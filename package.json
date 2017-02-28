@@ -1,7 +1,7 @@
 {
-  "name": "timeserver",
+  "name": "SOS1617-04",
   "version": "0.0.0",
-  "description": "Primera edicion",
+  "description": "Server time",
   "main": "server.js",
   "dependencies": {
     "express": "^4.14.1",
