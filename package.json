@@ -1,0 +1,25 @@
+{
+  "name": "timeserver",
+  "version": "0.0.0",
+  "description": "Primera edicion",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.14.1",
+    "moment": "^2.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SOS1617/SOS1617-04.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SOS1617/SOS1617-04/issues"
+  },
+  "homepage": "https://github.com/SOS1617/SOS1617-04#readme"
+}
