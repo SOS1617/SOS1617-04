@@ -4,10 +4,6 @@
   "description": "API REST",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.14.1",
-    "moment": "^2.17.1"
-  },
-  "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "helmet": "^3.5.0",
