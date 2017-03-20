@@ -1,16 +1,18 @@
 {
   "name": "SOS1617-04",
   "version": "0.0.0",
-  "description": "Server time",
-  "main": "server.js",
+  "description": "API REST",
+  "main": "index.js",
   "dependencies": {
     "express": "^4.14.1",
     "moment": "^2.17.1"
   },
-  "devDependencies": {},
-  "scripts": {
-    "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "helmet": "^3.5.0",
+    "nedb": "^1.8.0",
+    "path": "^0.12.7"
   },
   "repository": {
     "type": "git",
