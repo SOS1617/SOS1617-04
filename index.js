@@ -465,11 +465,7 @@ app.post(BASE_API_PATH + "/price-stats", function (request, response) {
     }
 });
 
-<<<<<<< HEAD
 // f) POST a un recurso (p.e. “/price-stats/Sevilla”) debe dar un error de método no permitido.
-=======
-// F) POST a un recurso (p.e. “/price-stats/Sevilla”) debe dar un error de método no permitido.
->>>>>>> 145b0329cf79782407617dfa9bbe1f860f8d2fe4
 app.post(BASE_API_PATH + "/price-stats/:province/:year", function (request, response) {
     var province = request.params.province;
     var year = request.params.year;
@@ -500,15 +496,10 @@ app.put(BASE_API_PATH + "/price-stats/:province/:year", function (request, respo
         } else {
             dbLuis.find({
                 province: province,
-<<<<<<< HEAD
                 $and: [{
                     year: year
                 }]
             }).toArray(function(err, sPrice) {
-=======
-                year: year
-            }).toArray(function(err, sArea) {
->>>>>>> 145b0329cf79782407617dfa9bbe1f860f8d2fe4
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
