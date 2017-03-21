@@ -447,7 +447,7 @@ app.post(BASE_API_PATH + "/price-stats", function (request, response) {
                     response.sendStatus(500); // internal server error
                 } else {
                     var contactsBeforeInsertion = price.filter((price) => {
-                        return (price.name.localeCompare(newPrice.name, "en", {'sensitivity': 'base'}) === 0);
+                        return (price.province.localeCompare(newPrice.province, "en", {'sensitivity': 'base'}) === 0);
                     });
                     if (contactsBeforeInsertion.length > 0) {
                         console.log("WARNING: The contact " + JSON.stringify(newPrice, 2, null) + " already extis, sending 409...");
@@ -463,9 +463,10 @@ app.post(BASE_API_PATH + "/price-stats", function (request, response) {
     }
 });
 
-// f) POST a un recurso (p.e. “/price-stats/Sevilla”) debe dar un error de método no permitido.
-app.post(BASE_API_PATH + "/price-stats/:province", function (request, response) {
+// F) POST a un recurso (p.e. “/price-stats/Sevilla”) debe dar un error de método no permitido.
+app.post(BASE_API_PATH + "/price-stats/:province/:year", function (request, response) {
     var province = request.params.province;
+    var year = request.params.year;
     console.log("WARNING: New POST request to /price-stats/" + province + ", sending 405...");
     response.sendStatus(405); // method not allowed
 });
@@ -543,20 +544,18 @@ app.delete(BASE_API_PATH + "/price-stats", function (request, response) {
 });
 
 
-// D) DELETE a un recurso (p.e. “/price-stats/Sevilla/2016”) borra ese recurso
-app.delete(BASE_API_PATH + "/price-stats/:province/:year", function (request, response) {
+// D) DELETE a un recurso (p.e. “/price-stats/Sevilla”) borra ese recurso
+app.delete(BASE_API_PATH + "/price-stats/:province", function (request, response) {
     var province = request.params.province;
-    var year = request.params.year;
 
-    if (!province || !year) {
-        console.log("WARNING: New DELETE request to /export-and-import-stats/:name without name, sending 400...");
+    if (!province) {
+        console.log("WARNING: New DELETE request to /price-stats/:name without name, sending 400...");
         response.sendStatus(400); // bad request
     }
     else {
          console.log("INFO: New DELETE request to /export-and-import-stats");
         dbLuis.remove({
-            province: province,
-            //year: year
+            province: province
         }, {
             multi: true
         }, function(err, numRemoved) {
