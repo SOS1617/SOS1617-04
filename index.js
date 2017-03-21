@@ -8,8 +8,7 @@ var app = express();
 
 
 var MongoClient = require('mongodb').MongoClient;
-var mAlberto = "mongodb://test:test@ds137370.mlab.com:37370/sandbox";
-var mdbURL = "mongodb://admin:admin@ds137230.mlab.com:37230/sos03";
+var mURL = "mongodb://test:test@ds137370.mlab.com:37370/sandbox";
 
 
 var port = (process.env.PORT || 10000);
@@ -17,11 +16,11 @@ var BASE_API_PATH = "/api/v1";
 
 var dbAlberto;
 var dbLuis;
-
+var dbAdrian;
 app.use(bodyParser.json()); //use default json enconding/decoding
 app.use(helmet()); //improve security
 
-MongoClient.connect(mAlberto, {
+MongoClient.connect(mURL, {
     native_parser: true
 }, function(err, database) {
     if (err) {
@@ -30,6 +29,8 @@ MongoClient.connect(mAlberto, {
     }
 
     dbAlberto = database.collection("exports");
+    dbLuis = database.collection("prices");
+    dbAdrian = database.collection("area");
 
 
     app.listen(port, () => {
@@ -39,15 +40,6 @@ MongoClient.connect(mAlberto, {
     });
 });
 
-MongoClient.connect(mdbURL, {native_parser:true}, function (err, database){
-    if(err){
-        console.log("Error conectando: " + err);
-        process.exit(1);
-    }
-    
-    dbLuis = database.pricestats;
-    console.log(database);
-});
 
 
 
@@ -383,16 +375,17 @@ app.get(BASE_API_PATH + "/", function (request, response) {
 // GET a collection
 app.get(BASE_API_PATH + "/price-stats", function (request, response) {
     console.log("INFO: New GET request to /price-stats");
-    dbLuis.find({}, function (err, contacts) {
+    dbLuis.find({}).toArray(function (err, price) {
         if (err) {
             console.error('WARNING: Error getting data from DB');
             response.sendStatus(500); // internal server error
         } else {
-            console.log("INFO: Sending price-stats: " + JSON.stringify(contacts, 2, null));
-            response.send(contacts);
+            console.log("INFO: Sending price-stats: " + JSON.stringify(price, 2, null));
+            response.send(price);
         }
     });
 });
+
 
 
 // GET a un año
