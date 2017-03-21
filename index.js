@@ -380,8 +380,7 @@ app.get(BASE_API_PATH + "/", function (request, response) {
     response.redirect(301, BASE_API_PATH + "/price-stats");
 });
 
-
-// GET a collection
+// A) GET a la ruta base (p.e. “/price-stats”) devuelve una lista con todos los recursos
 app.get(BASE_API_PATH + "/price-stats", function (request, response) {
     console.log("INFO: New GET request to /price-stats");
     dbLuis.find({}).toArray(function (err, price) {
@@ -395,37 +394,7 @@ app.get(BASE_API_PATH + "/price-stats", function (request, response) {
     });
 });
 
-
-
-// GET a una provincia
-/*
-app.get(BASE_API_PATH + "/price-stats/:province", function (request, response) {
-    var province = request.params.province;
-    if (!province) {
-        console.log("WARNING: New GET request to /price-stats/:province without name, sending 400...");
-        response.sendStatus(400); // bad request
-    } else {
-        console.log("INFO: New GET request to /price-stats/" + province);
-        dbLuis.find({}, function (err, province) {
-            if (err) {
-                console.error('WARNING: Error getting data from DB');
-                response.sendStatus(500); // internal server error
-            } else {
-                var filtered = province.filter((m) => {
-                    return (m.name.localeCompare(province, "en", {'sensitivity': 'base'}) === 0);
-                });
-                if (filtered.length > 0) {
-                    var m = filtered[0]; //since we expect to have exactly ONE contact with this name
-                    console.log("INFO: Sending contact: " + JSON.stringify(m, 2, null));
-                    response.send(m);
-                } else {
-                    console.log("WARNING: There are not any " + province);
-                    response.sendStatus(404); // not found
-                }
-            }
-        });
-    }
-});*/
+// C) GET a un recurso (p.e. “/price-stats/Sevilla”) devuelve ese recurso 
 app.get(BASE_API_PATH + "/price-stats/:province", function(request, response) {
     var province = request.params.province;
 
@@ -457,8 +426,7 @@ app.get(BASE_API_PATH + "/price-stats/:province", function(request, response) {
     }
 });
 
-
-//POST over a collection
+// B) POST a la ruta base (p.e. “/price-stats”) crea un nuevo recurso
 app.post(BASE_API_PATH + "/price-stats", function (request, response) {
     var newPrice = request.body;
     if (!newPrice) {
@@ -496,48 +464,54 @@ app.post(BASE_API_PATH + "/price-stats", function (request, response) {
 });
 
 
-//POST over a single resource
+// f) POST a un recurso (p.e. “/price-stats/Sevilla”) debe dar un error de método no permitido.
 app.post(BASE_API_PATH + "/price-stats/:province", function (request, response) {
-    var name = request.params.province;
-    console.log("WARNING: New POST request to /price-stats/" + name + ", sending 405...");
+    var province = request.params.province;
+    console.log("WARNING: New POST request to /price-stats/" + province + ", sending 405...");
     response.sendStatus(405); // method not allowed
 });
 
 
-//PUT over a collection
+// G) PUT a la ruta base (p.e. “/price-stats”) debe dar un error de método no permitido.
 app.put(BASE_API_PATH + "/price-stats", function (request, response) {
     console.log("WARNING: New PUT request to /price-stats, sending 405...");
     response.sendStatus(405); // method not allowed
 });
 
 
-//PUT over a single resource
-app.put(BASE_API_PATH + "/price-stats/:name", function (request, response) {
-    var updatedContact = request.body;
-    var name = request.params.name;
-    if (!updatedContact) {
+// E) PUT a un recurso (p.e. “/price-stats/Sevilla”) actualiza ese recurso 
+app.put(BASE_API_PATH + "/price-stats/:province/:year", function (request, response) {
+    var updated = request.body;
+    var province = request.params.province;
+    var year = request.params.year;
+    if (!updated) {
         console.log("WARNING: New PUT request to /price-stats/ without contact, sending 400...");
         response.sendStatus(400); // bad request
     } else {
-        console.log("INFO: New PUT request to /price-stats/" + name + " with data " + JSON.stringify(updatedContact, 2, null));
-        if (!updatedContact.name || !updatedContact.phone || !updatedContact.email) {
-            console.log("WARNING: The contact " + JSON.stringify(updatedContact, 2, null) + " is not well-formed, sending 422...");
+        console.log("INFO: New PUT request to /price-stats/" + province + " with data " + JSON.stringify(updated, 2, null));
+        if (!updated.province || !updated.year) {
+            console.log("WARNING: The contact " + JSON.stringify(updated, 2, null) + " is not well-formed, sending 422...");
             response.sendStatus(422); // unprocessable entity
         } else {
-            dbLuis.find({}, function (err, contacts) {
+            dbLuis.find({
+                province: province,
+                $and: [{
+                    year: year
+                }]            
+            }, function (err, contacts) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
                 } else {
                     var contactsBeforeInsertion = contacts.filter((contact) => {
-                        return (contact.name.localeCompare(name, "en", {'sensitivity': 'base'}) === 0);
+                        return (contact.name.localeCompare(province, "en", {'sensitivity': 'base'}) === 0);
                     });
                     if (contactsBeforeInsertion.length > 0) {
-                        dbLuis.update({name: name}, updatedContact);
-                        console.log("INFO: Modifying contact with name " + name + " with data " + JSON.stringify(updatedContact, 2, null));
-                        response.send(updatedContact); // return the updated contact
+                        dbLuis.update({name: province}, updated);
+                        console.log("INFO: Modifying price-stat with name " +province + " with data " + JSON.stringify(updated, 2, null));
+                        response.send(updated); // return the updated contact
                     } else {
-                        console.log("WARNING: There are not any contact with name " + name);
+                        console.log("WARNING: There are not any price-stat with name " + province);
                         response.sendStatus(404); // not found
                     }
                 }
@@ -547,7 +521,7 @@ app.put(BASE_API_PATH + "/price-stats/:name", function (request, response) {
 });
 
 
-//DELETE over a collection
+// H) DELETE a la ruta base (p.e. “/price-stats”) borra todos los recursos
 app.delete(BASE_API_PATH + "/price-stats", function (request, response) {
     console.log("INFO: New DELETE request to /price-stats");
     dbLuis.remove({}, {multi: true}, function (err, numRemoved) {
@@ -559,30 +533,33 @@ app.delete(BASE_API_PATH + "/price-stats", function (request, response) {
                 console.log("INFO: All the price-stats (" + numRemoved + ") have been succesfully deleted, sending 204...");
                 response.sendStatus(204); // no content
             } else {
-                console.log("WARNING: There are no contacts to delete");
+                console.log("WARNING: There are no stats to delete");
                 response.sendStatus(404); // not found
             }
         }
     });
 });
 
-
-//DELETE over a single resource
-app.delete(BASE_API_PATH + "/price-stats/:anyo", function (request, response) {
-    var name = request.params.anyo;
-    if (!name) {
-        console.log("WARNING: New DELETE request to /price-stats/:name without name, sending 400...");
+// D) DELETE a un recurso (p.e. “/price-stats/Sevilla”) borra ese recurso
+app.delete(BASE_API_PATH + "/price-stats/:province/:year", function (request, response) {
+    var province = request.params.province;
+    var year = request.params.year;
+    if (!province || !year) {
+        console.log("WARNING: New DELETE request to /area-and-production-stats/:name without name, sending 400...");
         response.sendStatus(400); // bad request
     } else {
-        console.log("INFO: New DELETE request to /price-stats/" + name);
-        dbLuis.remove({name: name}, {}, function (err, numRemoved) {
+        console.log("INFO: New DELETE request to /price-stats/" + province + "/" + year);
+        dbLuis.remove({
+            province: province,
+            year: year
+        }, {}, function (err, numRemoved) {
             if (err) {
                 console.error('WARNING: Error removing data from DB');
                 response.sendStatus(500); // internal server error
             } else {
-                console.log("INFO: Contacts removed: " + numRemoved);
+                console.log("INFO: Price-stats removed: " + numRemoved);
                 if (numRemoved === 1) {
-                    console.log("INFO: The contact with name " + name + " has been succesfully deleted, sending 204...");
+                    console.log("INFO: " + province + "/" + year + " has been succesfully deleted, sending 204...");
                     response.sendStatus(204); // no content
                 } else {
                     console.log("WARNING: There are no contacts to delete");
