@@ -1,8 +1,14 @@
+curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/price-stats/loadInitialData'
+
 A) GET a la ruta base (p.e. “/price-stats”) devuelve una lista con todos los recursos
 curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/price-stats'
 
 B) POST a la ruta base (p.e. “/price-stats”) crea un nuevo recurso
+<<<<<<< HEAD
 curl -v -XPOST -H 'Content-type: application/json' -d '{ "province": "Cordoba", "year": "2016", "priceaceite": "9.16", "priceextra": "3.71", "pricevirgen": "3.42" }' 'http://localhost:8080/api/v1/price-stats'
+=======
+curl -XPOST -H 'Content-type: application/json' -d '{ \"province\": \"Huelva2\", \"year\": \"2016\", \"priceaceite\": \"3.416\", \"priceextra\": \"3.7\", \"pricevirgen\": \"3.42\" }' 'http://localhost:8080/api/v1/price-stats'
+>>>>>>> 145b0329cf79782407617dfa9bbe1f860f8d2fe4
 
 C) GET a un recurso (p.e. “/price-stats/Sevilla”) devuelve ese recurso 
 curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/price-stats/Cordoba/2016'
@@ -11,6 +17,7 @@ D) DELETE a un recurso (p.e. “/price-stats/Sevilla”) borra ese recurso
 curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api/v1/price-stats/Cordoba/2016'
 
 E) PUT a un recurso (p.e. “/price-stats/Sevilla”) actualiza ese recurso 
+<<<<<<< HEAD
 curl -v -XPUT -H 'Content-type: application/json' -d '{ "province": "Sevilla", "year": "2016", "priceaceite": "39", "priceextra": 8.71, "pricevirgen": 9.42}' 'http://localhost:8080/api/v1/price-stats/Sevilla/2016'
 
 f) POST a un recurso (p.e. “/price-stats/Sevilla”) debe dar un error de método no permitido.
@@ -18,6 +25,15 @@ curl -v -XPOST -H 'Content-type: application/json' -d '{ "province": "Sevilla", 
 
 G) PUT a la ruta base (p.e. “/price-stats”) debe dar un error de método no permitido.
 curl -v -XPUT -H 'Content-type: application/json' -d '{ "province": "Sevilla", "year": "2016", "priceaceite": "3.416", "priceextra": 3.71, "pricevirgen": 3.42 }' 'http://localhost:8080/api/v1/price-stats'
+=======
+curl -v -XPUT -H 'Content-type: application/json' -d '{ \"province\": \"Sevilla\", \"year\": \"2017\", "priceaceite\": 3.416, \"priceextra\": 3.71, \"pricevirgen\": 3.42 }' 'http://localhost:8080/api/v1/price-stats/2015'
+
+f) POST a un recurso (p.e. “/price-stats/Sevilla”) debe dar un error de método no permitido.
+curl -v -XPOST -H 'Content-type: application/json' -d '{ \"province\": \"Huelva\", \"year\": \"2016\", \"priceaceite\": \"3.416\", \"priceextra\": \"3.7\"1, \"pricevirgen\": \"3.42\" }' 'http://localhost:8080/api/v1/price-stats/2015'
+
+G) PUT a la ruta base (p.e. “/price-stats”) debe dar un error de método no permitido.
+curl -v -XPUT -H 'Content-type: application/json' -d '{ \"province\": \"Huelva\", \"year\": \"2016\", \"priceaceite\": \"3.416\", \"priceextra\": \"3.7\"1, \"pricevirgen\": \"3.42\" }' 'http://localhost:8080/api/v1/price-stats'
+>>>>>>> 145b0329cf79782407617dfa9bbe1f860f8d2fe4
 
 H) DELETE a la ruta base (p.e. “/price-stats”) borra todos los recursos
 curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api/v1/price-stats'
