@@ -1,91 +1,89 @@
-"use strict";
-/* global __dirname */
-
 var express = require("express");
 var bodyParser = require("body-parser");
 var helmet = require("helmet");
 var path = require('path');
-var DataStore = require('nedb');
+
+
+var app = express();
+
+
+var MongoClient = require('mongodb').MongoClient;
+var mAlberto = "mongodb://test:test@ds137370.mlab.com:37370/sandbox";
 
 var port = (process.env.PORT || 10000);
 var BASE_API_PATH = "/api/v1";
 
-var dbFileName = path.join(__dirname, 'sExport.db');
-
-var db = new DataStore({
-    filename: dbFileName,
-    autoload: true
-});
-
-var app = express();
+var dbAlberto;
 
 app.use(bodyParser.json()); //use default json enconding/decoding
 app.use(helmet()); //improve security
 
-// @see: https://curlbuilder.com/
-// @see: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-// @see: https://i.stack.imgur.com/whhD1.png
-// @see: https://blog.agetic.gob.bo/2016/07/elegir-un-codigo-de-estado-http-deja-de-hacerlo-dificil/
-
-console.log("---BEGIN PROBAR LA API CON CURL---");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/contacts'");
-console.log("curl -v -XPOST -H 'Content-type: application/json' -d '{ \"name\": \"David\", \"phone\": \"954556350\", \"email\": \"david@example.com\" }' 'http://localhost:8080/api/v1/contacts'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/contacts/David'");
-console.log("curl -v -XPUT -H 'Content-type: application/json' -d '{ \"name\": \"Antonio\", \"phone\": \"954556350\", \"email\": \"antonio@example.com\" }' 'http://localhost:8080/api/v1/contacts'");
-console.log("curl -v -XPUT -H 'Content-type: application/json' -d '{ \"name\": \"Antonio\", \"phone\": \"954556350\", \"email\": \"antonio@example.com\" }' 'http://localhost:8080/api/v1/contacts/David'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/contacts/David'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/contacts/Antonio'");
-console.log("curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api/v1/contacts/Antonio'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/contacts/Antonio'");
-console.log("curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api/v1/contacts'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/contacts'");
-console.log("---END PROBAR LA API CON CURL---");
-
-
-db.find({}, function(err, sExport) {
-    console.log('INFO: Initialiting DB...');
-
+/*
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                                            API     ALBERTO
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*/
+MongoClient.connect(mAlberto, {
+    native_parser: true
+}, function(err, database) {
     if (err) {
-        console.error('WARNING: Error while getting initial data from DB');
-        return 0;
+        console.log("CANNOT connect to database" + err);
+        process.exit(1);
     }
 
+    dbAlberto = database.collection("exports");
 
-    if (sExport.length === 0) {
-        console.log('INFO: Empty DB, loading initial data');
 
-        var initialExport = [{
-            "province": "cordoba",
-            "year": 2013,
-            "oil": 300.7,
-            "import": 57.6,
-            "export": 57.6
-        }, {
-            "province": "cordoba",
-            "year": 2014,
-            "oil": 780.7,
-            "import": 58.6,
-            "export": 60.6
-        }];
+    app.listen(port, () => {
+        console.log("Magic is happening on port " + port);
 
-        db.insert(initialExport);
-    }
-    else {
-        console.log('INFO: DB has ' + initialExport.length + ' stats ');
-    }
+
+    });
 });
 
-// Base GET
-app.get("/export-and-import-stats", function(request, response) {
-    console.log("INFO: Redirecting to /export-and-import-stats");
-    response.redirect(301, BASE_API_PATH + "/export-and-import-stats");
+
+
+
+app.get(BASE_API_PATH + "/export-and-import/loadInitialData", function(req, res) {
+    dbAlberto.find({}).toArray(function(err, stats) {
+        if (err) {
+            console.error('WARNING: Error while getting initial data from DB');
+            return 0;
+        }
+        if (stats.length === 0) {
+            var initialStats = [{
+                "province": "jaen",
+                "year": "2013",
+                "oil": "375",
+                "importS": "802",
+                "exportS": "274"
+            }, {
+                "province": "huelva",
+                "year": "2013",
+                "oil": "385",
+                "importS": "772",
+                "exportS": "84"
+            }, ];
+
+            dbAlberto.insert(initialStats);
+            console.log("Date insert in db");
+            res.sendStatus(201);
+        }
+        else {
+            console.log("DB not empty")
+        }
+    });
 });
 
 
 // GET a collection
-app.get(BASE_API_PATH + "/export-and-import-stats", function(request, response) {
-    console.log("INFO: New GET request to /export-and-import-stats");
-    db.find({}, function(err, sExport) {
+app.get(BASE_API_PATH + "/export-and-import", function(request, response) {
+    console.log("INFO: New GET request to /export-and-import");
+    dbAlberto.find({}).toArray(function(err, sExport) {
         if (err) {
             console.error('WARNING: Error getting data from DB');
             response.sendStatus(500); // internal server error
@@ -99,29 +97,29 @@ app.get(BASE_API_PATH + "/export-and-import-stats", function(request, response) 
 
 
 // GET a single resource
-app.get(BASE_API_PATH + "/export-and-import-stats/:name", function(request, response) {
-    var name = request.params.name;
-    if (!name) {
+
+app.get(BASE_API_PATH + "/export-and-import/:province", function(request, response) {
+    var province = request.params.province;
+
+    if (!province) {
         console.log("WARNING: New GET request to /export-and-import-stats/:name without name, sending 400...");
         response.sendStatus(400); // bad request
     }
     else {
-        console.log("INFO: New GET request to /export-and-import-stats/" + name);
-        db.find({
-            "province": name
-        }, function(err, sExport) {
+        console.log("INFO: New GET request to /export-and-import-stats/" + province);
+        dbAlberto.find({    province: province     }).toArray(function(err, sExport) {
             if (err) {
                 console.error('WARNING: Error getting data from DB');
                 response.sendStatus(500); // internal server error
             }
             else {
                 if (sExport.length > 0) {
-                    var stats = sExport[0]; //since we expect to have exactly ONE contact with this name
-                    console.log("INFO: Sending contact: " + JSON.stringify(stats, 2, null));
-                    response.send(stats);
+                    var a = sExport[0];
+                    console.log("INFO: Sending stats: " + JSON.stringify(sExport, 2, null));
+                    response.send(a);
                 }
                 else {
-                    console.log("WARNING: There are not any export stats with name " + name);
+                    console.log("WARNING: There are not any export stats with name " + province);
                     response.sendStatus(404); // not found
                 }
             }
@@ -130,21 +128,62 @@ app.get(BASE_API_PATH + "/export-and-import-stats/:name", function(request, resp
 });
 
 
-//POST over a collection
-app.post(BASE_API_PATH + "/export-and-import-stats", function(request, response) {
-    var newStats = request.body;
-    if (!newStats) {
-        console.log("WARNING: New POST request to /export-and-import-stats/ without stats, sending 400...");
+
+
+
+//GET all stats of one year
+app.get(BASE_API_PATH + "/export-and-import/:province/:year", function(request, response) {
+    var province = request.params.province;
+    var year = request.params.year;
+    if (!province) {
+        console.log("WARNING: New GET request to /export-and-import/ without province, sending 400...");
         response.sendStatus(400); // bad request
     }
     else {
-        console.log("INFO: New POST request to /export-and-import-stats with body: " + JSON.stringify(newStats, 2, null));
-        if (!newStats.province || !newStats.year || !newStats.oil || !newStats.import || !newStats.export) {
-            console.log("WARNING: The contact " + JSON.stringify(newStats, 2, null) + " is not well-formed, sending 422...");
+        console.log("INFO: New GET request to /export-and-import/" + province);
+        dbAlberto.find({
+            province: province,
+            year: year
+        }).toArray(function(err, sExport) {
+            if (err) {
+                console.error('WARNING: Error getting data from DB');
+                response.sendStatus(500); // internal server error
+            }
+            else {
+                if (sExport.length > 0) {
+                    console.log("INFO: Sending stats: " + JSON.stringify(sExport, 2, null));
+                    response.send(sExport);
+                }
+                else {
+                    console.log("WARNING: There are not any export stats with name " + province + " and " + year);
+                    response.sendStatus(404); // not found
+                }
+            }
+        });
+    }
+});
+
+
+
+
+//POST over a collection
+app.post(BASE_API_PATH + "/export-and-import", function(request, response) {
+    var newStats = request.body;
+    if (!newStats) {
+        console.log("WARNING: New POST request to /export-and-import without stats, sending 400...");
+        response.sendStatus(400); // bad request
+    }
+    else {
+        console.log("INFO: New POST request to /export-and-import with body: " + JSON.stringify(newStats, 2, null));
+        if (!newStats.province || !newStats.year || !newStats.oil || !newStats.importS || !newStats.exportS) {
+            console.log("WARNING: The stat " + JSON.stringify(newStats, 2, null) + " is not well-formed, sending 422...");
             response.sendStatus(422); // unprocessable entity
         }
         else {
-            db.find({}, function(err, sExport) {
+            dbAlberto.find({
+                province: newStats.province,
+                year: newStats.year
+            }).toArray(function(err, sExport) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
@@ -161,7 +200,7 @@ app.post(BASE_API_PATH + "/export-and-import-stats", function(request, response)
                     }
                     else {
                         console.log("INFO: Adding contact " + JSON.stringify(newStats, 2, null));
-                        db.insert(newStats);
+                        dbAlberto.insert(newStats);
                         response.sendStatus(201); // created
                     }
                 }
@@ -172,55 +211,60 @@ app.post(BASE_API_PATH + "/export-and-import-stats", function(request, response)
 
 
 //POST over a single resource
-app.post(BASE_API_PATH + "/export-and-import-stats/:name", function(request, response) {
-    var name = request.params.name;
-    console.log("WARNING: New POST request to /export-and-import-stats/" + name + ", sending 405...");
+app.post(BASE_API_PATH + "/export-and-import/:province/:year", function(request, response) {
+    var province = request.params.province;
+    var year = request.params.year;
+
+    console.log("WARNING: New POST request to /export-and-import-stats/" + province +" and "+year+ ", sending 405...");
     response.sendStatus(405); // method not allowed
 });
 
 
 //PUT over a collection
-app.put(BASE_API_PATH + "/export-and-import-stats", function(request, response) {
+app.put(BASE_API_PATH + "/export-and-import", function(request, response) {
     console.log("WARNING: New PUT request to /export-and-import-stats, sending 405...");
     response.sendStatus(405); // method not allowed
 });
 
 
 //PUT over a single resource
-app.put(BASE_API_PATH + "/export-and-import-stats/:name", function(request, response) {
+app.put(BASE_API_PATH + "/export-and-import/:province/:year", function(request, response) {
     var updateExp = request.body;
-    var name = request.params.name;
+    var province = request.params.province;
+    var year = request.params.year;
+
     if (!updateExp) {
         console.log("WARNING: New PUT request to /export-and-import-stats/ without contact, sending 400...");
         response.sendStatus(400); // bad request
     }
     else {
-        console.log("INFO: New PUT request to /export-and-import-stats/" + name + " with data " + JSON.stringify(updateExp, 2, null));
-        if (!updateExp.province || !updateExp.year || !updateExp.oil || !updateExp.import || !updateExp.export) {
+        console.log("INFO: New PUT request to /export-and-import-stats/" + province + " with data " + JSON.stringify(updateExp, 2, null));
+        if (!updateExp.province || !updateExp.year || !updateExp.oil || !updateExp.importS || !updateExp.exportS) {
             console.log("WARNING: The contact " + JSON.stringify(updateExp, 2, null) + " is not well-formed, sending 422...");
             response.sendStatus(422); // unprocessable entity
         }
         else {
-            db.find({}, function(err, sExport) {
+            dbAlberto.find({
+                province: province,
+                $and: [{
+                    year: year
+                }]
+            }).toArray(function(err, sExport) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
                 }
                 else {
-                    var sExportBefore = sExport.filter((contact) => {
-                        return (sExport.name.localeCompare(name, "en", {
-                            'sensitivity': 'base'
-                        }) === 0);
-                    });
-                    if (sExportBefore.length > 0) {
-                        db.update({
-                            name: name
+                    if (sExport.length > 0) {
+                        dbAlberto.update({
+                            province: province,
+                            year: year
                         }, updateExp);
-                        console.log("INFO: Modifying contact with name " + name + " with data " + JSON.stringify(updateExp, 2, null));
+                        console.log("INFO: Modifying contact with name " + province + " with data " + JSON.stringify(updateExp, 2, null));
                         response.send(updateExp); // return the updated contact
                     }
                     else {
-                        console.log("WARNING: There are not any contact with name " + name);
+                        console.log("WARNING: There are not any stats with provinc " + province);
                         response.sendStatus(404); // not found
                     }
                 }
@@ -231,9 +275,9 @@ app.put(BASE_API_PATH + "/export-and-import-stats/:name", function(request, resp
 
 
 //DELETE over a collection
-app.delete(BASE_API_PATH + "/export-and-import-stats", function(request, response) {
+app.delete(BASE_API_PATH + "/export-and-import", function(request, response) {
     console.log("INFO: New DELETE request to /export-and-import-stats");
-    db.remove({}, {
+    dbAlberto.remove({}, {
         multi: true
     }, function(err, numRemoved) {
         if (err) {
@@ -255,17 +299,17 @@ app.delete(BASE_API_PATH + "/export-and-import-stats", function(request, respons
 
 
 //DELETE over a single resource
-app.delete(BASE_API_PATH + "/export-and-import-stats/:name", function(request, response) {
-    var name = request.params.name;
-    if (!name) {
+app.delete(BASE_API_PATH + "/export-and-import/:province/:year", function(request, response) {
+    var province = request.params.province;
+    var year = request.params.year;
+
+    if (!province || !year) {
         console.log("WARNING: New DELETE request to /export-and-import-stats/:name without name, sending 400...");
         response.sendStatus(400); // bad request
     }
     else {
-        console.log("INFO: New DELETE request to /export-and-import-stats/" + name);
-        db.remove({
-            name: name
-        }, {}, function(err, numRemoved) {
+        console.log("INFO: New DELETE request to /export-and-import-stats/" + province+ " and "+year);
+        dbAlberto.remove({ province: province, year: year }, {}, function(err, numRemoved) {
             if (err) {
                 console.error('WARNING: Error removing data from DB');
                 response.sendStatus(500); // internal server error
@@ -273,7 +317,7 @@ app.delete(BASE_API_PATH + "/export-and-import-stats/:name", function(request, r
             else {
                 console.log("INFO: Stats removed: " + numRemoved);
                 if (numRemoved === 1) {
-                    console.log("INFO: The state with name " + name + " has been succesfully deleted, sending 204...");
+                    console.log("INFO: The state with name " + province + "and year " + year + " has been succesfully deleted, sending 204...");
                     response.sendStatus(204); // no content
                 }
                 else {
@@ -284,7 +328,3 @@ app.delete(BASE_API_PATH + "/export-and-import-stats/:name", function(request, r
         });
     }
 });
-
-
-app.listen(port);
-console.log("Magic is happening on port " + port);
