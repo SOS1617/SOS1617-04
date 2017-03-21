@@ -556,7 +556,7 @@ app.delete(BASE_API_PATH + "/price-stats/:province/:year", function (request, re
          console.log("INFO: New DELETE request to /export-and-import-stats");
         dbLuis.remove({
             province: province,
-            year: year
+            //year: year
         }, {
             multi: true
         }, function(err, numRemoved) {
