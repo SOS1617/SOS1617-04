@@ -5,16 +5,23 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var helmet = require("helmet");
 var path = require('path');
-var DataStore = require('nedb');
+
+var MongoClient = require('mongodb').MongoClient;
+var mdbURL = 'mongodb://luis:luis@ds137360.mlab.com:37360/feedback';
 
 var port = (process.env.PORT || 10000);
 var BASE_API_PATH = "/api/v1";
 
-var dbFileName = path.join(__dirname, 'contacts.db');
+var db;
 
-var db = new DataStore({
-    filename: dbFileName,
-    autoload: true
+MongoClient.connect(mdbURL, {native_parser:true}, function (err, database){
+    if(err){
+        console.log("Error conectando: " + err);
+        process.exit(1);
+    }
+    
+    db = database.pricestats;
+    console.log(database);
 });
 
 var app = express();
@@ -22,42 +29,17 @@ var app = express();
 app.use(bodyParser.json()); //use default json enconding/decoding
 app.use(helmet()); //improve security
 
-// @see: https://curlbuilder.com/
-// @see: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-// @see: https://i.stack.imgur.com/whhD1.png
-// @see: https://blog.agetic.gob.bo/2016/07/elegir-un-codigo-de-estado-http-deja-de-hacerlo-dificil/
-
-db.find({}, function (err, contacts) {
-    console.log('INFO: Initialiting DB...');
-
-    if (err) {
-        console.error('WARNING: Error while getting initial data from DB');
-        return 0;
-    }
-
-
-    if (contacts.length === 0) {
-        console.log('INFO: Empty DB, loading initial data');
-    } else {
-        console.log('INFO: DB has ' + contacts.length + ' contacts ');
-    }
-});
-
 // El recurso debe contener una ruta /api/v1/XXXXX/loadInitialData que al hacer un GET cree 2 o más datos en la base de datos si está vacía.
 app.get("/price-stats/loadInitialData", function (request, response) {
     console.log("INFO: Creando datos");
-    // TODO
-    var people = [{
-                "name": "Felipe",
-                "phone": "954556356",
-                "email": "felipe@example.com"
-            },
-            {
-                "name": "Daniel",
-                "phone": "954556357",
-                "email": "daniel@example.com"
-            }];
-        db.insert(people);
+
+    var datos = [{
+        "month": "Octubre",
+        "price-aceite-oliva-total-euros-t": 3.416,
+        "price-virgen-extra-euros-t": 3.71,
+        "price-virgen-euros-t": 3.42
+    }];
+        db.insert(datos);
         
     response.redirect(200, BASE_API_PATH + "/");
 });
@@ -84,7 +66,7 @@ app.get(BASE_API_PATH + "/price-stats", function (request, response) {
 });
 
 
-// GET a un anyo
+// GET a un año
 app.get(BASE_API_PATH + "/price-stats/:anyo", function (request, response) {
     var anyo = request.params.anyo;
     if (!anyo) {
@@ -105,7 +87,7 @@ app.get(BASE_API_PATH + "/price-stats/:anyo", function (request, response) {
                     console.log("INFO: Sending contact: " + JSON.stringify(m, 2, null));
                     response.send(m);
                 } else {
-                    console.log("WARNING: There are not any contact with name " + anyo);
+                    console.log("WARNING: There are not any " + anyo);
                     response.sendStatus(404); // not found
                 }
             }
@@ -118,12 +100,12 @@ app.get(BASE_API_PATH + "/price-stats/:anyo", function (request, response) {
 app.post(BASE_API_PATH + "/price-stats", function (request, response) {
     var newContact = request.body;
     if (!newContact) {
-        console.log("WARNING: New POST request to /contacts/ without contact, sending 400...");
+        console.log("WARNING: New POST request to /price-stats/ without contact, sending 400...");
         response.sendStatus(400); // bad request
     } else {
-        console.log("INFO: New POST request to /contacts with body: " + JSON.stringify(newContact, 2, null));
+        console.log("INFO: New POST request to /price-stats with body: " + JSON.stringify(newContact, 2, null));
         if (!newContact.name || !newContact.phone || !newContact.email) {
-            console.log("WARNING: The contact " + JSON.stringify(newContact, 2, null) + " is not well-formed, sending 422...");
+            console.log("WARNING: " + JSON.stringify(newContact, 2, null) + " is not well-formed, sending 422...");
             response.sendStatus(422); // unprocessable entity
         } else {
             db.find({}, function (err, contacts) {
