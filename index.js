@@ -52,6 +52,8 @@ MongoClient.connect(mURL, {
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 */
+
+// LoadInitialData
 app.get(BASE_API_PATH + "/export-and-import/loadInitialData", function(req, res) {
     dbAlberto.find({}).toArray(function(err, stats) {
         if (err) {
@@ -75,7 +77,7 @@ app.get(BASE_API_PATH + "/export-and-import/loadInitialData", function(req, res)
 
             dbAlberto.insert(initialStats);
             console.log("Date insert in db");
-            res.sendStatus(201);
+            res.sendStatus(201, BASE_API_PATH + "/");
         }
         else {
             console.log("DB not empty")
@@ -355,10 +357,17 @@ app.get(BASE_API_PATH + "/price-stats/loadInitialData", function (request, respo
     console.log("INFO: Creando datos");
 
     var datos = [{
-        "month": "Octubre",
-        "price-aceite-oliva-total-euros-t": 3.416,
-        "price-virgen-extra-euros-t": 3.71,
-        "price-virgen-euros-t": 3.42
+        "province": "Sevilla",
+        "year": 2016,
+        "priceaceite": 3.416,
+        "priceextra": 3.71,
+        "pricevirgen": 3.42
+    },{
+        "province": "Huelva",
+        "year": 2016,
+        "priceaceite": 4.416,
+        "priceextra-euros-t": 3.51,
+        "pricevirgen": 3.92
     }];
         dbLuis.insert(datos);
         
@@ -389,27 +398,27 @@ app.get(BASE_API_PATH + "/price-stats", function (request, response) {
 
 
 // GET a un año
-app.get(BASE_API_PATH + "/price-stats/:anyo", function (request, response) {
-    var anyo = request.params.anyo;
-    if (!anyo) {
+app.get(BASE_API_PATH + "/price-stats/:province", function (request, response) {
+    var province = request.params.province;
+    if (!province) {
         console.log("WARNING: New GET request to /price-stats/:anyo without name, sending 400...");
         response.sendStatus(400); // bad request
     } else {
-        console.log("INFO: New GET request to /price-stats/" + anyo);
+        console.log("INFO: New GET request to /price-stats/" + province);
         dbLuis.find({}, function (err, contacts) {
             if (err) {
                 console.error('WARNING: Error getting data from DB');
                 response.sendStatus(500); // internal server error
             } else {
                 var filtered = contacts.filter((m) => {
-                    return (m.name.localeCompare(anyo, "en", {'sensitivity': 'base'}) === 0);
+                    return (m.name.localeCompare(province, "en", {'sensitivity': 'base'}) === 0);
                 });
                 if (filtered.length > 0) {
                     var m = filtered[0]; //since we expect to have exactly ONE contact with this name
                     console.log("INFO: Sending contact: " + JSON.stringify(m, 2, null));
                     response.send(m);
                 } else {
-                    console.log("WARNING: There are not any " + anyo);
+                    console.log("WARNING: There are not any " + province);
                     response.sendStatus(404); // not found
                 }
             }
@@ -418,32 +427,35 @@ app.get(BASE_API_PATH + "/price-stats/:anyo", function (request, response) {
 });
 
 
-//POST crea un anyo
+//POST over a collection
 app.post(BASE_API_PATH + "/price-stats", function (request, response) {
-    var newContact = request.body;
-    if (!newContact) {
+    var newPrice = request.body;
+    if (!newPrice) {
         console.log("WARNING: New POST request to /price-stats/ without contact, sending 400...");
         response.sendStatus(400); // bad request
     } else {
-        console.log("INFO: New POST request to /price-stats with body: " + JSON.stringify(newContact, 2, null));
-        if (!newContact.name || !newContact.phone || !newContact.email) {
-            console.log("WARNING: " + JSON.stringify(newContact, 2, null) + " is not well-formed, sending 422...");
+        console.log("INFO: New POST request to /price-stats with body: " + JSON.stringify(newPrice, 2, null));
+        if (!newPrice.province || !newPrice.year || !newPrice.priceaceite || !newPrice.pricevirgen || !newPrice.pricevirgen) {
+            console.log("WARNING: " + JSON.stringify(newPrice, 2, null) + " is not well-formed, sending 422...");
             response.sendStatus(422); // unprocessable entity
         } else {
-            dbLuis.find({}, function (err, contacts) {
+            dbLuis.find({
+                 province: newPrice.province,
+                year: newPrice.year
+            }).toArray(function (err, price) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
                 } else {
-                    var contactsBeforeInsertion = contacts.filter((contact) => {
-                        return (contact.name.localeCompare(newContact.name, "en", {'sensitivity': 'base'}) === 0);
+                    var contactsBeforeInsertion = price.filter((contact) => {
+                        return (contact.name.localeCompare(newPrice.name, "en", {'sensitivity': 'base'}) === 0);
                     });
                     if (contactsBeforeInsertion.length > 0) {
-                        console.log("WARNING: The contact " + JSON.stringify(newContact, 2, null) + " already extis, sending 409...");
+                        console.log("WARNING: The contact " + JSON.stringify(newPrice, 2, null) + " already extis, sending 409...");
                         response.sendStatus(409); // conflict
                     } else {
-                        console.log("INFO: Adding contact " + JSON.stringify(newContact, 2, null));
-                        dbLuis.insert(newContact);
+                        console.log("INFO: Adding contact " + JSON.stringify(newPrice, 2, null));
+                        dbLuis.insert(newPrice);
                         response.sendStatus(201); // created
                     }
                 }
@@ -454,8 +466,8 @@ app.post(BASE_API_PATH + "/price-stats", function (request, response) {
 
 
 //POST over a single resource
-app.post(BASE_API_PATH + "/price-stats/:anyo", function (request, response) {
-    var name = request.params.anyo;
+app.post(BASE_API_PATH + "/price-stats/:province", function (request, response) {
+    var name = request.params.province;
     console.log("WARNING: New POST request to /price-stats/" + name + ", sending 405...");
     response.sendStatus(405); // method not allowed
 });
