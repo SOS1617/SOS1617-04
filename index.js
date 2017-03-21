@@ -401,16 +401,16 @@ app.get(BASE_API_PATH + "/price-stats", function (request, response) {
 app.get(BASE_API_PATH + "/price-stats/:province", function (request, response) {
     var province = request.params.province;
     if (!province) {
-        console.log("WARNING: New GET request to /price-stats/:anyo without name, sending 400...");
+        console.log("WARNING: New GET request to /price-stats/:province without name, sending 400...");
         response.sendStatus(400); // bad request
     } else {
         console.log("INFO: New GET request to /price-stats/" + province);
-        dbLuis.find({}, function (err, contacts) {
+        dbLuis.find({}, function (err, province) {
             if (err) {
                 console.error('WARNING: Error getting data from DB');
                 response.sendStatus(500); // internal server error
             } else {
-                var filtered = contacts.filter((m) => {
+                var filtered = province.filter((m) => {
                     return (m.name.localeCompare(province, "en", {'sensitivity': 'base'}) === 0);
                 });
                 if (filtered.length > 0) {
@@ -447,8 +447,8 @@ app.post(BASE_API_PATH + "/price-stats", function (request, response) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
                 } else {
-                    var contactsBeforeInsertion = price.filter((contact) => {
-                        return (contact.name.localeCompare(newPrice.name, "en", {'sensitivity': 'base'}) === 0);
+                    var contactsBeforeInsertion = price.filter((price) => {
+                        return (price.name.localeCompare(newPrice.name, "en", {'sensitivity': 'base'}) === 0);
                     });
                     if (contactsBeforeInsertion.length > 0) {
                         console.log("WARNING: The contact " + JSON.stringify(newPrice, 2, null) + " already extis, sending 409...");
