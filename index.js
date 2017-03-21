@@ -780,7 +780,7 @@ app.put(BASE_API_PATH + "/area-and-production/:province/:year", function(request
                 }
                 else {
                     if (sArea.length > 0) {
-                        dbAlberto.update({
+                        dbAdrian.update({
                             province: province,
                             year: year
                         }, updateArea);
@@ -788,7 +788,7 @@ app.put(BASE_API_PATH + "/area-and-production/:province/:year", function(request
                         response.send(updateArea); // return the updated contact
                     }
                     else {
-                        console.log("WARNING: There are not any stats with provinc " + province);
+                        console.log("WARNING: There are not any stats with province " + province);
                         response.sendStatus(404); // not found
                     }
                 }
@@ -814,7 +814,7 @@ app.delete(BASE_API_PATH + "/area-and-production", function(request, response) {
                 response.sendStatus(204); // no content
             }
             else {
-                console.log("WARNING: There are no contacts to delete");
+                console.log("WARNING: There are no stats to delete");
                 response.sendStatus(404); // not found
             }
         }
@@ -848,7 +848,7 @@ app.delete(BASE_API_PATH + "/area-and-production/:province/:year", function(requ
                     response.sendStatus(204); // no content
                 }
                 else {
-                    console.log("WARNING: There are no contacts to delete");
+                    console.log("WARNING: There are no stats to delete");
                     response.sendStatus(404); // not found
                 }
             }
