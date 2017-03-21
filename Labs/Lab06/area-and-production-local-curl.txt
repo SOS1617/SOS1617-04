@@ -1,0 +1,26 @@
+-----GET a la ruta base (p.e. “/area-and-production”) devuelve una lista con todos los recursos
+curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/area-and-production'
+
+-----POST a la ruta base (p.e. “/area-and-production”) crea un nuevo recurso
+curl -XPOST -H "Content-type: application/json" -d '{ "province": "sevilla", "year": "2013", "production-tm": "8000", "area-hectare": "1500"}' 'http://localhost:8080/api/v1/area-and-production'       
+
+
+-----GET a un recurso (p.e. “//area-and-production/sevilla”)
+curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/area-and-production/sevilla'
+
+
+-----DELETE a un recurso (p.e. “/area-and-production/sevilla”) borra ese recurso
+curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api/v1/area-and-production/sevilla/2012'
+
+-----PUT a un recurso (p.e. “/area-and-production/jaen”) actualiza ese recurso 
+curl -XPUT -H "Content-type: application/json" -d '{ "province": "jaen", "year": "2014", "production-tm": "200", "area-hectare": "450"}' 'http://localhost:8080/api/v1/area-and-production/jaen/2014'  
+
+
+-----POST a un recurso (p.e. “/area-and-production/cordoba”) debe dar un error de método no permitido.
+curl -v -XPOST -H 'Content-type: application/json' -d '{ "province": "jaen", "year": "2015", "production-tm": "200", "area-hectare": "450" }' 'http://localhost:8080/api/v1/area-and-production/jaen/2015'
+
+-----PUT a la ruta base (p.e. “/area-and-production”) debe dar un error de método no permitido.
+curl -v -XPUT -H 'Content-type: application/json' -d '{ "province": "jaen", "year": "2013", "production-tm": "200", "area-hectare": "450" }' 'http://localhost:8080/api/v1/area-and-production'
+
+-----DELETE a la ruta base (p.e. “/area-and-production-stats”) borra todos los recursos
+curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api/v1/area-and-production'

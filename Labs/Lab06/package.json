@@ -1,0 +1,30 @@
+{
+  "name": "SOS1617-04",
+  "version": "1.0.0",
+  "description": "API REST",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "helmet": "^3.5.0",
+<<<<<<< HEAD
+    "mongodb": "^2.2.25",
+    "nedb": "^1.8.0",
+    "path": "^0.12.7"
+=======
+    "mongodb": "^2.2.25"
+>>>>>>> 096776f0f0551efcb221e106253c081f0d7674d9
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SOS1617/SOS1617-04.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SOS1617/SOS1617-04/issues"
+  },
+  "homepage": "https://github.com/SOS1617/SOS1617-04#readme"
+}
