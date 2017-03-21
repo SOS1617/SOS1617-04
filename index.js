@@ -464,15 +464,15 @@ app.post(BASE_API_PATH + "/price-stats", function (request, response) {
 });
 
 
-//POST over a single resource
+// f) POST a un recurso (p.e. “/price-stats/Sevilla”) debe dar un error de método no permitido.
 app.post(BASE_API_PATH + "/price-stats/:province", function (request, response) {
-    var name = request.params.province;
-    console.log("WARNING: New POST request to /price-stats/" + name + ", sending 405...");
+    var province = request.params.province;
+    console.log("WARNING: New POST request to /price-stats/" + province + ", sending 405...");
     response.sendStatus(405); // method not allowed
 });
 
 
-//PUT over a collection
+// G) PUT a la ruta base (p.e. “/price-stats”) debe dar un error de método no permitido.
 app.put(BASE_API_PATH + "/price-stats", function (request, response) {
     console.log("WARNING: New PUT request to /price-stats, sending 405...");
     response.sendStatus(405); // method not allowed
