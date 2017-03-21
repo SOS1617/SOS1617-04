@@ -9,13 +9,7 @@
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "helmet": "^3.5.0",
-<<<<<<< HEAD
-    "mongodb": "^2.2.25",
-    "nedb": "^1.8.0",
-    "path": "^0.12.7"
-=======
     "mongodb": "^2.2.25"
->>>>>>> 096776f0f0551efcb221e106253c081f0d7674d9
   },
   "repository": {
     "type": "git",
