@@ -1,14 +1,15 @@
 {
   "name": "SOS1617-04",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "API REST",
-  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "helmet": "^3.5.0",
-    "nedb": "^1.8.0",
-    "path": "^0.12.7"
+    "mongodb": "^2.2.25"
   },
   "repository": {
     "type": "git",
