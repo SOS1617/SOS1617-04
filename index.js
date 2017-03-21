@@ -463,14 +463,12 @@ app.post(BASE_API_PATH + "/price-stats", function (request, response) {
     }
 });
 
-
 // f) POST a un recurso (p.e. “/price-stats/Sevilla”) debe dar un error de método no permitido.
 app.post(BASE_API_PATH + "/price-stats/:province", function (request, response) {
     var province = request.params.province;
     console.log("WARNING: New POST request to /price-stats/" + province + ", sending 405...");
     response.sendStatus(405); // method not allowed
 });
-
 
 // G) PUT a la ruta base (p.e. “/price-stats”) debe dar un error de método no permitido.
 app.put(BASE_API_PATH + "/price-stats", function (request, response) {
@@ -485,33 +483,35 @@ app.put(BASE_API_PATH + "/price-stats/:province/:year", function (request, respo
     var province = request.params.province;
     var year = request.params.year;
     if (!updated) {
-        console.log("WARNING: New PUT request to /price-stats/ without contact, sending 400...");
+        console.log("WARNING: New PUT request to /price-stats/ without stats, sending 400...");
         response.sendStatus(400); // bad request
     } else {
         console.log("INFO: New PUT request to /price-stats/" + province + " with data " + JSON.stringify(updated, 2, null));
         if (!updated.province || !updated.year) {
-            console.log("WARNING: The contact " + JSON.stringify(updated, 2, null) + " is not well-formed, sending 422...");
+            console.log("WARNING: The stat " + JSON.stringify(updated, 2, null) + " is not well-formed, sending 422...");
             response.sendStatus(422); // unprocessable entity
         } else {
             dbLuis.find({
                 province: province,
                 $and: [{
                     year: year
-                }]            
-            }, function (err, contacts) {
+                }]
+            }).toArray(function(err, sArea) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
-                } else {
-                    var contactsBeforeInsertion = contacts.filter((contact) => {
-                        return (contact.name.localeCompare(province, "en", {'sensitivity': 'base'}) === 0);
-                    });
-                    if (contactsBeforeInsertion.length > 0) {
-                        dbLuis.update({name: province}, updated);
-                        console.log("INFO: Modifying price-stat with name " +province + " with data " + JSON.stringify(updated, 2, null));
+                }
+                else {
+                    if (sArea.length > 0) {
+                        dbAlberto.update({
+                            province: province,
+                            year: year
+                        }, updated);
+                        console.log("INFO: Modifying stat " + province + "/"+year+" with data " + JSON.stringify(updated, 2, null));
                         response.send(updated); // return the updated contact
-                    } else {
-                        console.log("WARNING: There are not any price-stat with name " + province);
+                    }
+                    else {
+                        console.log("WARNING: There are not any stats with provinc " + province);
                         response.sendStatus(404); // not found
                     }
                 }
