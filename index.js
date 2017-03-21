@@ -397,7 +397,8 @@ app.get(BASE_API_PATH + "/price-stats", function (request, response) {
 
 
 
-// GET a un año
+// GET a una provincia
+/*
 app.get(BASE_API_PATH + "/price-stats/:province", function (request, response) {
     var province = request.params.province;
     if (!province) {
@@ -419,6 +420,36 @@ app.get(BASE_API_PATH + "/price-stats/:province", function (request, response) {
                     response.send(m);
                 } else {
                     console.log("WARNING: There are not any " + province);
+                    response.sendStatus(404); // not found
+                }
+            }
+        });
+    }
+});*/
+app.get(BASE_API_PATH + "/price-stats/:province", function(request, response) {
+    var province = request.params.province;
+
+    if (!province) {
+        console.log("WARNING: New GET request to /export-and-import-stats/:name without name, sending 400...");
+        response.sendStatus(400); // bad request
+    }
+    else {
+        console.log("INFO: New GET request to /export-and-import-stats/" + province);
+        dbLuis.find({
+            province: province
+        }).toArray(function(err, sArea) {
+            if (err) {
+                console.error('WARNING: Error getting data from DB');
+                response.sendStatus(500); // internal server error
+            }
+            else {
+                if (sArea.length > 0) {
+                    var a = sArea[0];
+                    console.log("INFO: Sending stats: " + JSON.stringify(sArea, 2, null));
+                    response.send(a);
+                }
+                else {
+                    console.log("WARNING: There are not any area stats with name " + province);
                     response.sendStatus(404); // not found
                 }
             }
