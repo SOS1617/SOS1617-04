@@ -493,9 +493,7 @@ app.put(BASE_API_PATH + "/price-stats/:province/:year", function (request, respo
         } else {
             dbLuis.find({
                 province: province,
-                $and: [{
-                    year: year
-                }]
+                year: year
             }).toArray(function(err, sArea) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
@@ -523,45 +521,55 @@ app.put(BASE_API_PATH + "/price-stats/:province/:year", function (request, respo
 
 // H) DELETE a la ruta base (p.e. “/price-stats”) borra todos los recursos
 app.delete(BASE_API_PATH + "/price-stats", function (request, response) {
-    console.log("INFO: New DELETE request to /price-stats");
-    dbLuis.remove({}, {multi: true}, function (err, numRemoved) {
+        console.log("INFO: New DELETE request to /export-and-import-stats");
+    dbLuis.remove({}, {
+        multi: true
+    }, function(err, numRemoved) {
         if (err) {
             console.error('WARNING: Error removing data from DB');
             response.sendStatus(500); // internal server error
-        } else {
+        }
+        else {
             if (numRemoved > 0) {
-                console.log("INFO: All the price-stats (" + numRemoved + ") have been succesfully deleted, sending 204...");
+                console.log("INFO: All the stats (" + numRemoved + ") have been succesfully deleted, sending 204...");
                 response.sendStatus(204); // no content
-            } else {
-                console.log("WARNING: There are no stats to delete");
+            }
+            else {
+                console.log("WARNING: There are no contacts to delete");
                 response.sendStatus(404); // not found
             }
         }
     });
 });
 
-// D) DELETE a un recurso (p.e. “/price-stats/Sevilla”) borra ese recurso
+
+// D) DELETE a un recurso (p.e. “/price-stats/Sevilla/2016”) borra ese recurso
 app.delete(BASE_API_PATH + "/price-stats/:province/:year", function (request, response) {
     var province = request.params.province;
     var year = request.params.year;
+
     if (!province || !year) {
-        console.log("WARNING: New DELETE request to /area-and-production-stats/:name without name, sending 400...");
+        console.log("WARNING: New DELETE request to /export-and-import-stats/:name without name, sending 400...");
         response.sendStatus(400); // bad request
-    } else {
-        console.log("INFO: New DELETE request to /price-stats/" + province + "/" + year);
+    }
+    else {
+         console.log("INFO: New DELETE request to /export-and-import-stats");
         dbLuis.remove({
             province: province,
             year: year
-        }, {}, function (err, numRemoved) {
+        }, {
+            multi: true
+        }, function(err, numRemoved) {
             if (err) {
                 console.error('WARNING: Error removing data from DB');
                 response.sendStatus(500); // internal server error
-            } else {
-                console.log("INFO: Price-stats removed: " + numRemoved);
-                if (numRemoved === 1) {
-                    console.log("INFO: " + province + "/" + year + " has been succesfully deleted, sending 204...");
+            }
+            else {
+                if (numRemoved > 0) {
+                    console.log("INFO: All the stats (" + numRemoved + ") have been succesfully deleted, sending 204...");
                     response.sendStatus(204); // no content
-                } else {
+                }
+                else {
                     console.log("WARNING: There are no contacts to delete");
                     response.sendStatus(404); // not found
                 }

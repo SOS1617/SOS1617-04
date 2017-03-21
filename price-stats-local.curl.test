@@ -1,17 +1,19 @@
+curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/price-stats/loadInitialData'
+
 A) GET a la ruta base (p.e. “/price-stats”) devuelve una lista con todos los recursos
 curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/price-stats'
 
 B) POST a la ruta base (p.e. “/price-stats”) crea un nuevo recurso
-curl -v -XPOST -H 'Content-type: application/json' -d '{ "province": "Sevilla", "year": "2016", "priceaceite": "3.416", "priceextra\": 3.71, \"pricevirgen\": 3.42 }' 'http://localhost:8080/api/v1/price-stats'
+curl - v - XPOST - H 'Content-type: application/json' - d '{ \"province\": \"Huelva\", \"year\": \"2016\", \"priceaceite\": \"3.416\", \"priceextra\": \"3.7\"1, \"pricevirgen\": \"3.42\" }' 'http://localhost:8080/api/v1/price-stats'
 
 C) GET a un recurso (p.e. “/price-stats/Sevilla”) devuelve ese recurso 
 curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/price-stats/Sevilla'
 
-D) DELETE a un recurso (p.e. “/price-stats/Sevilla”) borra ese recurso
-curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api/v1/price-stats/Sevilla'
+D) DELETE a un recurso (p.e. “/price-stats/Sevilla/2016”) borra ese recurso
+curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api/v1/price-stats/Sevilla/2016'
 
 E) PUT a un recurso (p.e. “/price-stats/Sevilla”) actualiza ese recurso 
-curl -v -XPUT -H 'Content-type: application/json' -d '{ "province": "Sevilla", "year": "2016", "priceaceite": "3.416", "priceextra\": 3.71, \"pricevirgen\": 3.42}' 'http://localhost:8080/api/v1/price-stats/2015'
+curl -v -XPUT -H 'Content-type: application/json' -d '{ \"province\": \"Sevilla\", \"year\": \"2017\", "priceaceite\": 3.416, \"priceextra\": 3.71, \"pricevirgen\": 3.42 }' 'http://localhost:8080/api/v1/price-stats/2015'
 
 f) POST a un recurso (p.e. “/price-stats/Sevilla”) debe dar un error de método no permitido.
 curl -v -XPOST -H 'Content-type: application/json' -d '{ "province": "Sevilla", "year": "2016", "priceaceite": "3.416", "priceextra\": 3.71, \"pricevirgen\": 3.42 }' 'http://localhost:8080/api/v1/price-stats/2015'
