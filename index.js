@@ -5,6 +5,8 @@ var path = require('path');
 
 
 var app = express();
+var folder = path.join(__dirname, '/public');
+
 
 var MongoClient = require('mongodb').MongoClient;
 var mURL = "mongodb://test:test@ds137370.mlab.com:37370/sandbox";
@@ -13,13 +15,19 @@ var mURL = "mongodb://test:test@ds137370.mlab.com:37370/sandbox";
 var port = (process.env.PORT || 10000);
 var BASE_API_PATH = "/api/v1";
 
-var moduleExport=require("./module/exportModule.js");
+var moduleExport = require("./module/exportModule.js");
 
 var dbAlberto;
 var dbLuis;
 var dbAdrian;
+app.use("/", express.static(path.join(__dirname, "public")));
+
 app.use(bodyParser.json()); //use default json enconding/decoding
 app.use(helmet()); //improve security
+
+app.get('/test', function(req, res) {
+    res.sendFile(path.join(__dirname + '/public/test.html'));
+});
 
 MongoClient.connect(mURL, {
     native_parser: true
@@ -32,8 +40,8 @@ MongoClient.connect(mURL, {
     dbAlberto = database.collection("exports");
     dbLuis = database.collection("prices");
     dbAdrian = database.collection("area");
-    
-    moduleExport.register(app,dbAlberto,BASE_API_PATH);
+
+    moduleExport.register(app, dbAlberto, BASE_API_PATH);
 
 
     app.listen(port, () => {
@@ -42,6 +50,9 @@ MongoClient.connect(mURL, {
 
     });
 });
+
+
+
 
 /*
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
