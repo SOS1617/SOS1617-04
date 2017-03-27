@@ -8,6 +8,9 @@ curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1
 -----GET a un recurso (p.e. “/price-stats/sevilla/2013”)
 curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/export-and-import/jaen/2013'
 
+-----GET a un recurso (p.e. “/price-stats/2013”)
+curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/export-and-import/2013'
+
 -----POST a la ruta base (p.e. “/export-and-import”) crea un nuevo recurso
 curl -XPOST -H "Content-type: application/json" -d '{ "province": "sevilla", "year": "2013", "oil": "300.7","importS": "57.6", "exportS": "57.6"}' 'http://localhost:8080/api/v1/export-and-import'       
 
