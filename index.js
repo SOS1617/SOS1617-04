@@ -31,7 +31,7 @@ app.use(helmet()); //improve security
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/public/index.html'));
 });
-app.get(BASE_API_PATH+'/test', function(req, res) {
+app.get(BASE_API_PATH+'/tests', function(req, res) {
     res.sendFile(path.join(__dirname + '/public/test.html'));
 });
 
