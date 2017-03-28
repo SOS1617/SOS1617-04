@@ -150,8 +150,8 @@
        response.sendStatus(500); // internal server error
       }
       else {
-       var sExportBefore = sExport.filter((contact) => {
-        return (sExport.province.localeCompare(newStats.name, "en", {
+       var sExportBefore = sExport.filter((result) => {
+        return (result.province.localeCompare(newStats.province, "en", {
          'sensitivity': 'base'
         }) === 0);
        });

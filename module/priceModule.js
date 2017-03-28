@@ -102,8 +102,8 @@ exports.register = function(app, dbLuis, BASE_API_PATH) {
                         response.sendStatus(500); // internal server error
                     }
                     else {
-                        var contactsBeforeInsertion = price.filter((price) => {
-                            return (price.province.localeCompare(newPrice.province, "en", {
+                        var contactsBeforeInsertion = price.filter((result) => {
+                            return (result.province.localeCompare(newPrice.province, "en", {
                                 'sensitivity': 'base'
                             }) === 0);
                         });
