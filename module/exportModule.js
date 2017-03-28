@@ -2,7 +2,7 @@
 
  exports.register = function(app, dbAlberto, BASE_API_PATH) {
 
- 
+
 
 
 
@@ -247,8 +247,7 @@
     }
     else {
      var n = doc.result.n;
-     console.log("INFO: Stats removed: " + n);
-     if (doc.result.n !== 0) {
+     if (n !== 0) {
       console.log("INFO: Remove: " + n + " stats, sending 204...");
       response.sendStatus(204); // no content
      }
@@ -282,7 +281,6 @@
      }
      else {
       var n = doc.result.n;
-      console.log("INFO: Stats removed: " + n);
       if (n !== 0) {
        console.log("INFO: The stat with name " + province + " and year " + year + " has been succesfully deleted, sending 204...");
        response.sendStatus(204); // no content
