@@ -5,6 +5,7 @@ var path = require('path');
 
 
 var app = express();
+var folder = path.join(__dirname, '/public');
 
 
 var MongoClient = require('mongodb').MongoClient;
@@ -14,11 +15,25 @@ var mURL = "mongodb://test:test@ds137370.mlab.com:37370/sandbox";
 var port = (process.env.PORT || 10000);
 var BASE_API_PATH = "/api/v1";
 
+var moduleExport = require("./module/exportModule.js");
+var modulePrice = require("./module/priceModule.js");
+var moduleArea = require("./module/areaModule.js");
+
+
 var dbAlberto;
 var dbLuis;
 var dbAdrian;
+app.use("/", express.static(path.join(__dirname, "public")));
+
 app.use(bodyParser.json()); //use default json enconding/decoding
 app.use(helmet()); //improve security
+
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname + '/public/index.html'));
+});
+app.get('/test', function(req, res) {
+    res.sendFile(path.join(__dirname + '/public/test.html'));
+});
 
 MongoClient.connect(mURL, {
     native_parser: true
@@ -32,6 +47,7 @@ MongoClient.connect(mURL, {
     dbLuis = database.collection("prices");
     dbAdrian = database.collection("area");
 
+<<<<<<< HEAD
 
     app.listen(port, () => {
         console.log("Magic is happening on port " + port);
@@ -637,242 +653,18 @@ app.get(BASE_API_PATH + "/area-and-production", function(request, response) {
         }
     });
 });
-
-
-// GET a single resource
-
-app.get(BASE_API_PATH + "/area-and-production/:province", function(request, response) {
-    var province = request.params.province;
-
-    if (!province) {
-        console.log("WARNING: New GET request to /export-and-import-stats/:name without name, sending 400...");
-        response.sendStatus(400); // bad request
-    }
-    else {
-        console.log("INFO: New GET request to /export-and-import-stats/" + province);
-        dbAdrian.find({
-            province: province
-        }).toArray(function(err, sArea) {
-            if (err) {
-                console.error('WARNING: Error getting data from DB');
-                response.sendStatus(500); // internal server error
-            }
-            else {
-                if (sArea.length > 0) {
-                    var a = sArea[0];
-                    console.log("INFO: Sending stats: " + JSON.stringify(sArea, 2, null));
-                    response.send(a);
-                }
-                else {
-                    console.log("WARNING: There are not any area stats with name " + province);
-                    response.sendStatus(404); // not found
-                }
-            }
-        });
-    }
-});
+=======
+    moduleExport.register(app, dbAlberto, BASE_API_PATH);
+    modulePrice.register(app, dbLuis, BASE_API_PATH);
+    moduleArea.register(app, dbAdrian, BASE_API_PATH);
+>>>>>>> bfeb14dd3b7b331963cdb88e3ebb1e79e4637101
 
 
 
 
-
-//GET all stats of one year
-app.get(BASE_API_PATH + "/area-and-production/:province/:year", function(request, response) {
-    var province = request.params.province;
-    var year = request.params.year;
-    if (!province) {
-        console.log("WARNING: New GET request to /area-and-production/ without province, sending 400...");
-        response.sendStatus(400); // bad request
-    }
-    else {
-        console.log("INFO: New GET request to /area-and-production/" + province);
-        dbAdrian.find({
-            province: province,
-            year: year
-        }).toArray(function(err, sArea) {
-            if (err) {
-                console.error('WARNING: Error getting data from DB');
-                response.sendStatus(500); // internal server error
-            }
-            else {
-                if (sArea.length > 0) {
-                    console.log("INFO: Sending stats: " + JSON.stringify(sArea, 2, null));
-                    response.send(sArea);
-                }
-                else {
-                    console.log("WARNING: There are not any area stats with name " + province + " and " + year);
-                    response.sendStatus(404); // not found
-                }
-            }
-        });
-    }
-});
+    app.listen(port, () => {
+        console.log("Magic is happening on port " + port);
 
 
-
-
-//POST over a collection
-app.post(BASE_API_PATH + "/area-and-production", function(request, response) {
-    var newStats = request.body;
-    if (!newStats) {
-        console.log("WARNING: New POST request to /area-and-production without stats, sending 400...");
-        response.sendStatus(400); // bad request
-    }
-    else {
-        console.log("INFO: New POST request to /area-and-production with body: " + JSON.stringify(newStats, 2, null));
-        if (!newStats.province || !newStats.year  || !newStats.productionS || !newStats.areaS) {
-            console.log("WARNING: The stat " + JSON.stringify(newStats, 2, null) + " is not well-formed, sending 422...");
-            response.sendStatus(422); // unprocessable entity
-        }
-        else {
-            dbAdrian.find({
-                province: newStats.province,
-                year: newStats.year
-            }).toArray(function(err, sExport) {
-                if (err) {
-                    console.error('WARNING: Error getting data from DB');
-                    response.sendStatus(500); // internal server error
-                }
-                else {
-                    var sExportBefore = sExport.filter((province) => {
-                        return (sExport.province.localeCompare(newStats.name, "en", {
-                            'sensitivity': 'base'
-                        }) === 0);
-                    });
-                    if (sExportBefore.length > 0) {
-                        console.log("WARNING: The contact " + JSON.stringify(newStats, 2, null) + " already extis, sending 409...");
-                        response.sendStatus(409); // conflict
-                    }
-                    else {
-                        console.log("INFO: Adding contact " + JSON.stringify(newStats, 2, null));
-                        dbAdrian.insert(newStats);
-                        response.sendStatus(201); // created
-                    }
-                }
-            });
-        }
-    }
-});
-
-
-//POST over a single resource
-app.post(BASE_API_PATH + "/area-and-production/:province/:year", function(request, response) {
-    var province = request.params.province;
-    var year = request.params.year;
-
-    console.log("WARNING: New POST request to /area-and-production-stats/" + province + " and " + year + ", sending 405...");
-    response.sendStatus(405); // method not allowed
-});
-
-
-//PUT over a collection
-app.put(BASE_API_PATH + "/area-and-production", function(request, response) {
-    console.log("WARNING: New PUT request to /area-and-production-stats, sending 405...");
-    response.sendStatus(405); // method not allowed
-});
-
-
-//PUT over a single resource
-app.put(BASE_API_PATH + "/area-and-production/:province/:year", function(request, response) {
-    var updateArea = request.body;
-    var province = request.params.province;
-    var year = request.params.year;
-
-    if (!updateArea) {
-        console.log("WARNING: New PUT request to /area-and-production-stats/ without contact, sending 400...");
-        response.sendStatus(400); // bad request
-    }
-    else {
-        console.log("INFO: New PUT request to /area-and-production-stats/" + province + " with data " + JSON.stringify(updateArea, 2, null));
-        if (!updateArea.province || !updateArea.year ||  !updateArea.productionS  || !updateArea.areaS) {
-            console.log("WARNING: The contact " + JSON.stringify(updateArea, 2, null) + " is not well-formed, sending 422...");
-            response.sendStatus(422); // unprocessable entity
-        }
-        else {
-            dbAdrian.find({
-                province: province,
-                $and: [{
-                    year: year
-                }]
-            }).toArray(function(err, sArea) {
-                if (err) {
-                    console.error('WARNING: Error getting data from DB');
-                    response.sendStatus(500); // internal server error
-                }
-                else {
-                    if (sArea.length > 0) {
-                        dbAdrian.update({
-                            province: province,
-                            year: year
-                        }, updateArea);
-                        console.log("INFO: Modifying contact with name " + province + " with data " + JSON.stringify(updateArea, 2, null));
-                        response.send(updateArea); // return the updated contact
-                    }
-                    else {
-                        console.log("WARNING: There are not any stats with province " + province);
-                        response.sendStatus(404); // not found
-                    }
-                }
-            });
-        }
-    }
-});
-
-
-//DELETE over a collection
-app.delete(BASE_API_PATH + "/area-and-production", function(request, response) {
-    console.log("INFO: New DELETE request to /area-and-production-stats");
-    dbAdrian.remove({}, {
-        multi: true
-    }, function(err, numRemoved) {
-        if (err) {
-            console.error('WARNING: Error removing data from DB');
-            response.sendStatus(500); // internal server error
-        }
-        else {
-            if (numRemoved > 0) {
-                console.log("INFO: All the stats (" + numRemoved + ") have been succesfully deleted, sending 204...");
-                response.sendStatus(204); // no content
-            }
-            else {
-                console.log("WARNING: There are no stats to delete");
-                response.sendStatus(404); // not found
-            }
-        }
     });
-});
-
-
-//DELETE over a single resource
-app.delete(BASE_API_PATH + "/area-and-production/:province/:year", function(request, response) {
-    var province = request.params.province;
-    var year = request.params.year;
-
-    if (!province || !year) {
-        console.log("WARNING: New DELETE request to /area-and-production-stats/:name without name, sending 400...");
-        response.sendStatus(400); // bad request
-    }
-    else {
-        console.log("INFO: New DELETE request to /area-and-production-stats/" + province + " and " + year);
-        dbAdrian.remove({
-            province: province,
-            year: year
-        }, {}, function(err, numRemoved) {
-            if (err) {
-                console.error('WARNING: Error removing data from DB');
-                response.sendStatus(500); // internal server error
-            }
-            else {
-                console.log("INFO: Stats removed: " + numRemoved);
-                if (numRemoved === 1) {
-                    console.log("INFO: The state with name " + province + "and year " + year + " has been succesfully deleted, sending 204...");
-                    response.sendStatus(204); // no content
-                }
-                else {
-                    console.log("WARNING: There are no contacts to delete");
-                    response.sendStatus(404); // not found
-                }
-            }
-        });
-    }
 });
