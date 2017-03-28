@@ -444,6 +444,7 @@ app.get(BASE_API_PATH + "/price-stats/:province/:year", function(request, respon
     }
 });
 
+
 // B) POST a la ruta base (p.e. “/price-stats”) crea un nuevo recurso
 app.post(BASE_API_PATH + "/price-stats", function (request, response) {
     var newPrice = request.body;
