@@ -142,7 +142,7 @@ exports.register = function(app, dbLuis, BASE_API_PATH) {
         var updated = request.body;
         var province = request.params.province;
         var year = request.params.year;
-        if (!updated || (updated.province != province && updated.year != year)) {
+        if (!updated || updated.province != province || updated.year != year) {
             console.log("WARNING: New PUT request to /price-stats/ without stats, sending 400...");
             response.sendStatus(400); // bad request
         }
