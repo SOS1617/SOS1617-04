@@ -31,6 +31,56 @@ exports.register = function(app, dbLuis, BASE_API_PATH) {
                             console.log('INFO: DB has ' + price.length + ' objects ');
                             res.sendStatus(200);
                         }
+                    }
+                });
+            }
+        }
+    });
+
+    // f) POST a un recurso (p.e. “/price-stats/Sevilla”) debe dar un error de método no permitido.
+    app.post(BASE_API_PATH + "/price-stats/:province/:year", function(request, response) {
+        var province = request.params.province;
+        var year = request.params.year;
+        console.log("WARNING: New POST request to /price-stats/" + province + ", sending 405...");
+        response.sendStatus(405); // method not allowed
+    });
+
+    // G) PUT a la ruta base (p.e. “/price-stats”) debe dar un error de método no permitido.
+    app.put(BASE_API_PATH + "/price-stats", function(request, response) {
+        console.log("WARNING: New PUT request to /price-stats, sending 405...");
+        response.sendStatus(405); // method not allowed
+    });
+
+
+    // E) PUT a un recurso (p.e. “/price-stats/Sevilla”) actualiza ese recurso 
+    app.put(BASE_API_PATH + "/price-stats/:province/:year", function(request, response) {
+        var updated = request.body;
+        var province = request.params.province;
+        var year = request.params.year;
+        if (!updated || updated.province != province || updated.year != year) {
+            console.log("WARNING: New PUT request to /price-stats/ without stats, sending 400...");
+            response.sendStatus(400); // bad request
+        }
+        else {
+            console.log("INFO: New PUT request to /price-stats/" + province + " with data " + JSON.stringify(updated, 2, null));
+            if (!updated.province || !updated.year || !updated.priceaceite || !updated.priceextra || !updated.pricevirgen) {
+                console.log("WARNING: The stat " + JSON.stringify(updated, 2, null) + " is not well-formed, sending 422...");
+                response.sendStatus(422); // unprocessable entity
+            }
+            else {
+                dbLuis.find({
+                    province: province,
+                    $and: [{
+                        year: year
+                    }]
+                }).toArray(function(err, sPrice) {
+                    if (err) {
+                        console.error('WARNING: Error getting data from DB');
+                        response.sendStatus(500); // internal server error
+                    }
+                    else {
+                        if (sPrice.length > 0) {
+                            dbLuis.update({
                     });
 
                     // Base GET
