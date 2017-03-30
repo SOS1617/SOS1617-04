@@ -27,7 +27,8 @@ exports.register = function(app, dbAdrian, BASE_API_PATH) {
                 res.sendStatus(201);
             }
             else {
-                console.log("DB not empty");
+                console.log('INFO: DB has ' + stats.length + ' objects ');
+                res.sendStatus(200);
             }
         });
     });
@@ -274,7 +275,7 @@ exports.register = function(app, dbAdrian, BASE_API_PATH) {
                     response.sendStatus(500); // internal server error
                 }
                 else {
-                          var n = numRemoved.result.n;
+                    var n = numRemoved.result.n;
 
                     if (n === 1) {
                         console.log("INFO: The state with name " + province + "and year " + year + " has been succesfully deleted, sending 204...");

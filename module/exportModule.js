@@ -33,8 +33,10 @@
      res.sendStatus(201, BASE_API_PATH + "/");
     }
     else {
-     console.log("DB not empty")
-    }
+         console.log('INFO: DB has ' + stats.length + ' objects ');
+         res.sendStatus(200); 
+
+     }
    });
   });
 
