@@ -7,11 +7,9 @@
     "deploy": "git add . ; git commit -m 'deploy to heroku' ; git push heroku"
   },
   "dependencies": {
-    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "helmet": "^3.5.0",
-    "jsonwebtoken": "^7.3.0",
     "mongodb": "^2.2.25"
   },
   "repository": {
