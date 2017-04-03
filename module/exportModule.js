@@ -1,6 +1,48 @@
- var exports = module.exports = {};
+var exports = module.exports = {};
+
+
 
  exports.register = function(app, dbAlberto, BASE_API_PATH) {
+
+
+
+  // GET a collection and Search
+  app.get(BASE_API_PATH + "/export-and-import/", function(request, response) {
+   var url = request.query;
+   var province = url.province;
+   var year = url.year;
+   var importS = url.importS;
+   var exportS = url.exportS
+   var ose=0;
+   var limite=5;
+   if(url.limit!=undefined){
+     limite=parseInt(url.limit);
+     ose=parseInt(url.offset);
+   }
+   console.log(limite);
+   dbAlberto.find({}).skip(ose).limit(limite).toArray(function(err, sExport) {
+    if (err) {
+     console.error('WARNING: Error getting data from DB');
+     response.sendStatus(500); // internal server error
+    }
+    else {
+     var filted = sExport.filter((stat) => {
+      if ((province == undefined || stat.province == province) && (year == undefined || stat.year == year) && (importS == undefined || stat.importS == importS) && (exportS == undefined || stat.exportS == exportS)) {
+       return stat;
+      }
+     });
+     if (filted.length > 0) {
+      console.log("INFO: Sending stat: " + JSON.stringify(filted, 2, null));
+      response.send(filted);
+     }
+     else {
+      console.log("WARNING: There are not any contact with this properties");
+      response.sendStatus(404); // not found
+     }
+    }
+   })  ;
+
+  });
 
 
 
@@ -21,6 +63,12 @@
       "importS": "802",
       "exportS": "274"
      }, {
+      "province": "jaen",
+      "year": "2014",
+      "oil": "457",
+      "importS": "802",
+      "exportS": "124"
+     }, {
       "province": "huelva",
       "year": "2013",
       "oil": "385",
@@ -33,28 +81,32 @@
      res.sendStatus(201, BASE_API_PATH + "/");
     }
     else {
-     console.log("DB not empty")
+     console.log('INFO: DB has ' + stats.length + ' objects ');
+     res.sendStatus(200);
+
     }
    });
   });
 
-
+/*
   // GET a collection
-  app.get(BASE_API_PATH + "/export-and-import", function(request, response) {
-   console.log("INFO: New GET request to /export-and-import");
-   dbAlberto.find({}).toArray(function(err, sExport) {
-    if (err) {
-     console.error('WARNING: Error getting data from DB');
-     response.sendStatus(500); // internal server error
-    }
-    else {
-     console.log("INFO: Sending export and import stats: " + JSON.stringify(sExport, 2, null));
-     response.send(sExport);
-    }
-   });
-  });
+   app.get(BASE_API_PATH + "/export-and-import", function(request, response) {
+     console.log("INFO: New GET request to /export-and-import");
+     dbAlberto.find({}).toArray(function(err, sExport) {
+      if (err) {
+       console.error('WARNING: Error getting data from DB');
+       response.sendStatus(500); // internal server error
+      }
+      else {
+       console.log("INFO: Sending export and import stats: " + JSON.stringify(sExport, 2, null));
+       response.send(sExport);
+      }
+     });
+    });
 
-
+  */
+  
+  
   // GET a single resource
 
   app.get(BASE_API_PATH + "/export-and-import/:province", function(request, response) {
@@ -200,7 +252,7 @@
    }
    else {
     console.log("INFO: New PUT request to /export-and-import-stats/" + province + " with data " + JSON.stringify(updateExp, 2, null));
-    if (!updateExp.province || !updateExp.year || !updateExp.oil || !updateExp.importS || !updateExp.exportS) {
+    if (!updateExp.province || !updateExp.year || !updateExp.oil || !updateExp.importS || !updateExp.exportS || updateExp.province !== province || updateExp.year !== year) {
      console.log("WARNING: The contact " + JSON.stringify(updateExp, 2, null) + " is not well-formed, sending 422...");
      response.sendStatus(422); // unprocessable entity
     }
