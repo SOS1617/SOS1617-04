@@ -31,8 +31,16 @@ exports.register = function(app, dbLuis, BASE_API_PATH) {
 
     // A) GET a la ruta base (p.e. “/price-stats”) devuelve una lista con todos los recursos
     app.get(BASE_API_PATH + "/price-stats", function(request, response) {
+        var url = request.query;
+        var ose=0;
+        var limite=5;
+        if(url.limit!=undefined){
+            limite=parseInt(url.limit);
+            ose=parseInt(url.offset);
+        }
+        console.log("INFO: limit = "+limite);
         console.log("INFO: New GET request to /price-stats");
-        dbLuis.find({}).toArray(function(err, price) {
+        dbLuis.find({}).skip(ose).limit(limite).toArray(function(err, price) {
             if (err) {
                 console.error('WARNING: Error getting data from DB');
                 response.sendStatus(500); // internal server error
