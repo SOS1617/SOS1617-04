@@ -204,7 +204,7 @@ exports.register = function(app, dbLuis, BASE_API_PATH) {
             else {
                 var n = numRemoved.result.n;
 
-                if (numRemoved.result.n > 0) {
+                if (n !== 0) {
                     console.log("INFO: Remove: " + n + " stats, sending 204...");
                     response.sendStatus(204); // no content
                 }
