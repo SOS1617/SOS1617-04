@@ -2,6 +2,8 @@ var exports = module.exports = {};
 
 exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
 
+// Authentication apikey=12345
+
  var key = function(request, callback) {
   var d;
   dbUser.find({
