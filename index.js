@@ -20,10 +20,17 @@ var modulePrice = require("./module/priceModule.js");
 var moduleArea = require("./module/areaModule.js");
 
 
+
+
 var dbAlberto;
 var dbLuis;
 var dbAdrian;
+
+var dbUser;
+
+
 app.use("/", express.static(path.join(__dirname, "public")));
+
 
 app.use(bodyParser.json()); //use default json enconding/decoding
 app.use(helmet()); //improve security
@@ -31,7 +38,7 @@ app.use(helmet()); //improve security
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/public/index.html'));
 });
-app.get(BASE_API_PATH+'/tests', function(req, res) {
+app.get(BASE_API_PATH + '/tests', function(req, res) {
     res.sendFile(path.join(__dirname + '/public/test.html'));
 });
 
@@ -47,12 +54,13 @@ MongoClient.connect(mURL, {
     dbLuis = database.collection("prices");
     dbAdrian = database.collection("area");
 
-    moduleExport.register(app, dbAlberto, BASE_API_PATH);
+    dbUser = database.collection("user");
+
+
+    moduleExport.register(app, dbAlberto, dbUser, BASE_API_PATH);
     modulePrice.register(app, dbLuis, BASE_API_PATH);
     moduleArea.register(app, dbAdrian, BASE_API_PATH);
-
-
-
+    
 
     app.listen(port, () => {
         console.log("Magic is happening on port " + port);
