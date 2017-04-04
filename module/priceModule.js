@@ -9,8 +9,8 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
         var d;
         dbUser.find({
             apikey: request
-        }).toArray(function(err, sExport) {
-            if (sExport.length > 0) {
+        }).toArray(function(err, sPrice) {
+            if (sPrice.length > 0) {
                 d = 1;
             } else {
                 d = 0;
@@ -26,9 +26,10 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
     {
         //
         var res = request.query.apikey;
-        var resul = key(res, function(d) {
-            if (d > 0) {
-                
+        var resul = key(res, function(d) 
+        {
+            if (d > 0) 
+            {
                 //
                 console.log("INFO: Creando datos");
                 var datos = [{
@@ -83,8 +84,8 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
         var resul = key(res, function(d) {
             if (d > 0) {
                 if(url.limit!=undefined){
-                    limite=parseInt(url.limit);
-                    ose=parseInt(url.offset);
+                    limite = parseInt(url.limit);
+                    ose = parseInt(url.offset);
                 }
                 console.log("INFO: limit = "+limite);
                 console.log("INFO: New GET request to /price-stats");
@@ -401,3 +402,5 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
     });
     
 }
+
+console.log("priceModule.js OK");
