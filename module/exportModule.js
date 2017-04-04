@@ -30,16 +30,16 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
   var year = url.year;
   var importS = url.importS;
   var exportS = url.exportS;
-  var ose = 0;
+  var off = 0;
   var limite = 5;
   var res = request.query.apikey;
   var resul = key(res, function(d) {
    if (d > 0) {
     if (url.limit != undefined) {
      limite = parseInt(url.limit);
-     ose = parseInt(url.offset);
+     off = parseInt(url.offset);
     }
-    dbAlberto.find({}).skip(ose).limit(limite).toArray(function(err, sExport) {
+    dbAlberto.find({}).skip(off).limit(limite).toArray(function(err, sExport) {
      if (err) {
       console.error('WARNING: Error getting data from DB');
       response.sendStatus(500); // internal server error
