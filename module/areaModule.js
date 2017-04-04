@@ -20,7 +20,7 @@ exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
 
  }
  // GET a collection and Search
- app.get(BASE_API_PATH + "/export-and-import", function(request, response) {
+ app.get(BASE_API_PATH + "/area-and-production", function(request, response) {
   var url = request.query;
   var province = url.province;
   var year = url.year;
