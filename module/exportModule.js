@@ -313,17 +313,16 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
     response.sendStatus(401);
    }
   });
-
+  });
 
   //PUT over a single resource
   app.put(BASE_API_PATH + "/export-and-import/:province/:year", function(request, response) {
    var updateExp = request.body;
    var province = request.params.province;
    var year = request.params.year;
-   var res = request.query.apikey;
+    var res = request.query.apikey;
   var resul = key(res, function(d) {
    if (d > 0) {
-
     if (!updateExp) {
      console.log("WARNING: New PUT request to /export-and-import-stats/ without contact, sending 400...");
      response.sendStatus(400); // bad request
@@ -447,5 +446,5 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
    }
   });
  });
-
-}
+ 
+ }
