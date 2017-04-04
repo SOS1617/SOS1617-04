@@ -1,8 +1,72 @@
 var exports = module.exports = {};
 
-exports.register = function(app, dbAdrian, BASE_API_PATH) {
+exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
 
-    app.get(BASE_API_PATH + "/area-and-production/loadInitialData", function(req, res) {
+// Authentication apikey=12345
+
+ var key = function(request, callback) {
+  var d;
+  dbUser.find({
+   apikey: request
+  }).toArray(function(err, sArea) {
+   if (sArea.length > 0) {
+    d = 1;
+   }
+   else {
+    d = 0;
+   }
+   callback(d);
+  });
+
+ }
+ // GET a collection and Search
+ app.get(BASE_API_PATH + "/export-and-import", function(request, response) {
+  var url = request.query;
+  var province = url.province;
+  var year = url.year;
+  var productionS = url.productionS;
+  var areaS = url.areaS;
+  var off = 0;
+  var limite = 5;
+  var res = request.query.apikey;
+  var resul = key(res, function(d) {
+   if (d > 0) {
+    if (url.limit != undefined) {
+     limite = parseInt(url.limit);
+     off = parseInt(url.offset);
+    }
+    dbAdrian.find({}).skip(off).limit(limite).toArray(function(err, sExport) {
+     if (err) {
+      console.error('WARNING: Error getting data from DB');
+      response.sendStatus(500); // internal server error
+     }
+     else {
+      var filted = sExport.filter((stat) => {
+       if ((province == undefined || stat.province == province) && (year == undefined || stat.year == year) && (productionS == undefined || stat.importS == productionS) && (areaS == undefined || stat.exportS == areaS)) {
+        return stat;
+       }
+      });
+      if (filted.length > 0) {
+       console.log("INFO: Sending stat: " + JSON.stringify(filted, 2, null));
+       response.send(filted);
+      }
+      else {
+       console.log("WARNING: There are not any contact with this properties");
+       response.sendStatus(404); // not found
+      }
+     }
+    });
+   }
+   else {
+    response.sendStatus(401);
+   }
+  });
+ });
+    
+    app.get(BASE_API_PATH + "/area-and-production/loadInitialData", function(request, response) {
+        var res = request.query.apikey;
+        var resul = key(res, function(d) {
+        if (d > 0) {
         dbAdrian.find({}).toArray(function(err, stats) {
             if (err) {
                 console.error('WARNING: Error while getting initial data from DB');
@@ -30,10 +94,15 @@ exports.register = function(app, dbAdrian, BASE_API_PATH) {
                 console.log('INFO: DB has ' + stats.length + ' objects ');
                 res.sendStatus(200);
             }
+            });    
+        }
+        else {
+            response.sendStatus(401);
+        }
         });
     });
 
-
+     /*
     // GET a collection
     app.get(BASE_API_PATH + "/area-and-production", function(request, response) {
         console.log("INFO: New GET request to /area-and-production");
@@ -48,13 +117,15 @@ exports.register = function(app, dbAdrian, BASE_API_PATH) {
             }
         });
     });
-
+    */
 
     // GET a single resource
 
     app.get(BASE_API_PATH + "/area-and-production/:province", function(request, response) {
         var province = request.params.province;
-
+        var res = request.query.apikey;
+        var resul = key(res, function(d) {
+        if (d > 0) {
         if (!province) {
             console.log("WARNING: New GET request to /export-and-import-stats/:name without name, sending 400...");
             response.sendStatus(400); // bad request
@@ -81,8 +152,12 @@ exports.register = function(app, dbAdrian, BASE_API_PATH) {
                 }
             });
         }
+        }
+        else {
+            response.sendStatus(401);
+        }
     });
-
+    });
 
 
 
@@ -91,6 +166,9 @@ exports.register = function(app, dbAdrian, BASE_API_PATH) {
     app.get(BASE_API_PATH + "/area-and-production/:province/:year", function(request, response) {
         var province = request.params.province;
         var year = request.params.year;
+        var res = request.query.apikey;
+        var resul = key(res, function(d) {
+            if (d > 0) {
         if (!province) {
             console.log("WARNING: New GET request to /area-and-production/ without province, sending 400...");
             response.sendStatus(400); // bad request
@@ -117,6 +195,11 @@ exports.register = function(app, dbAdrian, BASE_API_PATH) {
                 }
             });
         }
+            }
+        else {
+            response.sendStatus(401);
+    }
+    });
     });
 
 
@@ -125,6 +208,9 @@ exports.register = function(app, dbAdrian, BASE_API_PATH) {
     //POST over a collection
     app.post(BASE_API_PATH + "/area-and-production", function(request, response) {
         var newStats = request.body;
+        var res = request.query.apikey;
+        var resul = key(res, function(d) {
+            if (d > 0) {
         if (!newStats) {
             console.log("WARNING: New POST request to /area-and-production without stats, sending 400...");
             response.sendStatus(400); // bad request
@@ -163,6 +249,11 @@ exports.register = function(app, dbAdrian, BASE_API_PATH) {
                 });
             }
         }
+            }
+        else {
+                response.sendStatus(401);
+        }
+        });
     });
 
 
@@ -170,25 +261,40 @@ exports.register = function(app, dbAdrian, BASE_API_PATH) {
     app.post(BASE_API_PATH + "/area-and-production/:province/:year", function(request, response) {
         var province = request.params.province;
         var year = request.params.year;
-
+        var res = request.query.apikey;
+        var resul = key(res, function(d) {
+            if (d > 0) {
         console.log("WARNING: New POST request to /area-and-production-stats/" + province + " and " + year + ", sending 405...");
         response.sendStatus(405); // method not allowed
+            }
+        else {
+                response.sendStatus(401);
+        }
     });
-
+ });
 
     //PUT over a collection
     app.put(BASE_API_PATH + "/area-and-production", function(request, response) {
+        var res = request.query.apikey;
+        var resul = key(res, function(d) {
+        if (d > 0) {
         console.log("WARNING: New PUT request to /area-and-production-stats, sending 405...");
         response.sendStatus(405); // method not allowed
+        }
+        else {
+        response.sendStatus(401);
+     }
     });
-
+});
 
     //PUT over a single resource
     app.put(BASE_API_PATH + "/area-and-production/:province/:year", function(request, response) {
         var updateArea = request.body;
         var province = request.params.province;
         var year = request.params.year;
-
+        var res = request.query.apikey;
+        var resul = key(res, function(d) {
+        if (d > 0) {
         if (!updateArea || updateArea.province !== province || updateArea.year !== year) {
             console.log("WARNING: New PUT request to /area-and-production-stats/ without contact, sending 400...");
             response.sendStatus(400); // bad request
@@ -227,11 +333,18 @@ exports.register = function(app, dbAdrian, BASE_API_PATH) {
                 });
             }
         }
+        }
+        else {
+        response.sendStatus(401);
+    }
     });
-
+});
 
     //DELETE over a collection
     app.delete(BASE_API_PATH + "/area-and-production", function(request, response) {
+        var res = request.query.apikey;
+        var resul = key(res, function(d) {
+        if (d > 0) {
         console.log("INFO: New DELETE request to /area-and-production-stats");
         dbAdrian.remove({}, {
             multi: true
@@ -252,14 +365,20 @@ exports.register = function(app, dbAdrian, BASE_API_PATH) {
                 }
             }
         });
+        }
+        else {
+            response.sendStatus(401);
+   }
     });
-
+});
 
     //DELETE over a single resource
     app.delete(BASE_API_PATH + "/area-and-production/:province/:year", function(request, response) {
         var province = request.params.province;
         var year = request.params.year;
-
+        var res = request.query.apikey;
+        var resul = key(res, function(d) {
+        if (d > 0) {
         if (!province || !year) {
             console.log("WARNING: New DELETE request to /area-and-production-stats/:name without name, sending 400...");
             response.sendStatus(400); // bad request
@@ -288,5 +407,10 @@ exports.register = function(app, dbAdrian, BASE_API_PATH) {
                 }
             });
         }
+        }
+        else {
+        response.sendStatus(401);
+   }
+    });
     });
 }
