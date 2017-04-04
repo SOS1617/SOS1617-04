@@ -320,10 +320,9 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
    var updateExp = request.body;
    var province = request.params.province;
    var year = request.params.year;
-
-   if (auth(request)) {
-
-
+   var res = request.query.apikey;
+  var resul = key(res, function(d) {
+   if (d > 0) {
 
     if (!updateExp) {
      console.log("WARNING: New PUT request to /export-and-import-stats/ without contact, sending 400...");
