@@ -92,6 +92,8 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
     app.get(BASE_API_PATH + "/price-stats", function(request, response) 
     {
         var url = request.query;
+        var province = url.province;
+        var year = url.year;
         var ose=0;
         var limite=5;
         var res = request.query.apikey;
@@ -109,8 +111,21 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
                         response.sendStatus(500); // internal server error
                     }
                     else {
-                        console.log("INFO: Sending price-stats: " + JSON.stringify(price, 2, null));
-                        response.send(price);
+                        var filted = price.filter((stat) => {
+                            if ((province == undefined || stat.province == province) && (year == undefined || stat.year == year)) {
+                                return stat;
+                           }
+                        });
+                        if (filted.length > 0) {
+                           console.log("INFO: Sending stat: " + JSON.stringify(filted, 2, null));
+                           response.send(filted);
+                        } else {
+                            console.log("WARNING: There are not any contact with this properties");
+                            response.sendStatus(404); // not found
+                        }
+      
+                        //console.log("INFO: Sending price-stats: " + JSON.stringify(price, 2, null));
+                        //response.send(price);
                     }
                 });
             } else {
