@@ -59,9 +59,9 @@ exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
    }
    else {
        if(!request.query.apikey){
-           response.sendStatus(403);
+           response.sendStatus(401);
        }else{
-    response.sendStatus(401);
+           response.sendStatus(403);
        }
    }
   });
