@@ -2,7 +2,7 @@ var exports = module.exports = {};
 
 exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
 
-// Authentication apikey=12345
+ // Authentication apikey=12345
 
  var key = function(request, callback) {
   var d;
@@ -15,6 +15,7 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
    else {
     d = 0;
    }
+
    callback(d);
   });
 
@@ -62,7 +63,14 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
     });
    }
    else {
-    response.sendStatus(401);
+    if (!request.query.apikey) {
+     console.log("Err401: Login error.");
+     response.sendStatus(401);
+    }
+    else {
+     console.log("Err403: Login error.");
+     response.sendStatus(403);
+    }
    }
   });
  });
@@ -116,7 +124,15 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
 
    }
    else {
-    response.sendStatus(401);
+    if (!request.query.apikey) {
+     console.log("Err401: Login error.");
+     response.sendStatus(401);
+    }
+    else {
+     console.log("Err403: Login error.");
+     response.sendStatus(403);
+    }
+
    }
   });
  });
@@ -174,7 +190,14 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
 
    }
    else {
-    response.sendStatus(401);
+    if (!request.query.apikey) {
+     console.log("Err401: Login error.");
+     response.sendStatus(401);
+    }
+    else {
+     console.log("Err403: Login error.");
+     response.sendStatus(403);
+    }
    }
   });
  });
@@ -219,7 +242,14 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
 
    }
    else {
-    response.sendStatus(401);
+    if (!request.query.apikey) {
+     console.log("Err401: Login error.");
+     response.sendStatus(401);
+    }
+    else {
+     console.log("Err403: Login error.");
+     response.sendStatus(403);
+    }
    }
   });
  });
@@ -274,7 +304,14 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
 
    }
    else {
-    response.sendStatus(401);
+    if (!request.query.apikey) {
+     console.log("Err401: Login error.");
+     response.sendStatus(401);
+    }
+    else {
+     console.log("Err403: Login error.");
+     response.sendStatus(403);
+    }
    }
   });
  });
@@ -292,7 +329,14 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
 
    }
    else {
-    response.sendStatus(401);
+    if (!request.query.apikey) {
+     console.log("Err401: Login error.");
+     response.sendStatus(401);
+    }
+    else {
+     console.log("Err403: Login error.");
+     response.sendStatus(403);
+    }
    }
   });
  });
@@ -309,17 +353,24 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
 
    }
    else {
-    response.sendStatus(401);
+    if (!request.query.apikey) {
+     console.log("Err401: Login error.");
+     response.sendStatus(401);
+    }
+    else {
+     console.log("Err403: Login error.");
+     response.sendStatus(403);
+    }
    }
   });
-  });
+ });
 
-  //PUT over a single resource
-  app.put(BASE_API_PATH + "/export-and-import/:province/:year", function(request, response) {
-   var updateExp = request.body;
-   var province = request.params.province;
-   var year = request.params.year;
-    var res = request.query.apikey;
+ //PUT over a single resource
+ app.put(BASE_API_PATH + "/export-and-import/:province/:year", function(request, response) {
+  var updateExp = request.body;
+  var province = request.params.province;
+  var year = request.params.year;
+  var res = request.query.apikey;
   var resul = key(res, function(d) {
    if (d > 0) {
     if (!updateExp) {
@@ -363,7 +414,14 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
 
    }
    else {
-    response.sendStatus(401);
+    if (!request.query.apikey) {
+     console.log("Err401: Login error.");
+     response.sendStatus(401);
+    }
+    else {
+     console.log("Err403: Login error.");
+     response.sendStatus(403);
+    }
    }
   });
  });
@@ -398,7 +456,14 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
 
    }
    else {
-    response.sendStatus(401);
+    if (!request.query.apikey) {
+     console.log("Err401: Login error.");
+     response.sendStatus(401);
+    }
+    else {
+     console.log("Err403: Login error.");
+     response.sendStatus(403);
+    }
    }
   });
  });
@@ -441,9 +506,16 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
     }
    }
    else {
-    response.sendStatus(401);
+    if (!request.query.apikey) {
+     console.log("Err401: Login error.");
+     response.sendStatus(401);
+    }
+    else {
+     console.log("Err403: Login error.");
+     response.sendStatus(403);
+    }
    }
   });
  });
- 
- }
+
+}
