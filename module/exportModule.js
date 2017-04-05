@@ -30,16 +30,16 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
   var year = url.year;
   var importS = url.importS;
   var exportS = url.exportS;
-  var off = 0;
+  var ose = 0;
   var limite = 5;
   var res = request.query.apikey;
   var resul = key(res, function(d) {
    if (d > 0) {
     if (url.limit != undefined) {
      limite = parseInt(url.limit);
-     off = parseInt(url.offset);
+     ose = parseInt(url.offset);
     }
-    dbAlberto.find({}).skip(off).limit(limite).toArray(function(err, sExport) {
+    dbAlberto.find({}).skip(ose).limit(limite).toArray(function(err, sExport) {
      if (err) {
       console.error('WARNING: Error getting data from DB');
       response.sendStatus(500); // internal server error
@@ -320,9 +320,17 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
    var updateExp = request.body;
    var province = request.params.province;
    var year = request.params.year;
+<<<<<<<<< saved version
     var res = request.query.apikey;
   var resul = key(res, function(d) {
    if (d > 0) {
+=========
+
+   if (auth(request)) {
+
+
+
+>>>>>>>>> local version
     if (!updateExp) {
      console.log("WARNING: New PUT request to /export-and-import-stats/ without contact, sending 400...");
      response.sendStatus(400); // bad request
