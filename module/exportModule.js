@@ -136,7 +136,6 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
        }
       });
      });
-
    */
 
 
