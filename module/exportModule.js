@@ -2,28 +2,22 @@ var exports = module.exports = {};
 
 exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
 
- // Authentication apikey=12345
+// Authentication apikey=12345
 
  var key = function(request, callback) {
   var d;
-  if (!request) {
-   d = -1;
-  }
-  else {
-   dbUser.find({
-    apikey: request
-   }).toArray(function(err, sExport) {
-    if (sExport.length > 0) {
-     d = 1;
-    }
-    else {
-     d = 0;
-    }
+  dbUser.find({
+   apikey: request
+  }).toArray(function(err, sExport) {
+   if (sExport.length > 0) {
+    d = 1;
+   }
+   else {
+    d = 0;
+   }
+   callback(d);
+  });
 
-    callback(d);
-   });
-
-  }
  }
 
 
@@ -40,7 +34,6 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
   var limite = 5;
   var res = request.query.apikey;
   var resul = key(res, function(d) {
-
    if (d > 0) {
     if (url.limit != undefined) {
      limite = parseInt(url.limit);
@@ -69,12 +62,7 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
     });
    }
    else {
-    if (d === -1) {
-     response.sendStatus(401);
-    }
-    else {
-     response.sendStatus(403);
-    }
+    response.sendStatus(401);
    }
   });
  });
@@ -148,7 +136,6 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
        }
       });
      });
-
    */
 
 
@@ -325,14 +312,14 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
     response.sendStatus(401);
    }
   });
- });
+  });
 
- //PUT over a single resource
- app.put(BASE_API_PATH + "/export-and-import/:province/:year", function(request, response) {
-  var updateExp = request.body;
-  var province = request.params.province;
-  var year = request.params.year;
-  var res = request.query.apikey;
+  //PUT over a single resource
+  app.put(BASE_API_PATH + "/export-and-import/:province/:year", function(request, response) {
+   var updateExp = request.body;
+   var province = request.params.province;
+   var year = request.params.year;
+    var res = request.query.apikey;
   var resul = key(res, function(d) {
    if (d > 0) {
     if (!updateExp) {
@@ -458,6 +445,5 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
    }
   });
  });
-
-}
-
+ 
+ }

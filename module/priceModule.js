@@ -19,6 +19,7 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
         });
     }
  
+ 
     // *******************************     *******************************
     // El recurso debe contener una ruta /api/v1/XXXXX/loadInitialData que al hacer un GET cree 2 o más datos en la base de datos si está vacía.
     // *******************************     *******************************
@@ -50,13 +51,21 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
                 //
                 response.redirect(200, BASE_API_PATH + "/");
             } else {
-                console.log("Err401: Login error.");
-                response.sendStatus(401);
+                if(!request.query.apikey){
+                    console.log("Err401: Login error.");
+                    response.sendStatus(401);
+                } else {
+                    console.log("Err403: Login error.");
+                    response.sendStatus(403);
+                }
             }
         });
     });
 
-    // Base GET
+
+    // *******************************     *******************************
+    // Si no se especifica que se consulta redirigir
+    // *******************************     *******************************
     app.get(BASE_API_PATH + "/", function(request, response) {
         //
         var res = request.query.apikey;
@@ -65,8 +74,13 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
                 console.log("INFO: Redirecting to /price-stats");
                 response.redirect(301, BASE_API_PATH + "/price-stats");
             } else {
-                console.log("Err401: Login error.");
-                response.sendStatus(401);
+                if(!request.query.apikey){
+                    console.log("Err401: Login error.");
+                    response.sendStatus(401);
+                } else {
+                    console.log("Err403: Login error.");
+                    response.sendStatus(403);
+                }
             }
         });
     });
@@ -77,9 +91,16 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
     // *******************************     *******************************
     app.get(BASE_API_PATH + "/price-stats", function(request, response) 
     {
+        // 
         var url = request.query;
+        var province = url.province;
+        var year = url.year;
+        
+        // Paginacion por defecto
         var ose=0;
         var limite=5;
+        
+        //
         var res = request.query.apikey;
         var resul = key(res, function(d) {
             if (d > 0) {
@@ -95,13 +116,28 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
                         response.sendStatus(500); // internal server error
                     }
                     else {
-                        console.log("INFO: Sending price-stats: " + JSON.stringify(price, 2, null));
-                        response.send(price);
+                        var filted = price.filter((stat) => {
+                            if ((province == undefined || stat.province == province) && (year == undefined || stat.year == year)) {
+                                return stat;
+                            }
+                        });
+                        if (filted.length > 0) {
+                           console.log("INFO: Sending stat: " + JSON.stringify(filted, 2, null));
+                           response.send(filted);
+                        } else {
+                            console.log("WARNING: There are not any stat with this properties.");
+                            response.sendStatus(404); // not found
+                        }
                     }
                 });
             } else {
-                console.log("Err401: Login error.");
-                response.sendStatus(401);
+                if(!request.query.apikey){
+                    console.log("Err401: Login error.");
+                    response.sendStatus(401);
+                } else {
+                    console.log("Err403: Login error.");
+                    response.sendStatus(403);
+                }
             }
         });
     });
@@ -148,8 +184,13 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
                     });
                 }
             } else {
-                console.log("Err401: Login error.");
-                response.sendStatus(401);
+                if(!request.query.apikey){
+                    console.log("Err401: Login error.");
+                    response.sendStatus(401);
+                } else {
+                    console.log("Err403: Login error.");
+                    response.sendStatus(403);
+                }
             }
         });
     });
@@ -206,8 +247,13 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
                     }
                 }
             } else {
-                console.log("Err401: Login error.");
-                response.sendStatus(401);
+                if(!request.query.apikey){
+                    console.log("Err401: Login error.");
+                    response.sendStatus(401);
+                } else {
+                    console.log("Err403: Login error.");
+                    response.sendStatus(403);
+                }
             }
         });
     });
@@ -229,8 +275,13 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
                 console.log("WARNING: New POST request to /price-stats/" + province + ", sending 405...");
                 response.sendStatus(405); // method not allowed
             } else {
-                console.log("Err401: Login error.");
-                response.sendStatus(401);
+                if(!request.query.apikey){
+                    console.log("Err401: Login error.");
+                    response.sendStatus(401);
+                } else {
+                    console.log("Err403: Login error.");
+                    response.sendStatus(403);
+                }
             }
         });
     });
@@ -248,8 +299,13 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
                 console.log("WARNING: New PUT request to /price-stats, sending 405...");
                 response.sendStatus(405); // method not allowed
             } else {
-                console.log("Err401: Login error.");
-                response.sendStatus(401);
+                if(!request.query.apikey){
+                    console.log("Err401: Login error.");
+                    response.sendStatus(401);
+                } else {
+                    console.log("Err403: Login error.");
+                    response.sendStatus(403);
+                }
             }
         });
     });
@@ -308,8 +364,13 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
                     }
                 }
             } else {
-                console.log("Err401: Login error.");
-                response.sendStatus(401);
+                if(!request.query.apikey){
+                    console.log("Err401: Login error.");
+                    response.sendStatus(401);
+                } else {
+                    console.log("Err403: Login error.");
+                    response.sendStatus(403);
+                }
             }
         });
     });
@@ -346,8 +407,13 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
                     }
                 });
             } else {
-                console.log("Err401: Login error.");
-                response.sendStatus(401);
+                if(!request.query.apikey){
+                    console.log("Err401: Login error.");
+                    response.sendStatus(401);
+                } else {
+                    console.log("Err403: Login error.");
+                    response.sendStatus(403);
+                }
             }
         });
     });
@@ -395,8 +461,13 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
                     });
                 }
             } else {
-                console.log("Err401: Login error.");
-                response.sendStatus(401);
+                if(!request.query.apikey){
+                    console.log("Err401: Login error.");
+                    response.sendStatus(401);
+                } else {
+                    console.log("Err403: Login error.");
+                    response.sendStatus(403);
+                }
             }
         });
     });
