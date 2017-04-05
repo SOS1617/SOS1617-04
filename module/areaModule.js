@@ -58,7 +58,11 @@ exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
     });
    }
    else {
+       if(!request.query.apikey){
+           response.sendStatus(403);
+       }else{
     response.sendStatus(401);
+       }
    }
   });
  });
