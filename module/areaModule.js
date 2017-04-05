@@ -92,11 +92,11 @@ exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
 
                 dbAdrian.insert(initialStats);
                 console.log("Date insert in db");
-                res.sendStatus(201);
+                response.sendStatus(201);
             }
             else {
                 console.log('INFO: DB has ' + stats.length + ' objects ');
-                res.sendStatus(200);
+                response.sendStatus(200);
             }
             });    
         }
