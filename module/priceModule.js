@@ -474,4 +474,3 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
     
 }
 
-console.log("priceModule.js OK");

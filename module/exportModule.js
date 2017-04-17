@@ -32,7 +32,7 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
   var importS = url.importS;
   var exportS = url.exportS;
   var off = 0;
-  var limite = 5;
+  var limite = 10;
   var res = request.query.apikey;
   var resul = key(res, function(d) {
    if (d > 0) {
@@ -56,7 +56,7 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
        response.send(filted);
       }
       else {
-       console.log("WARNING: There are not any contact with this properties");
+       console.log("WARNING: There are not any stat with this properties");
        response.sendStatus(404); // not found
       }
      }
@@ -109,7 +109,25 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
        "oil": "385",
        "importS": "772",
        "exportS": "84"
-      }, ];
+      }, {
+       "province": "cordoba",
+       "year": "2013",
+       "oil": "423",
+       "importS": "90",
+       "exportS": "98"
+      }, {
+       "province": "almeria",
+       "year": "2013",
+       "oil": "94",
+       "importS": "82",
+       "exportS": "93"
+      }, {
+       "province": "granada",
+       "year": "2013",
+       "oil": "97",
+       "importS": "66",
+       "exportS": "55"
+      }];
 
       dbAlberto.insert(initialStats);
       console.log("Date insert in db");
