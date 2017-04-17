@@ -62,11 +62,16 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
         });
     });
 
-
+    
+    // *******************************     *******************************
+    // 
+    // *******************************     *******************************
+    app.use(express.static(path.join(__dirname, "public")));
+    
     // *******************************     *******************************
     // Si no se especifica que se consulta redirigir
     // *******************************     *******************************
-    app.get(BASE_API_PATH + "/", function(request, response) {
+    /*app.get(BASE_API_PATH + "/", function(request, response) {
         //
         var res = request.query.apikey;
         var resul = key(res, function(d) {
@@ -84,6 +89,7 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
             }
         });
     });
+    */
 
 
     // *******************************  A  *******************************
