@@ -37,7 +37,7 @@ app.controller("ListCtrl", ["$scope", "$http", function($scope, $http) {
     }
     function refresh() {
         $http
-            .get("api/v1/price"+$scope.apikey)
+            .get("api/v1/price-stats"+$scope.apikey)
             .then(function(response) {
                 if (!response.data) {
                     console.log("They aren't stat");
@@ -49,7 +49,7 @@ app.controller("ListCtrl", ["$scope", "$http", function($scope, $http) {
 
     $scope.addStat = function() {
         $http
-            .post("api/v1/price"+$scope.apikey, $scope.newStat)
+            .post("api/v1/price-stats"+$scope.apikey, $scope.newStat)
             .then(function(response) {
                 console.log("Stat added");
                 refresh();
@@ -57,7 +57,7 @@ app.controller("ListCtrl", ["$scope", "$http", function($scope, $http) {
     }
     $scope.update = function(province, year) {
         $http
-            .put("api/v1/price/" + province + "/" + year+$scope.apikey, $scope.newStat)
+            .put("api/v1/price-stats/" + province + "/" + year+$scope.apikey, $scope.newStat)
             .then(function(response) {
                 console.log("Update stats " + province);
                 refresh();
@@ -65,7 +65,7 @@ app.controller("ListCtrl", ["$scope", "$http", function($scope, $http) {
     }
     $scope.loadInitial = function() {
         $http
-            .get("api/v1/price/loadInitialData"+$scope.apikey)
+            .get("api/v1/price-stats/loadInitialData"+$scope.apikey)
             .then(function(response) {
                 console.log("Load data");
                 refresh();
@@ -77,7 +77,7 @@ app.controller("ListCtrl", ["$scope", "$http", function($scope, $http) {
 
     $scope.deleteStat = function(province, year) {
         $http
-            .delete("api/v1/price/" + province + "/" + year +$scope.apikey, $scope.newStat)
+            .delete("api/v1/price-stats/" + province + "/" + year +$scope.apikey, $scope.newStat)
             .then(function(response) {
                 console.log("Deleting stats " + province);
                 refresh();
@@ -85,7 +85,7 @@ app.controller("ListCtrl", ["$scope", "$http", function($scope, $http) {
     }
     $scope.deleteAll = function() {
         $http
-            .delete("api/v1/price"+$scope.apikey)
+            .delete("api/v1/price-stats"+$scope.apikey)
             .then(function(response) {
                 console.log("Deleting all stats ");
                 refresh();

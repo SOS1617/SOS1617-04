@@ -56,15 +56,11 @@ MongoClient.connect(mURL, {
 
     dbUser = database.collection("user");
 
-
     moduleExport.register(app, dbAlberto, dbUser, BASE_API_PATH);
     modulePrice.register(app, dbLuis, dbUser, BASE_API_PATH);
     moduleArea.register(app, dbAdrian,dbUser, BASE_API_PATH);
-    
 
     app.listen(port, () => {
         console.log("Magic is happening on port " + port);
-
-
     });
 });
