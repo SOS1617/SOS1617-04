@@ -66,7 +66,7 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
     // *******************************     *******************************
     // 
     // *******************************     *******************************
-    app.use(express.static(path.join(__dirname, "public")));
+    //app.use(express.static(path.join(__dirname, "public")));
     
     // *******************************     *******************************
     // Si no se especifica que se consulta redirigir
