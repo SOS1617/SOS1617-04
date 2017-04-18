@@ -1,6 +1,6 @@
 var exports = module.exports = {};
 
-exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
+exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
     
     // *******************************     *******************************
     // 
@@ -163,11 +163,11 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
         var resul = key(res, function(d) {
             if (d > 0) { // login OK
                 if (!province || !year) {
-                    console.log("WARNING: New GET request to /export-and-import-stats/:name without name, sending 400...");
+                    console.log("WARNING: New GET request to /price-stats/:name without name, sending 400...");
                     response.sendStatus(400); // bad request
                 }
                 else {
-                    console.log("INFO: New GET request to /export-and-import-stats/" + province + year);
+                    console.log("INFO: New GET request to /price-stats/" + province + year);
                     dbLuis.find({
                         province: province,
                         year: year
@@ -391,7 +391,7 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
         var res = request.query.apikey;
         var resul = key(res, function(d) {
             if (d > 0) { // login OK
-                console.log("INFO: New DELETE request to /export-and-import-stats");
+                console.log("INFO: New DELETE request to /price-stats");
                 dbLuis.remove({}, {
                     multi: true
                 }, function(err, numRemoved) {
@@ -442,7 +442,7 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
                     response.sendStatus(400); // bad request
                 }
                 else {
-                    console.log("INFO: New DELETE request to /export-and-import-stats");
+                    console.log("INFO: New DELETE request to /price-stats");
                     dbLuis.remove({
                         province: province
                     }, {
