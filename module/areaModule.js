@@ -101,8 +101,12 @@ exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
             });    
         }
         else {
-            response.sendStatus(401);
-        }
+       if(!request.query.apikey){
+           response.sendStatus(401);
+       }else{
+           response.sendStatus(403);
+       }
+   }
         });
     });
 
@@ -158,8 +162,12 @@ exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
         }
         }
         else {
-            response.sendStatus(401);
-        }
+       if(!request.query.apikey){
+           response.sendStatus(401);
+       }else{
+           response.sendStatus(403);
+       }
+   }
     });
     });
 
@@ -201,8 +209,12 @@ exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
         }
             }
         else {
-            response.sendStatus(401);
-    }
+       if(!request.query.apikey){
+           response.sendStatus(401);
+       }else{
+           response.sendStatus(403);
+       }
+   }
     });
     });
 
@@ -255,8 +267,12 @@ exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
         }
             }
         else {
-                response.sendStatus(401);
-        }
+       if(!request.query.apikey){
+           response.sendStatus(401);
+       }else{
+           response.sendStatus(403);
+       }
+   }
         });
     });
 
@@ -286,8 +302,12 @@ exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
         response.sendStatus(405); // method not allowed
         }
         else {
-        response.sendStatus(401);
-     }
+       if(!request.query.apikey){
+           response.sendStatus(401);
+       }else{
+           response.sendStatus(403);
+       }
+   }
     });
 });
 
@@ -339,8 +359,12 @@ exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
         }
         }
         else {
-        response.sendStatus(401);
-    }
+       if(!request.query.apikey){
+           response.sendStatus(401);
+       }else{
+           response.sendStatus(403);
+       }
+   }
     });
 });
 
@@ -371,7 +395,11 @@ exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
         });
         }
         else {
-            response.sendStatus(401);
+       if(!request.query.apikey){
+           response.sendStatus(401);
+       }else{
+           response.sendStatus(403);
+       }
    }
     });
 });
@@ -413,7 +441,11 @@ exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
         }
         }
         else {
-        response.sendStatus(401);
+       if(!request.query.apikey){
+           response.sendStatus(401);
+       }else{
+           response.sendStatus(403);
+       }
    }
     });
     });
