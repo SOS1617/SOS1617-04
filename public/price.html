@@ -21,7 +21,7 @@
 
         <br><br><span class="glyphicon glyphicon-search"></span><input type="text" name="search" ng-model="test" placeholder="Search..">
 
-        <br><br>Insert ApiKey<input class="form-control" ng-model="api" value="12345" />
+        <br><br>Insert ApiKey (12345) <input class="form-control" ng-model="api" />
         <button class="button btn btn-primary" ng-click="setApikey(api)">Send</button>
         <table class="table table-striped">
             <thead>
@@ -79,9 +79,7 @@
 
         </table>
        <td><button class="button btn btn-danger btn-lg" ng-click="deleteAll()">Delete All</button></td>
-                 <br><br> <select class="btn dropdown-toggle btn-default"> <option>The apikey is</option><option select="selected">12345</option></select>
-
-                </div>
+    </div>
 </body>
 
 </html>
