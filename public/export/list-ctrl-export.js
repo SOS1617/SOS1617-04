@@ -4,11 +4,24 @@ app.controller("ListCtrl", ["$scope", "$http", function($scope, $http) {
     $scope.itemsPerPage = $scope.viewby;;
     $scope.currentPage = 0;
     $scope.items = [];
-    $scope.setApikey= function(api){
+    $scope.setLimit= function(limit,offset){
+        $http
+            .get("api/v1/export-and-import"+$scope.apikey+"&limit="+limit+"&offset="+offset)
+            .then(function(response) {
+                if (!response.data) {
+                    console.log("They aren't stat");
+                }
+                $scope.stats = response.data;
+                res();
+            });
+    }
+    
+     $scope.setApikey= function(api){
         $scope.apikey="?apikey="+api;
         console.log($scope.apikey);
         refresh();
     }
+    
     function res() {
         for (i = 0; i < $scope.stats.length; i++) {
             $scope.items.push($scope.stats[i]);

@@ -18,12 +18,16 @@
     <div ng-controller="ListCtrl">
         <h2>Export and import Stats</h2>
         <button class="button btn btn-primary" ng-click="loadInitial()">Load Initial Data</button>
-
-
-        <br><br> <span class="glyphicon glyphicon-search"></span><input type="text" name="search" ng-model="test" placeholder="Search..">
-
-        <br><br>Insert ApiKey<input class="form-control" ng-model="api" />
+        <br>
+        <br> <span class="glyphicon glyphicon-search"></span><input type="text" name="search" ng-model="test" placeholder="Search..">
+        <br>
+        <h4>Apikey = 12345</h4>
+        Insert ApiKey<input class="form-control" ng-model="api" />
         <button class="button btn btn-primary" ng-click="setApikey(api)">Send</button>
+
+        <br>Limit<input class="form-control" ng-model="limit" /> Offset
+        <input class="form-control" ng-model="offset" />
+        <button class="button btn btn-primary" ng-click="setLimit(limit,offset)">GET</button>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -82,7 +86,6 @@
 
         </table>
         <td><button class="button btn btn-danger btn-lg" ng-click="deleteAll()">Delete All</button></td>
-               <br><br> <select class="btn dropdown-toggle btn-default"> <option>The apikey is</option><option>12345</option></select>
 
                 </div>
 </body>

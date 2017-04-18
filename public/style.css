@@ -21,11 +21,7 @@ input[type=text]:focus {
     width: 100%;
 }
 
-
-
-
 /* === Containers === */
-
 #linkGroup {
     color: white;
     float: left;
@@ -42,7 +38,7 @@ input[type=text]:focus {
 }
 
 #title {
-    width: 230px;
+    width: 180px;
     height: 40px;
     margin-right: 20px;
     margin-top: 15px;
@@ -56,7 +52,7 @@ input[type=text]:focus {
 .contentTitle {
     font-family: Verdana, Arial, Helvetica, sans-serif;
     color: #213E74;
-    font-size: 25px;
+    font-size: 18px;
     margin-left: 15px;
     margin-right: 12px;
     margin-bottom: 12px;
@@ -66,7 +62,7 @@ input[type=text]:focus {
 .pageContent {
     font-family: Arial, Helvetica, sans-serif;
     color: #000000;
-    font-size: 18px;
+    font-size: 14px;
     margin-left: 20px;
     margin-right: 20px;
     width: 560px;
