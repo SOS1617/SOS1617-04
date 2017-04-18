@@ -428,10 +428,11 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
     // *******************************   D   *******************************
     // DELETE a un recurso (p.e. “/price-stats/Sevilla”) borra ese recurso
     // *******************************       *******************************
-    app.delete(BASE_API_PATH + "/price-stats/:province", function(request, response)
+    app.delete(BASE_API_PATH + "/price-stats/:province/:year", function(request, response)
     {
         //
         var province = request.params.province;
+        var year = request.params.year;
 
         //
         var res = request.query.apikey;
@@ -444,7 +445,8 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
                 else {
                     console.log("INFO: New DELETE request to /price-stats");
                     dbLuis.remove({
-                        province: province
+                        province: province,
+                        year: year
                     }, {
                         multi: true
                     }, function(err, numRemoved) {
