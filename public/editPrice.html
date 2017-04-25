@@ -1,0 +1,30 @@
+<div ng-controller="EditCtrl">
+
+
+    <h2> Edit price Stats</h2>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Province</th>
+                <th>Year</th>
+                <th>priceaceite</th>
+                <th>priceextra</th>
+                <th>pricevirgen</th>
+                <th>ACTIONS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{updateStat.province}}</td>
+                <td><input class="form-control" type="text" ng-model="updateStat.province" /></td>
+                <td><input class="form-control" type="text" ng-model="updateStat.year" /></td>
+                <td><input class="form-control" type="text" ng-model="updateStat.priceaceite" /></td>
+                <td><input class="form-control" type="text" ng-model="updateStat.priceextra" /></td>
+                <td><input class="form-control" type="text" ng-model="updateStat.pricevirgen" /></td>
+                <td><button class="button btn btn-primary" ng-click="updateS()">Update</button></td>
+            </tr>
+        </tbody>
+
+</div>

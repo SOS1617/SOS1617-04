@@ -4,16 +4,27 @@ app.controller("ListCtrl", ["$scope", "$http", function($scope, $http) {
     $scope.itemsPerPage = $scope.viewby;;
     $scope.currentPage = 0;
     $scope.items = [];
+    
     $scope.setApikey= function(api){
         $scope.apikey="?apikey="+api;
-        console.log($scope.apikey);
         refresh();
     }
+    
+     $scope.setProvince= function(province){
+        $scope.province = province;
+        refresh();
+    }
+    
+    $scope.setYear= function(year){
+        $scope.year= year;
+        refresh();
+    }
+    
+    
     function res() {
-        for (i = 0; i < $scope.stats.length; i++) {
+        for (var i = 0; i < $scope.stats.length; i++) {
             $scope.items.push($scope.stats[i]);
         }
-
     }
     $scope.prevPage = function() {
         if ($scope.currentPage > 0) {
@@ -34,17 +45,45 @@ app.controller("ListCtrl", ["$scope", "$http", function($scope, $http) {
     $scope.setItemsPerPage = function(num) {
         $scope.itemsPerPage = num;
         $scope.currentPage = 0; //reset to first paghe
+        console.log(num);
     }
+
     function refresh() {
+        var province = ($scope.province)? "&province="+$scope.province: "";
+        var year = ($scope.year)? "&year="+$scope.year: "";
         $http
-            .get("api/v1/price-stats"+$scope.apikey)
+            .get("api/v1/price-stats"+$scope.apikey+province+year)
             .then(function(response) {
                 if (!response.data) {
-                    console.log("They aren't stat");
+                    toggleResults(0);
+                } else {
+                    toggleResults(1);
                 }
                 $scope.stats = response.data;
                 res();
-            });
+                document.getElementById("errorApiKey").innerHTML = "";
+             }, function errorCallback(response) {
+                if(response.status == 401){
+                    document.getElementById("errorApiKey").innerHTML = "Introduzca ApiKey.";
+                }
+                else if(response.status == 403){
+                    document.getElementById("errorApiKey").innerHTML = "ApiKey incorrecta.";
+                }
+                toggleResults(0);
+             });
+    }
+    
+    function toggleResults(i){
+        // Ocultar
+        if(i == 0){
+            document.getElementById("results").style.visibility = "hidden";
+            document.getElementById("NoResults").style.visibility = "";
+        }
+        // Mostrar
+        else if(i == 1){
+            document.getElementById("results").style.visibility = "";
+            document.getElementById("NoResults").style.visibility = "hidden";
+        }
     }
 
     $scope.addStat = function() {
@@ -53,7 +92,14 @@ app.controller("ListCtrl", ["$scope", "$http", function($scope, $http) {
             .then(function(response) {
                 console.log("Stat added");
                 refresh();
-            })
+                document.getElementById("addError").innerHTML = "";
+                document.getElementById("addOk").innerHTML = "Estadística añadida correctamente.";
+            }, function errorCallback(response) {
+                if(response.status == 409){
+                    document.getElementById("addOk").innerHTML = "";
+                    document.getElementById("addError").innerHTML = "Error 409, ha intentado añadir una estádística duplicada. Mejor edítela.";
+                }
+             })
     }
     $scope.update = function(province, year) {
         $http
@@ -71,9 +117,6 @@ app.controller("ListCtrl", ["$scope", "$http", function($scope, $http) {
                 refresh();
             })
     }
-    
-
-
 
     $scope.deleteStat = function(province, year) {
         $http
