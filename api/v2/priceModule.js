@@ -50,13 +50,43 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
                     "year": "2016",
                     "priceaceite": "3.416",
                     "priceextra": "3.71",
-                    "pricevirgen": "3.42"
+                    "pricevirgen": "3.484"
                 }, {
                     "province": "Huelva",
                     "year": "2016",
                     "priceaceite": "4.416",
                     "priceextra": "3.51",
                     "pricevirgen": "3.92"
+                }, {
+                    "province": "Cordoba",
+                    "year": "2016",
+                    "priceaceite": "4.416",
+                    "priceextra": "3.51",
+                    "pricevirgen": "3.92"
+                }, {
+                    "province": "Almeria",
+                    "year": "2014",
+                    "priceaceite": "4.416",
+                    "priceextra": "3.51",
+                    "pricevirgen": "3.92"
+                }, {
+                    "province": "Malaga",
+                    "year": "2015",
+                    "priceaceite": "6.46",
+                    "priceextra": "1.57",
+                    "pricevirgen": "7.82"
+                }, {
+                    "province": "Malaga",
+                    "year": "2016",
+                    "priceaceite": "3.316",
+                    "priceextra": "4.28",
+                    "pricevirgen": "3.17"
+                }, {
+                    "province": "Jaen",
+                    "year": "2015",
+                    "priceaceite": "2.258",
+                    "priceextra": "6.782",
+                    "pricevirgen": "3.148"
                 }];
                 dbLuis.insert(datos);
         
@@ -73,36 +103,7 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
             }
         });
     });
-
     
-    // *******************************     *******************************
-    // 
-    // *******************************     *******************************
-    //app.use(express.static(path.join(__dirname, "public")));
-    
-    // *******************************     *******************************
-    // Si no se especifica que se consulta redirigir
-    // *******************************     *******************************
-    /*app.get(BASE_API_PATH + "/", function(request, response) {
-        //
-        var res = request.query.apikey;
-        var resul = key(res, function(d) {
-            if (d > 0) { // login OK
-                console.log("INFO: Redirecting to /price-stats");
-                response.redirect(301, BASE_API_PATH + "/price-stats");
-            } else {
-                if(!request.query.apikey){
-                    console.log("Err401: Login error.");
-                    response.sendStatus(401);
-                } else {
-                    console.log("Err403: Login error.");
-                    response.sendStatus(403);
-                }
-            }
-        });
-    });
-    */
-
 
     // *******************************  A  *******************************
     // GET a la ruta base (p.e. “/price-stats”) devuelve una lista con todos los recursos
@@ -139,7 +140,7 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
                         }
                         else {
                             if (filted.length > 0) {
-                               var filted = searchFrom(price,from,to);
+                                var filted = searchFrom(price,from,to);
                                 response.send(filted);
                             } else {
                                 console.log("WARNING: There are not any stat with this properties.");
@@ -147,9 +148,6 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
                             }
                         }
                     });
-                    
-                    
-                    dbAlberto.find({}).toArray(function(err, sExport) {
                 } else {
                     dbLuis.find({}).skip(ose).limit(limite).toArray(function(err, price) {
                         if (err) {
