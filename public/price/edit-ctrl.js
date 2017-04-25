@@ -1,4 +1,4 @@
-angular.module("ExportManagerApp")
+angular.module("PriceManagerApp")
 .controller("EditCtrl", ["$scope", "$http","$routeParams", function($scope, $http,$routeParams) {
     $scope.apikey="?apikey=12345"
     console.log("EditCtrl");
