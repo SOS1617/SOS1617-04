@@ -1,0 +1,31 @@
+
+<div ng-controller="EditCtrl">
+
+
+    <h2> Edit Export and import Stats</h2>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Province</th>
+                <th>Year</th>
+                <th>Oil</th>
+                <th>Import Stats</th>
+                <th>Export Stats</th>
+                <th>ACTIONS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{updateStat.province}}</td>
+                <td><input class="form-control" type="text" ng-model="updateStat.year" /></td>
+                <td><input class="form-control" type="text" ng-model="updateStat.oil" /></td>
+                <td><input class="form-control" type="text" ng-model="updateStat.importS" /></td>
+                <td><input class="form-control" type="text" ng-model="updateStat.exportS" /></td>
+                <td><button class="button btn btn-primary" ng-click="updateS()">Update</button></td>
+            </tr>
+        </tbody>
+
+</div>
+

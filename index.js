@@ -13,11 +13,11 @@ var mURL = "mongodb://test:test@ds137370.mlab.com:37370/sandbox";
 
 
 var port = (process.env.PORT || 10000);
-var BASE_API_PATH = "/api/v1";
+var BASE_API_PATH = "/api/v2";
 
-var moduleExport = require("./module/exportModule.js");
-var modulePrice = require("./module/priceModule.js");
-var moduleArea = require("./module/areaModule.js");
+var moduleExport = require("./api/v2/exportModule.js");
+var modulePrice = require("./api/v2/priceModule.js");
+var moduleArea = require("./api/v2/areaModule.js");
 
 
 
@@ -35,12 +35,9 @@ app.use("/", express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json()); //use default json enconding/decoding
 app.use(helmet()); //improve security
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/public/index.html'));
-});
-app.get(BASE_API_PATH + '/tests', function(req, res) {
-    res.sendFile(path.join(__dirname + '/public/test.html'));
-});
+app.use("/",express.static(path.join(__dirname, 'public')));
+
+app.use("/api/v1/tests", express.static(path.join(__dirname , "public/test.html")));
 
 MongoClient.connect(mURL, {
     native_parser: true
