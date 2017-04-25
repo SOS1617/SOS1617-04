@@ -1,6 +1,6 @@
 // ["ngRoute", "angularUtils.directives.dirPagination"]).
 
-angular.module("ExportManagerApp",["ngRoute", "angularUtils.directives.dirPagination"]).config(function($routeProvider){
+angular.module("PriceManagerApp",["ngRoute", "angularUtils.directives.dirPagination"]).config(function($routeProvider){
     
     $routeProvider
         .when("/",{
