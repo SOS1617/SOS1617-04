@@ -1,0 +1,29 @@
+
+<div ng-controller="EditCtrl">
+
+
+    <h2> Edit Area and production Stats</h2>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Province</th>
+                <th>Year</th>
+                <th>Area Stats</th>
+                <th>Production Stats</th>
+                <th>ACTIONS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{updateStat.province}}</td>
+                <td><input class="form-control" type="text" ng-model="updateStat.year" /></td>
+                <td><input class="form-control" type="text" ng-model="updateStat.areaS" /></td>
+                <td><input class="form-control" type="text" ng-model="updateStat.productionS" /></td>
+                <td><button class="button btn btn-primary" ng-click="updateS()">Update</button></td>
+            </tr>
+        </tbody>
+
+</div>
+

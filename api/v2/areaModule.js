@@ -19,6 +19,21 @@ exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
   });
 
  }
+ function searchFrom(sArea,from,to){
+   var from = parseInt(from);
+   var to = parseInt(to);
+   var res=[];
+   sArea.forEach((filt)=>{
+    if(filt.year>=from && filt.year<=to){
+     res.push(filt);
+    }
+   });
+
+    return res;
+
+  
+  
+ }
  // GET a collection and Search
  app.get(BASE_API_PATH + "/area-and-production", function(request, response) {
   var url = request.query;
