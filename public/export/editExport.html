@@ -1,12 +1,10 @@
-<main>
-
 <div ng-controller="EditCtrlExport">
 
 
     <h2> Edit Export and import Stats</h2>
 
 
-    <table class="table table-striped">
+    <table class="table">
         <thead>
             <tr>
                 <th>Province</th>
@@ -19,15 +17,15 @@
         </thead>
         <tbody>
             <tr>
-                <td>{{update.province}}</td>
-                <td>{{update.year}}</td>
-                <td><input class="form-control" type="text" ng-model="update.oil" /></td>
-                <td><input class="form-control" type="text" ng-model="update.importS" /></td>
-                <td><input class="form-control" type="text" ng-model="update.exportS" /></td>
+                <td>{{updateStat.province}}</td>
+                <td>{{updateStat.year}}</td>
+                <td><input class="form-control" ng-model="updateStat.oil" /></td>
+                <td><input class="form-control" ng-model="updateStat.importS" /></td>
+                <td><input class="form-control" ng-model="updateStat.exportS" /></td>
                 <td><button class="button btn btn-primary" ng-click="updateS()">Update</button></td>
             </tr>
         </tbody>
+        </<table>
+
 
 </div>
-
-</main>

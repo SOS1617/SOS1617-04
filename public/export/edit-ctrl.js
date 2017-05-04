@@ -5,10 +5,19 @@ angular.module("ManagerApp")
 
 
         $scope.updateS = function() {
-            console.log("api/v2/export-and-import/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey);
+
+            console.log($scope.updateStat);
+            var stat = new Object();
+            stat.province = $routeParams.province;
+            stat.year = $routeParams.year;
+            stat.oil = $scope.updateStat.oil;
+            stat.importS = $scope.updateStat.importS;
+            stat.exportS = $scope.updateStat.exportS;
+            
+            console.log(stat);
             $http
 
-                .put("api/v2/export-and-import/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey, $scope.update)
+                .put("api/v2/export-and-import/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey, stat)
                 .then(function(response) {
                     $scope.errorMessage = bootbox.alert("Correct Update");
                 }, function(response) {
@@ -20,7 +29,7 @@ angular.module("ManagerApp")
                         $scope.errorMessage = bootbox.alert("Stat not exists");
                     }
                 });
-            $location.path("/export");
+           // $location.path("/export");
 
         };
         getResultsPage(1);
