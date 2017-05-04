@@ -1,23 +1,24 @@
-angular.module("ExportManagerApp")
-    .controller("ListCtrl", ["$scope", "$http", function($scope, $http) {
-        console.log("ListCtrl");
+angular.module("ManagerApp")
+    .controller("ListCtrlExport", ["$scope", "$http", function($scope, $http) {
+        console.log("ListCtrlExport");
+
         $scope.stats = [];
         $scope.currentPage = 1;
         $scope.pageSize = 5;
-        var aux=1;
+        var aux = 1;
 
 
         $scope.setApikey = function(api) {
             $scope.apikey = "?apikey=" + api;
-            aux=0;
+            aux = 0;
             getResultsPage(1);
         }
 
         $scope.searchFrom = function(from, to) {
 
-            console.log("api/v2/area-and-production" + $scope.apikey + "&from=" + from + "&to=" + to);
+            console.log("api/v2/export-and-import" + $scope.apikey + "&from=" + from + "&to=" + to);
             $http
-                .get("api/v2/area-and-production" + $scope.apikey + "&from=" + from + "&to=" + to)
+                .get("/api/v2/export-and-import" + $scope.apikey + "&from=" + from + "&to=" + to)
                 .then(function(response) {
                     $scope.stats = response.data;
                 }, function(response) {
@@ -30,7 +31,7 @@ angular.module("ExportManagerApp")
 
         function getResultsPage(newPage) {
             $http
-                .get("api/v2/area-and-production" + $scope.apikey)
+                .get("api/v2/export-and-import" + $scope.apikey)
                 .then(function(response) {
                     if (aux === 0) {
                         $scope.errorMessage = bootbox.alert("Correct Apikey");
@@ -50,7 +51,7 @@ angular.module("ExportManagerApp")
 
         $scope.addStat = function() {
                 $http
-                    .post("api/v2/area-and-production" + $scope.apikey, $scope.newStat)
+                    .post("api/v2/export-and-import" + $scope.apikey, $scope.newStat)
                     .then(function(response) {
                         $scope.errorMessage = bootbox.alert("Add stat");
                     }, function(response) {
@@ -84,7 +85,7 @@ angular.module("ExportManagerApp")
 
         $scope.loadInitial = function() {
             $http
-                .get("api/v2/area-and-production/loadInitialData" + $scope.apikey)
+                .get("api/v2/export-and-import/loadInitialData" + $scope.apikey)
                 .then(function(response) {
                     $scope.errorMessage = bootbox.alert("Load Stats");
                     getResultsPage(1);
@@ -92,7 +93,7 @@ angular.module("ExportManagerApp")
         }
         $scope.deleteStat = function(province, year) {
             $http
-                .delete("api/v2/area-and-production/" + province + "/" + year + $scope.apikey, $scope.newStat)
+                .delete("api/v2/export-and-import/" + province + "/" + year + $scope.apikey, $scope.newStat)
                 .then(function(response) {
                     $scope.errorMessage = bootbox.alert("Stat delete");
                     getResultsPage(1);
@@ -106,7 +107,7 @@ angular.module("ExportManagerApp")
         }
         $scope.deleteAll = function() {
             $http
-                .delete("api/v2/area-and-production" + $scope.apikey)
+                .delete("api/v2/export-and-import" + $scope.apikey)
                 .then(function(response) {
                     $scope.errorMessage = bootbox.alert("Delete all stats");
                     getResultsPage(1);
@@ -121,7 +122,7 @@ angular.module("ExportManagerApp")
     }]);
 
 
-angular.module("AreaManagerApp")
+angular.module("ManagerApp")
     .filter('offset', function() {
         return function(input, start) {
             if (!input || !input.length) {

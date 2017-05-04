@@ -1,5 +1,5 @@
-angular.module("AreaManagerApp")
-.controller("EditCtrl", ["$scope", "$http","$routeParams", function($scope, $http,$routeParams) {
+angular.module("ManagerApp")
+.controller("EditCtrlArea", ["$scope", "$http","$routeParams", function($scope, $http,$routeParams) {
     $scope.apikey="?apikey=12345"
     console.log("EditCtrl");
     $scope.updateS = function() {

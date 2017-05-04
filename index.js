@@ -37,7 +37,8 @@ app.use(helmet()); //improve security
 
 app.use("/",express.static(path.join(__dirname, 'public')));
 
-app.use("/api/v1/tests", express.static(path.join(__dirname , "public/test.html")));
+
+app.use("/api/v2/tests", express.static(path.join(__dirname , "public/test.html")));
 
 MongoClient.connect(mURL, {
     native_parser: true
