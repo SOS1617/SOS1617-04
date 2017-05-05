@@ -29,7 +29,7 @@ angular.module("ManagerApp")
                         $scope.errorMessage = bootbox.alert("Stat not exists");
                     }
                 });
-           // $location.path("/export");
+           //$location.path("/export");
 
         };
         getResultsPage(1);

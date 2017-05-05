@@ -135,19 +135,26 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
      }
      if (stats.length === 0) {
       var initialStats = [{
-       "province": "jaen",
+       "province": "sevilla",
        "year": "2013",
        "oil": "375",
        "importS": "802",
        "exportS": "274"
       }, {
-       "province": "jaen",
-       "year": "2014",
+       "province": "malaga",
+       "year": "2013",
        "oil": "457",
-       "importS": "802",
+       "importS": "45",
        "exportS": "124"
       }, {
-       "province": "huelva",
+       "province": "cadiz",
+       "year": "2013",
+       "oil": "97",
+       "importS": "66",
+       "exportS": "55"
+      },
+      {
+       "province": "granada",
        "year": "2013",
        "oil": "385",
        "importS": "772",
@@ -161,58 +168,71 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
       }, {
        "province": "almeria",
        "year": "2013",
-       "oil": "94",
+       "oil": "99",
        "importS": "82",
        "exportS": "93"
       }, {
-       "province": "granada",
+       "province": "jaen",
        "year": "2013",
-       "oil": "97",
+       "oil": "44",
+       "importS": "66",
+       "exportS": "55"
+      }, {
+       "province": "huelva",
+       "year": "2013",
+       "oil": "22",
+       "importS": "66",
+       "exportS": "55"
+      }, {
+       "province": "sevilla",
+       "year": "2015",
+       "oil": "32",
+       "importS": "66",
+       "exportS": "55"
+      }, {
+       "province": "malaga",
+       "year": "2015",
+       "oil": "47",
+       "importS": "66",
+       "exportS": "55"
+      }, {
+       "province": "cadiz",
+       "year": "2015",
+       "oil": "64",
+       "importS": "68",
+       "exportS": "75"
+      }, {
+       "province": "granada",
+       "year": "2015",
+       "oil": "75",
        "importS": "66",
        "exportS": "55"
       }, {
        "province": "cordoba",
-       "year": "2014",
-       "oil": "97",
-       "importS": "66",
-       "exportS": "55"
-      }, {
-       "province": "granada",
        "year": "2015",
-       "oil": "97",
+       "oil": "81",
        "importS": "66",
        "exportS": "55"
       }, {
        "province": "almeria",
        "year": "2015",
-       "oil": "97",
+       "oil": "77",
        "importS": "66",
        "exportS": "55"
       }, {
-       "province": "cordoba",
-       "year": "2010",
-       "oil": "97",
-       "importS": "66",
-       "exportS": "55"
-      }, {
-       "province": "cadiz",
-       "year": "2014",
-       "oil": "97",
-       "importS": "66",
-       "exportS": "55"
-      }, {
-       "province": "cadiz",
-       "year": "2011",
-       "oil": "97",
+       "province": "jaen",
+       "year": "2015",
+       "oil": "25",
        "importS": "66",
        "exportS": "55"
       }, {
        "province": "huelva",
-       "year": "2010",
-       "oil": "97",
+       "year": "2015",
+       "oil": "85",
        "importS": "66",
        "exportS": "55"
-      }];
+      }
+      ];
 
       dbAlberto.insert(initialStats);
       console.log("Date insert in db");

@@ -38,6 +38,7 @@ angular.module("ManagerApp")
                         aux = 1;
                     }
                     $scope.stats = response.data;
+
                 }, function(response) {
                     $scope.stats = [];
                     if (response.status == 401) {

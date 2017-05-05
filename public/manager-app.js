@@ -29,7 +29,14 @@ angular.module("ManagerApp", ["angularUtils.directives.dirPagination", "ngRoute"
         .when("/area/:province/:year", {
             templateUrl: "/area/editArea.html",
             controller: "EditCtrlArea"
-        });
+        })
+         .when("/highExport", {
+            templateUrl: "/export/highcharts.html",
+            controller: "HighchartsCtrl"
+        })
+        
+        
+        ;
 
 
     console.log("App initialized");
