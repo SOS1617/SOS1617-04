@@ -64,23 +64,6 @@ angular.module("ManagerApp")
                         getResultsPage(1);
                     })
             }
-            /*   
-            $scope.updateStat = function(province, year) {
-                   $http
-                       .put("api/v2/price-stats/" + province + "/" + year + $scope.apikey, $scope.newStat)
-                       .then(function(response) {
-                           $scope.errorMessage = bootbox.alert("Correct Update");
-                       }, function(response) {
-                           $scope.stats = [];
-                           if (response.status == 422) {
-                               $scope.errorMessage = bootbox.alert("Stat empty");
-                           }
-                           if (response.status == 404) {
-                               $scope.errorMessage = bootbox.alert("Stat not exists");
-                           }
-                           getResultsPage(1);
-                       })
-               }*/
 
         $scope.loadInitial = function() {
             $http

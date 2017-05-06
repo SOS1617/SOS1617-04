@@ -117,7 +117,7 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
         
         // Paginacion por defecto
         var ose=0;
-        var limite=5;
+        var limite=100;
         
         //
         var res = request.query.apikey;

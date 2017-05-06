@@ -42,7 +42,7 @@ exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
   var productionS = url.productionS;
   var areaS = url.areaS;
   var off = 0;
-  var limite = 5;
+  var limite = 100;
   var res = request.query.apikey;
   var resul = key(res, function(d) {
    if (d > 0) {
