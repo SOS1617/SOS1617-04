@@ -2,18 +2,27 @@ angular.module("ManagerApp")
     .controller("EditCtrlExport", ["$scope", "$http", "$routeParams", "$location", function($scope, $http, $routeParams, $location) {
         $scope.apikey = "?apikey=12345"
         console.log("EditCtrl");
+        refresh();
+
+
+        function refresh() {
+            $http
+                .get("/api/v2/export-and-import/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey)
+                .then(function(response) {
+                    $scope.data = JSON.stringify(response.data, null, 2);
+                    $scope.updateStat = response.data[0];
+                });
+        }
 
 
         $scope.updateS = function() {
-
-            console.log($scope.updateStat);
             var stat = new Object();
-            stat.province = $routeParams.province;
-            stat.year = $routeParams.year;
+            stat.province = $scope.updateStat.province;
+            stat.year = $scope.updateStat.year;
             stat.oil = $scope.updateStat.oil;
             stat.importS = $scope.updateStat.importS;
             stat.exportS = $scope.updateStat.exportS;
-            
+
             console.log(stat);
             $http
 
@@ -29,20 +38,10 @@ angular.module("ManagerApp")
                         $scope.errorMessage = bootbox.alert("Stat not exists");
                     }
                 });
-           //$location.path("/export");
+            $location.path("/export");
 
         };
-        getResultsPage(1);
 
 
-        function getResultsPage(newPage) {
-            $http
-                .get("api/v2/export-and-import" + $scope.apikey)
-                .then(function(response) {
-                    $scope.stats = response.data;
-                }, function(response) {
-                    $scope.stats = [];
 
-                });
-        }
     }]);

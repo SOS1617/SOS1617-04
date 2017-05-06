@@ -52,8 +52,7 @@
                 <div>
                     <tr dir-paginate="stat in stats |itemsPerPage: pageSize|filter:test1 |filter:test2 |filter:test3 |filter:test4 |filter:test5" current-page="currentPage">
                         <td><a href="#!/export/{{stat.province}}/{{stat.year}}">{{stat.province}}</a></td>
-                        <td>{{stat.year}}</a>
-                        </td>
+                        <td>{{stat.year}}</td>
                         <td>{{stat.oil}}</td>
                         <td>{{stat.importS}}</td>
                         <td>{{stat.exportS}}</td>
