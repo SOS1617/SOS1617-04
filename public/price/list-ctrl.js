@@ -1,5 +1,5 @@
-angular.module("PriceManagerApp")
-    .controller("ListCtrl", ["$scope", "$http", function($scope, $http) {
+angular.module("ManagerApp")
+    .controller("ListCtrlPrice", ["$scope", "$http", function($scope, $http) {
         console.log("ListCtrl");
         $scope.stats = [];
         $scope.currentPage = 1;
@@ -121,7 +121,7 @@ angular.module("PriceManagerApp")
     }]);
 
 
-angular.module("PriceManagerApp")
+angular.module("ManagerApp")
     .filter('offset', function() {
         return function(input, start) {
             if (!input || !input.length) {

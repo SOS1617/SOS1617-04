@@ -19,11 +19,11 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
         });
     }
     
-    function searchFrom(sExport, from, to) {
+    function searchFrom(sPrice, from, to) {
         var from = parseInt(from);
         var to = parseInt(to);
         var res = [];
-        sExport.forEach((filt) => {
+        sPrice.forEach((filt) => {
             if (filt.year >= from && filt.year <= to) {
                 res.push(filt);
             }
@@ -139,6 +139,11 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
                             response.sendStatus(500); // internal server error
                         }
                         else {
+                            var filted = price.filter((stat) => {
+                            if ((province == undefined || stat.province == province) && (year == undefined || stat.year == year) && (year == undefined || stat.year == year)) {
+                                return stat;
+                            }
+                            });
                             if (filted.length > 0) {
                                 var filted = searchFrom(price,from,to);
                                 response.send(filted);

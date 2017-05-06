@@ -1,5 +1,4 @@
-
-<div ng-controller="ListCtrl">
+<div ng-controller="ListCtrlPrice">
     <h2>List Price Stats </h2>
 
 
@@ -8,9 +7,20 @@
     Insert ApiKey<input class="form-control" ng-model="api" />
     <button class="button btn btn-primary" ng-click="setApikey(api)">Send</button>
     <h4>Search</h4>
-    Province:<input type="text" name="search" ng-model="test1" placeholder="Province.."> Year: <input type="text" name="search" ng-model="test2" placeholder="Year.."> Oil: <input type="text" name="search" ng-model="test3" placeholder="Oil.."> Import:
-    <input type="text" name="search" ng-model="test4" placeholder="Import.."> Export: <input type="text" name="search" ng-model="test5" placeholder="Export..">
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Province:</h4><input class="form-control" type="text" name="search" ng-model="test1" placeholder="Province.."></div>
+
+        <div class="col-md-6">
+            <h4>Year:</h4><input class="form-control" type="text" name="search" ng-model="test2" placeholder="Year.."></div>
+
+    </div>
+    
+     
+      
     <br/>
+    
     <div class="row">
         <div class="col-md-6">
             <h4>From:</h4><input class="form-control" ng-model="from" /> </div>
@@ -19,6 +29,7 @@
             <h4>To:</h4> <input class="form-control" ng-model="to" /> </div>
 
     </div>
+    
     <button class="button btn btn-primary" ng-click="searchFrom(from,to)">GET</button>
 
 
@@ -26,29 +37,28 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                    <th>Province</th>
-                    <th>Year</th>
-                    <th>priceaceite</th>
-                    <th>priceextra</th>
-                    <th>pricevirgen</th>
+                <th>Province</th>
+                <th>Year</th>
+                <th>priceaceite</th>
+                <th>priceextra</th>
+                <th>pricevirgen</th>
                 <th>ACTIONS</th>
                 <th>DELETE</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                    <td><input class="form-control" ng-model="newStat.province" /></td>
-                    <td><input class="form-control" ng-model="newStat.year" /></td>
-                    <td><input class="form-control" ng-model="newStat.priceaceite" /></td>
-                    <td><input class="form-control" ng-model="newStat.priceextra" /></td>
-                    <td><input class="form-control" ng-model="newStat.pricevirgen" /></td>
+                <td><input class="form-control" ng-model="newStat.province" /></td>
+                <td><input class="form-control" ng-model="newStat.year" /></td>
+                <td><input class="form-control" ng-model="newStat.priceaceite" /></td>
+                <td><input class="form-control" ng-model="newStat.priceextra" /></td>
+                <td><input class="form-control" ng-model="newStat.pricevirgen" /></td>
                 <td><button class="button btn btn-primary" ng-click="addStat()">Add</button></td>
                 <td></td>
             </tr>
             <div>
                 <tr dir-paginate="stat in stats |itemsPerPage: pageSize|filter:test1 |filter:test2 |filter:test3 |filter:test4 |filter:test5" current-page="currentPage">
                     <td><a href="#!/price-stats/{{stat.province}}/{{stat.year}}">{{stat.province}}</a></td>
-                    <td>{{stat.province}}</td>
                     <td>{{stat.year}}</td>
                     <td>{{stat.priceaceite}}</td>
                     <td>{{stat.priceextra}}</td>

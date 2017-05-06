@@ -1,6 +1,5 @@
-
-<div ng-controller="ListCtrl">
-    <h2>List Export and import Stats </h2>
+<div ng-controller="ListCtrlArea">
+    <h2>List Area and production Stats </h2>
 
 
     <button class="button btn btn-primary" ng-click="loadInitial()">Load Initial Data</button>
@@ -8,8 +7,8 @@
     Insert ApiKey<input class="form-control" ng-model="api" />
     <button class="button btn btn-primary" ng-click="setApikey(api)">Send</button>
     <h4>Search</h4>
-    Province:<input type="text" name="search" ng-model="test1" placeholder="Province.."> Year: <input type="text" name="search" ng-model="test2" placeholder="Year.."> Oil: <input type="text" name="search" ng-model="test3" placeholder="Oil.."> Import:
-    <input type="text" name="search" ng-model="test4" placeholder="Import.."> Export: <input type="text" name="search" ng-model="test5" placeholder="Export..">
+    Province:<input type="text" name="search" ng-model="test1" placeholder="Province.."> Year: <input type="text" name="search" ng-model="test2" placeholder="Year..">  Area:
+    <input type="text" name="search" ng-model="test3" placeholder="Area.."> Production: <input type="text" name="search" ng-model="test4" placeholder="Production..">
     <br/>
     <div class="row">
         <div class="col-md-6">
@@ -28,9 +27,8 @@
             <tr>
                 <th>Province</th>
                 <th>Year</th>
-                <th>Oil</th>
-                <th>Import Stats</th>
-                <th>Export Stats</th>
+                <th>Area Stats</th>
+                <th>Production Stats</th>
                 <th>ACTIONS</th>
                 <th>DELETE</th>
             </tr>
@@ -39,19 +37,17 @@
             <tr>
                 <td><input class="form-control" ng-model="newStat.province" /></td>
                 <td><input class="form-control" ng-model="newStat.year" /></td>
-                <td><input class="form-control" ng-model="newStat.oil" /></td>
-                <td><input class="form-control" ng-model="newStat.importS" /></td>
-                <td><input class="form-control" ng-model="newStat.exportS" /></td>
+                <td><input class="form-control" ng-model="newStat.areaS" /></td>
+                <td><input class="form-control" ng-model="newStat.productionS" /></td>
                 <td><button class="button btn btn-primary" ng-click="addStat()">Add</button></td>
                 <td></td>
             </tr>
             <div>
-                <tr dir-paginate="stat in stats |itemsPerPage: pageSize|filter:test1 |filter:test2 |filter:test3 |filter:test4 |filter:test5" current-page="currentPage">
+                <tr dir-paginate="stat in stats |itemsPerPage: pageSize|filter:test1 |filter:test2 |filter:test3 |filter:test4 " current-page="currentPage">
                     <td><a href="#!/export-stat/{{stat.province}}/{{stat.year}}">{{stat.province}}</a></td>
                     <td>{{stat.year}}</a></td>
-                    <td>{{stat.oil}}</td>
-                    <td>{{stat.importS}}</td>
-                    <td>{{stat.exportS}}</td>
+                    <td>{{stat.areaS}}</td>
+                    <td>{{stat.productionS}}</td>
                     <td><button class="button btn btn-danger" ng-click="deleteStat(stat.province,stat.year)">Delete</button></td>
 
                 </tr>
