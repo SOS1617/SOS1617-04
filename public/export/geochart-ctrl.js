@@ -67,7 +67,9 @@ angular.module("ManagerApp")
                         console.log(dataH);
 
                         google.charts.load('current', {
-                            'packages': ['geochart']
+                            'packages': ['geochart'],
+                            mapsApiKey: "AIzaSyD3cwim5y4k5XplhEsTj_AuLYdu6rQHq2o"
+                            
                         });
                         google.charts.setOnLoadCallback(drawMarkersMap);
 
