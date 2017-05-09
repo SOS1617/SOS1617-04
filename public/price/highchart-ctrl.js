@@ -14,48 +14,61 @@ angular.module("ManagerApp")
 
         $scope.sta = [];
 
+        function sortResults(prop, asc) {
+                $scope.sta = $scope.sta.sort(function(a, b) {
+                    if (asc) {
+                        return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
+                    }
+                    else {
+                        return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
+                    }
+                });
+            }
 
         $http
             .get("api/v2/price-stats" + $scope.apikey)
             .then(function(response) {
-                $scope.sta = response.data;
-                var cat = [];
-                for (var i in $scope.sta) {
-                    cat.push($scope.sta[i].year);
-                    switch ($scope.sta[i].province) {
-                        case "sevilla":
-                            dataS.push(parseInt($scope.sta[i].pricevirgen));
-                            break;
-                        case "malaga":
-                            dataM.push(parseInt($scope.sta[i].pricevirgen));
-                            break;
-                        case "cadiz":
-                            dataCa.push(parseInt($scope.sta[i].pricevirgen));
-                            break;
-                        case "granada":
-                            dataG.push(parseInt($scope.sta[i].pricevirgen));
-                            break;
-                        case "cordoba":
-                            dataCo.push(parseInt($scope.sta[i].pricevirgen));
-                            break;
-                        case "almeria":
-                            dataA.push(parseInt($scope.sta[i].pricevirgen));
-                            break;
-                        case "huelva":
-                            dataH.push(parseInt($scope.sta[i].pricevirgen));
-                            break;
-                        case "sevilla":
-                            dataS.push(parseInt($scope.sta[i].pricevirgen));
-                            break;
-                    }
-                }
-                cat.sort();
-                categoriesH = cat.filter(function(elem, index, self) {
-                    return index == self.indexOf(elem);
-                });
+                        $scope.sta = response.data;
+                        sortResults('year', true);
+                        var cat = [];
+                        for (var i in $scope.sta) {
+                            cat.push($scope.sta[i].year);
+                            switch ($scope.sta[i].province) {
+                                case "sevilla":
+                                    dataS.push(parseInt($scope.sta[i].pricevirgen));
+                                    break;
+                                case "malaga":
+                                    dataM.push(parseInt($scope.sta[i].pricevirgen));
+                                    break;
+                                case "cadiz":
+                                    dataCa.push(parseInt($scope.sta[i].pricevirgen));
+                                    break;
+                                case "granada":
+                                    dataG.push(parseInt($scope.sta[i].pricevirgen));
+                                    break;
+                                case "cordoba":
+                                    dataCo.push(parseInt($scope.sta[i].pricevirgen));
+                                    break;
+                                case "almeria":
+                                    dataA.push(parseInt($scope.sta[i].pricevirgen));
+                                    break;
+                                case "huelva":
+                                    dataH.push(parseInt($scope.sta[i].pricevirgen));
+                                    break;
+                                case "sevilla":
+                                    dataS.push(parseInt($scope.sta[i].pricevirgen));
+                                    break;
+                            }
+                        }
+                        cat.sort();
+                        categoriesH = cat.filter(function(elem, index, self) {
+                            return index == self.indexOf(elem);
+                        });
+                        
+                        
                 Highcharts.chart('container', {
                     chart: {
-                        type: 'Ember Charts'
+                        type: 'area'
                     },
                     title: {
                         text: 'Price of virgen extra in Andalucia'

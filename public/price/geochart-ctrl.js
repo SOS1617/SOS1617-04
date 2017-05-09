@@ -20,6 +20,7 @@ angular.module("ManagerApp")
                         $scope.sta = response.data;
                         for (var i in $scope.sta) {
                             if ($scope.sta[i].year === $scope.year) {
+                                console.log($scope.sta[i]);
                                 switch ($scope.sta[i].province) {
                                     case "sevilla":
                                         dataS.push("sevilla");
@@ -64,10 +65,12 @@ angular.module("ManagerApp")
                                 }
                             }
                         }
-                        console.log(dataH);
+                        //console.log(dataH);
 
                         google.charts.load('current', {
-                            'packages': ['geochart'], //                             mapsApiKey: "AIzaSyD3cwim5y4k5XplhEsTj_AuLYdu6rQHq2o"
+                            'packages': ['geochart'],                              
+                            mapsApiKey: "AIzaSyD3cwim5y4k5XplhEsTj_AuLYdu6rQHq2o"
+                            
                         });
                         google.charts.setOnLoadCallback(drawMarkersMap);
 
