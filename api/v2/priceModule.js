@@ -45,27 +45,130 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
             {
                 //
                 console.log("INFO: Creando datos");
-                var datos = [{
+                var datos = [
+                       
+                // 2013
+                {
                     "province": "sevilla",
-                    "year": "2016",
-                    "priceaceite": "3.416",
+                    "year": "2013",
+                    "priceaceite": "0.416",
+                    "priceextra": "0.71",
+                    "pricevirgen": "3.484"
+                }, {
+                    "province": "huelva",
+                    "year": "2013",
+                    "priceaceite": "4.416",
+                    "priceextra": "13.51",
+                    "pricevirgen": "3.92"
+                }, {
+                    "province": "cordoba",
+                    "year": "2013",
+                    "priceaceite": "4.416",
+                    "priceextra": "9.51",
+                    "pricevirgen": "3.92"
+                }, {
+                    "province": "almeria",
+                    "year": "2013",
+                    "priceaceite": "24.416",
+                    "priceextra": "3.51",
+                    "pricevirgen": "3.92"
+                }, {
+                    "province": "malaga",
+                    "year": "2013",
+                    "priceaceite": "1.46",
+                    "priceextra": "0.57",
+                    "pricevirgen": "7.82"
+                }, {
+                    "province": "cadiz",
+                    "year": "2013",
+                    "priceaceite": "0.316",
+                    "priceextra": "4.28",
+                    "pricevirgen": "3.17"
+                }, {
+                    "province": "jaen",
+                    "year": "2013",
+                    "priceaceite": "20.258",
+                    "priceextra": "0.782",
+                    "pricevirgen": "3.148"
+                }, {
+                    "province": "granada",
+                    "year": "2013",
+                    "priceaceite": "2.258",
+                    "priceextra": "1.782",
+                    "pricevirgen": "3.148"
+                },
+                // 2014
+                {
+                    "province": "sevilla",
+                    "year": "2014",
+                    "priceaceite": "8.416",
                     "priceextra": "3.71",
                     "pricevirgen": "3.484"
                 }, {
                     "province": "huelva",
-                    "year": "2016",
+                    "year": "2014",
                     "priceaceite": "4.416",
-                    "priceextra": "3.51",
+                    "priceextra": "13.51",
                     "pricevirgen": "3.92"
                 }, {
                     "province": "cordoba",
-                    "year": "2016",
-                    "priceaceite": "4.416",
+                    "year": "2014",
+                    "priceaceite": "24.416",
                     "priceextra": "3.51",
                     "pricevirgen": "3.92"
                 }, {
                     "province": "almeria",
                     "year": "2014",
+                    "priceaceite": "4.416",
+                    "priceextra": "3.51",
+                    "pricevirgen": "3.92"
+                }, {
+                    "province": "malaga",
+                    "year": "2014",
+                    "priceaceite": "9.46",
+                    "priceextra": "10.57",
+                    "pricevirgen": "7.82"
+                }, {
+                    "province": "cadiz",
+                    "year": "2014",
+                    "priceaceite": "0.316",
+                    "priceextra": "4.28",
+                    "pricevirgen": "3.17"
+                }, {
+                    "province": "jaen",
+                    "year": "2014",
+                    "priceaceite": "2.258",
+                    "priceextra": "0.782",
+                    "pricevirgen": "3.148"
+                }, {
+                    "province": "granada",
+                    "year": "2014",
+                    "priceaceite": "2.258",
+                    "priceextra": "1.782",
+                    "pricevirgen": "3.148"
+                },
+                // 2015
+                {
+                    "province": "sevilla",
+                    "year": "2015",
+                    "priceaceite": "3.416",
+                    "priceextra": "3.71",
+                    "pricevirgen": "3.484"
+                }, {
+                    "province": "huelva",
+                    "year": "2015",
+                    "priceaceite": "4.416",
+                    "priceextra": "3.51",
+                    "pricevirgen": "3.92"
+                }, {
+                    "province": "cordoba",
+                    "year": "2015",
+                    "priceaceite": "4.416",
+                    "priceextra": "3.51",
+                    "pricevirgen": "3.92"
+                }, {
+                    "province": "almeria",
+                    "year": "2015",
                     "priceaceite": "4.416",
                     "priceextra": "3.51",
                     "pricevirgen": "3.92"
@@ -77,7 +180,7 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
                     "pricevirgen": "7.82"
                 }, {
                     "province": "cadiz",
-                    "year": "2016",
+                    "year": "2015",
                     "priceaceite": "3.316",
                     "priceextra": "4.28",
                     "pricevirgen": "3.17"
@@ -93,7 +196,8 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
                     "priceaceite": "2.258",
                     "priceextra": "6.782",
                     "pricevirgen": "3.148"
-                }];
+                }
+                ];
                 dbLuis.insert(datos);
         
                 //
