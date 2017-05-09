@@ -2,7 +2,7 @@ angular.module("ManagerApp")
     .controller("GeochartsCtrlPrice", ["$scope", "$http", "$location", function($scope, $http, $location) {
 
         $scope.apikey = "?apikey=12345"
-        console.log("GeochartsCtrl");
+        console.log("GeochartsCtrlPrice");
 
 
         $scope.change = function() {
@@ -67,9 +67,7 @@ angular.module("ManagerApp")
                         console.log(dataH);
 
                         google.charts.load('current', {
-                            'packages': ['geochart'],
-                            mapsApiKey: "AIzaSyD3cwim5y4k5XplhEsTj_AuLYdu6rQHq2o"
-                            
+                            'packages': ['geochart'], //                             mapsApiKey: "AIzaSyD3cwim5y4k5XplhEsTj_AuLYdu6rQHq2o"
                         });
                         google.charts.setOnLoadCallback(drawMarkersMap);
 

@@ -1,7 +1,7 @@
 angular.module("ManagerApp")
     .controller("HighchartsCtrlPrice", ["$scope", "$http", "$location", function($scope, $http, $location) {
         $scope.apikey = "?apikey=12345"
-        console.log("HighchartsCtrl");
+        console.log("HighchartsCtrlPrice");
         var categoriesH = [];
         var dataS = [];
         var dataM = [];
@@ -24,28 +24,28 @@ angular.module("ManagerApp")
                     cat.push($scope.sta[i].year);
                     switch ($scope.sta[i].province) {
                         case "sevilla":
-                            dataS.push(parseInt($scope.sta[i].oil));
+                            dataS.push(parseInt($scope.sta[i].pricevirgen));
                             break;
                         case "malaga":
-                            dataM.push(parseInt($scope.sta[i].oil));
+                            dataM.push(parseInt($scope.sta[i].pricevirgen));
                             break;
                         case "cadiz":
-                            dataCa.push(parseInt($scope.sta[i].oil));
+                            dataCa.push(parseInt($scope.sta[i].pricevirgen));
                             break;
                         case "granada":
-                            dataG.push(parseInt($scope.sta[i].oil));
+                            dataG.push(parseInt($scope.sta[i].pricevirgen));
                             break;
                         case "cordoba":
-                            dataCo.push(parseInt($scope.sta[i].oil));
+                            dataCo.push(parseInt($scope.sta[i].pricevirgen));
                             break;
                         case "almeria":
-                            dataA.push(parseInt($scope.sta[i].oil));
+                            dataA.push(parseInt($scope.sta[i].pricevirgen));
                             break;
                         case "huelva":
-                            dataH.push(parseInt($scope.sta[i].oil));
+                            dataH.push(parseInt($scope.sta[i].pricevirgen));
                             break;
                         case "sevilla":
-                            dataS.push(parseInt($scope.sta[i].oil));
+                            dataS.push(parseInt($scope.sta[i].pricevirgen));
                             break;
                     }
                 }
@@ -58,7 +58,7 @@ angular.module("ManagerApp")
                         type: 'Ember Charts'
                     },
                     title: {
-                        text: 'Price of oil in Andalucia'
+                        text: 'Price of virgen extra in Andalucia'
                     },
                     subtitle: {
                         text: 'Source: Junta de Andalucia'

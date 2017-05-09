@@ -54,6 +54,18 @@ angular.module("ManagerApp", ["angularUtils.directives.dirPagination", "ngRoute"
             templateUrl: "/area/plotly.html",
             controller: "PlotlyCtrl"
         })
+         .when("/highPrice", {
+            templateUrl: "/price/highcharts.html",
+            controller: "HighchartsCtrlPrice"
+        })
+         .when("/geoPrice", {
+            templateUrl: "/price/geochart.html",
+            controller: "GeochartsCtrlPrice"
+        })/*
+        .when("/tauExport", {
+            templateUrl: "/price/tauchart.html",
+            controller: "TauchartsCtrlPrice"
+        })*/
         ;
 
 
