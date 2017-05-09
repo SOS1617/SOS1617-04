@@ -31,19 +31,10 @@ angular.module("ManagerApp")
                             ]
                         });
                         chart.renderTo('#scatter');
-
-                     
-
                     },
                     function(response) {
                         $scope.sta = [];
                     });
-
-
-
-
-
-
         }
 
     }]);

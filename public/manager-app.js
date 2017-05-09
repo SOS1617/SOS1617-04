@@ -32,11 +32,11 @@ angular.module("ManagerApp", ["angularUtils.directives.dirPagination", "ngRoute"
         })
          .when("/highExport", {
             templateUrl: "/export/highcharts.html",
-            controller: "HighchartsCtrl"
+            controller: "HighExportCtrl"
         })
          .when("/geoExport", {
             templateUrl: "/export/geochart.html",
-            controller: "GeochartsCtrl"
+            controller: "GeoExportCtrl"
         })
         .when("/tauExport", {
             templateUrl: "/export/tauchart.html",

@@ -1,5 +1,5 @@
 angular.module("ManagerApp")
-    .controller("GeochartsCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
+    .controller("GeoExportCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
 
         $scope.apikey = "?apikey=12345"
         console.log("GeochartsCtrl");
