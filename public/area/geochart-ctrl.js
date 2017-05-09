@@ -1,5 +1,5 @@
 angular.module("ManagerApp")
-    .controller("GeochartsCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
+    .controller("GeoAreaCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
 
         $scope.apikey = "?apikey=12345"
         console.log("GeochartsCtrl");
@@ -67,13 +67,14 @@ angular.module("ManagerApp")
                         console.log(dataH);
 
                         google.charts.load('current', {
-                            'packages': ['geochart']
+                            'packages': ['geochart'],
+                             mapsApiKey: "AIzaSyD3cwim5y4k5XplhEsTj_AuLYdu6rQHq2o"
                         });
                         google.charts.setOnLoadCallback(drawMarkersMap);
 
                         function drawMarkersMap() {
                             var data = google.visualization.arrayToDataTable([
-                                ['City', 'Area(Tons)', 'Production(Tons)'],
+                                ['City', 'Area', 'Production(Tons)'],
                                 dataS, dataM, dataCa, dataG, dataCo, dataA, dataJ, dataH
                             ]);
 

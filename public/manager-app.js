@@ -44,11 +44,11 @@ angular.module("ManagerApp", ["angularUtils.directives.dirPagination", "ngRoute"
         })
         .when("/highArea", {
             templateUrl: "/area/highcharts.html",
-            controller: "HighchartsCtrl"
+            controller: "HighAreaCtrl"
         })
          .when("/geoArea", {
             templateUrl: "/area/geochart.html",
-            controller: "GeochartsCtrl"
+            controller: "GeoAreaCtrl"
         })
         .when("/plotlyArea", {
             templateUrl: "/area/plotly.html",
