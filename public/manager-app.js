@@ -70,6 +70,7 @@ angular.module("ManagerApp", ["angularUtils.directives.dirPagination", "ngRoute"
             templateUrl: "/analytics.html",
             
         })
+<<<<<<< HEAD
 
 
     console.log("App initialized");
@@ -142,6 +143,8 @@ angular.module("ManagerApp", ["angularUtils.directives.dirPagination", "ngRoute"
             controller: "EmberChartsCtrlPrice"
         })
         ;
+=======
+>>>>>>> 5ee4f9b020fce86f48794c90a4af1ad9be2bd97c
 
 
     console.log("App initialized");

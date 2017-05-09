@@ -99,11 +99,144 @@ exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
                     "areaS": "802",
 
                 }, {
-                    "province": "huelva",
+                    "province": "cordoba",
                     "year": "2013",
                     "productionS": "772",
                     "areaS": "84"
-                }, ];
+                },
+                {
+                    "province": "sevilla",
+                    "year": "2013",
+                    "productionS": "600",
+                    "areaS": "100"
+                },
+                {
+                    "province": "huelva",
+                    "year": "2013",
+                    "productionS": "200",
+                    "areaS": "100"
+                },
+                {
+                    "province": "cadiz",
+                    "year": "2013",
+                    "productionS": "450",
+                    "areaS": "80"
+                },
+                {
+                    "province": "malaga",
+                    "year": "2013",
+                    "productionS": "800",
+                    "areaS": "120"
+                },
+                {
+                    "province": "granada",
+                    "year": "2013",
+                    "productionS": "375",
+                    "areaS": "802",
+
+                }, {
+                    "province": "almeria",
+                    "year": "2013",
+                    "productionS": "772",
+                    "areaS": "84"
+                },
+                {
+                    "province": "jaen",
+                    "year": "2014",
+                    "productionS": "600",
+                    "areaS": "100"
+                },
+                {
+                    "province": "cordoba",
+                    "year": "2014",
+                    "productionS": "200",
+                    "areaS": "100"
+                },
+                {
+                    "province": "sevilla",
+                    "year": "2014",
+                    "productionS": "450",
+                    "areaS": "80"
+                },
+                {
+                    "province": "huelva",
+                    "year": "2014",
+                    "productionS": "800",
+                    "areaS": "120"
+                },
+                 {
+                    "province": "cadiz",
+                    "year": "2014",
+                    "productionS": "450",
+                    "areaS": "80"
+                },
+                {
+                    "province": "malaga",
+                    "year": "2014",
+                    "productionS": "800",
+                    "areaS": "120"
+                },
+                {
+                    "province": "granada",
+                    "year": "2014",
+                    "productionS": "375",
+                    "areaS": "802",
+
+                }, {
+                    "province": "almeria",
+                    "year": "2014",
+                    "productionS": "772",
+                    "areaS": "84"
+                },
+                {
+                    "province": "jaen",
+                    "year": "2015",
+                    "productionS": "600",
+                    "areaS": "100"
+                },
+                {
+                    "province": "cordoba",
+                    "year": "2015",
+                    "productionS": "200",
+                    "areaS": "100"
+                },
+                {
+                    "province": "sevilla",
+                    "year": "2015",
+                    "productionS": "450",
+                    "areaS": "80"
+                },
+                {
+                    "province": "huelva",
+                    "year": "2015",
+                    "productionS": "800",
+                    "areaS": "120"
+                },
+                 {
+                    "province": "cadiz",
+                    "year": "2015",
+                    "productionS": "450",
+                    "areaS": "80"
+                },
+                {
+                    "province": "malaga",
+                    "year": "2015",
+                    "productionS": "800",
+                    "areaS": "120"
+                },
+                {
+                    "province": "granada",
+                    "year": "2015",
+                    "productionS": "375",
+                    "areaS": "802",
+
+                }, {
+                    "province": "almeria",
+                    "year": "2015",
+                    "productionS": "772",
+                    "areaS": "84"
+                },
+                ];
 
                 dbAdrian.insert(initialStats);
                 console.log("Date insert in db");
