@@ -1,6 +1,6 @@
 describe('Add data', function () {
 	it('should add a new data', function (){
-		browser.get('https://localhost:8080');
+		browser.get('https://https://sos1617-04.herokuapp.com/#!/area/');
 
 		element.all(by.repeater('dataUnit in data')).then(function (initialResults){
 				browser.driver.sleep(2000);
