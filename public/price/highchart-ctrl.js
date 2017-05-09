@@ -1,5 +1,5 @@
 angular.module("ManagerApp")
-    .controller("HighchartsCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
+    .controller("HighchartsCtrlPrice", ["$scope", "$http", "$location", function($scope, $http, $location) {
         $scope.apikey = "?apikey=12345"
         console.log("HighchartsCtrl");
         var categoriesH = [];

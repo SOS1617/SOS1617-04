@@ -1,5 +1,5 @@
 angular.module("ManagerApp")
-    .controller("TauchartsCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
+    .controller("TauchartsCtrlPrice", ["$scope", "$http", "$location", function($scope, $http, $location) {
 
         $scope.apikey = "?apikey=12345"
         console.log("TauchartsCtrl");

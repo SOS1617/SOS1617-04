@@ -1,5 +1,5 @@
 angular.module("ManagerApp")
-    .controller("GeochartsCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
+    .controller("GeochartsCtrlPrice", ["$scope", "$http", "$location", function($scope, $http, $location) {
 
         $scope.apikey = "?apikey=12345"
         console.log("GeochartsCtrl");
@@ -23,43 +23,43 @@ angular.module("ManagerApp")
                                 switch ($scope.sta[i].province) {
                                     case "sevilla":
                                         dataS.push("sevilla");
-                                        dataS.push(parseInt($scope.sta[i].pricevIrgen));
-                                        dataS.push(parseInt($scope.sta[i].priceeXtra));
+                                        dataS.push(parseInt($scope.sta[i].pricevirgen));
+                                        dataS.push(parseInt($scope.sta[i].priceextra));
                                         break;
                                     case "malaga":
                                         dataM.push("malaga");
-                                        dataM.push(parseInt($scope.sta[i].pricevIrgen));
-                                        dataM.push(parseInt($scope.sta[i].priceeXtra));
+                                        dataM.push(parseInt($scope.sta[i].pricevirgen));
+                                        dataM.push(parseInt($scope.sta[i].priceextra));
                                         break;
                                     case "cadiz":
                                         dataCa.push("cadiz");
-                                        dataCa.push(parseInt($scope.sta[i].pricevIrgen));
-                                        dataCa.push(parseInt($scope.sta[i].priceeXtra));
+                                        dataCa.push(parseInt($scope.sta[i].pricevirgen));
+                                        dataCa.push(parseInt($scope.sta[i].priceextra));
                                         break;
                                     case "granada":
                                         dataG.push("granada");
-                                        dataG.push(parseInt($scope.sta[i].pricevIrgen));
-                                        dataG.push(parseInt($scope.sta[i].priceeXtra));
+                                        dataG.push(parseInt($scope.sta[i].pricevirgen));
+                                        dataG.push(parseInt($scope.sta[i].priceextra));
                                         break;
                                     case "cordoba":
                                         dataCo.push("cordoba");
-                                        dataCo.push(parseInt($scope.sta[i].pricevIrgen));
-                                        dataCo.push(parseInt($scope.sta[i].priceeXtra));
+                                        dataCo.push(parseInt($scope.sta[i].pricevirgen));
+                                        dataCo.push(parseInt($scope.sta[i].priceextra));
                                         break;
                                     case "almeria":
                                         dataA.push("almeria");
-                                        dataA.push(parseInt($scope.sta[i].pricevIrgen));
-                                        dataA.push(parseInt($scope.sta[i].priceeXtra));
+                                        dataA.push(parseInt($scope.sta[i].pricevirgen));
+                                        dataA.push(parseInt($scope.sta[i].priceextra));
                                         break;
                                     case "jaen":
                                         dataJ.push("jaen");
-                                        dataJ.push(parseInt($scope.sta[i].pricevIrgen));
-                                        dataJ.push(parseInt($scope.sta[i].priceeXtra));
+                                        dataJ.push(parseInt($scope.sta[i].pricevirgen));
+                                        dataJ.push(parseInt($scope.sta[i].priceextra));
                                         break;
                                     case "huelva":
                                         dataH.push("huelva");
-                                        dataH.push(parseInt($scope.sta[i].pricevIrgen));
-                                        dataH.push(parseInt($scope.sta[i].priceeXtra));
+                                        dataH.push(parseInt($scope.sta[i].pricevirgen));
+                                        dataH.push(parseInt($scope.sta[i].priceextra));
                                         break;
                                 }
                             }
@@ -75,7 +75,7 @@ angular.module("ManagerApp")
 
                         function drawMarkersMap() {
                             var data = google.visualization.arrayToDataTable([
-                                ['City', 'Import(Tons)', 'Export(Tons)'],
+                                ['City', 'Price Virgen (Eur)', 'Price Extra (Eur)'],
                                 dataS, dataM, dataCa, dataG, dataCo, dataA, dataJ, dataH
                             ]);
 
