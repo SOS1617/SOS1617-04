@@ -61,7 +61,12 @@ angular.module("ManagerApp", ["angularUtils.directives.dirPagination", "ngRoute"
          .when("/geoPrice", {
             templateUrl: "/price/geochart.html",
             controller: "GeochartsCtrlPrice"
-        })/*
+        })
+        .when("/googlePrice", {
+            templateUrl: "/price/googlechart.html",
+            controller: "GoogleChartsCtrlPrice"
+        })
+        /*
         .when("/tauExport", {
             templateUrl: "/price/tauchart.html",
             controller: "TauchartsCtrlPrice"
