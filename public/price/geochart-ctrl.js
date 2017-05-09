@@ -76,7 +76,7 @@ angular.module("ManagerApp")
 
                         function drawMarkersMap() {
                             var data = google.visualization.arrayToDataTable([
-                                ['City', 'Import(Tons)', 'Export(Tons)'],
+                                ['City', 'Price aceite', 'Price Extra'],
                                 dataS, dataM, dataCa, dataG, dataCo, dataA, dataJ, dataH
                             ]);
 
