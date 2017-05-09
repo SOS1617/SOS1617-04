@@ -18,6 +18,7 @@
     "angular-route": "^1.6.4",
     "angular": "^1.6.4",
     "bootstrap": "^3.3.7",
-    "taucharts": "^1.1.3"
+    "taucharts": "^1.1.3",
+    "plotlyjs": "plotly#^1.18.1"
   }
 }
