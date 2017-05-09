@@ -63,32 +63,20 @@ angular.module("ManagerApp")
                                 }
                             }
                         }
-                        console.log(dataH);
-                
-                
-                
-                
                 
                 var data = [{
                     x: ['sevilla', 'malaga', 'cadiz', 'granada','cordoba','almeria','huelva','jaen'],
-                    y: [dataS, dataM, dataCa, dataG, dataCo, dataA, dataH, dataJ],
+                    y: [dataS[0], dataM[0], dataCa[0], dataG[0], dataCo[0], dataA[0], dataH[0], dataJ[0]],
                     type: 'bar'
                 }];
 
                 Plotly.newPlot('myDiv', data); 
-               
                      
 
                     },
                     function(response) {
                         $scope.sta = [];
                     });
-
-
-
-
-
-
         }
 
     }]);

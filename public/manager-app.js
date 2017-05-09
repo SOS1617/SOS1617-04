@@ -66,7 +66,10 @@ angular.module("ManagerApp", ["angularUtils.directives.dirPagination", "ngRoute"
             templateUrl: "/price/tauchart.html",
             controller: "TauchartsCtrlPrice"
         })*/
-        ;
+        .when("/analytics", {
+            templateUrl: "/analytics.html",
+            
+        })
 
 
     console.log("App initialized");
