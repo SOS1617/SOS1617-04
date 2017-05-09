@@ -15,7 +15,7 @@ angular.module("ManagerApp")
             var dataJ = [];
             var dataH = [];
             $http
-                .get("api/v2/export-and-import" + $scope.apikey)
+                .get("api/v2/price-stats" + $scope.apikey)
                 .then(function(response) {
                         $scope.sta = response.data;
                         for (var i in $scope.sta) {
@@ -23,43 +23,43 @@ angular.module("ManagerApp")
                                 switch ($scope.sta[i].province) {
                                     case "sevilla":
                                         dataS.push("sevilla");
-                                        dataS.push(parseInt($scope.sta[i].importS));
-                                        dataS.push(parseInt($scope.sta[i].exportS));
+                                        dataS.push(parseInt($scope.sta[i].pricevIrgen));
+                                        dataS.push(parseInt($scope.sta[i].priceeXtra));
                                         break;
                                     case "malaga":
                                         dataM.push("malaga");
-                                        dataM.push(parseInt($scope.sta[i].importS));
-                                        dataM.push(parseInt($scope.sta[i].exportS));
+                                        dataM.push(parseInt($scope.sta[i].pricevIrgen));
+                                        dataM.push(parseInt($scope.sta[i].priceeXtra));
                                         break;
                                     case "cadiz":
                                         dataCa.push("cadiz");
-                                        dataCa.push(parseInt($scope.sta[i].importS));
-                                        dataCa.push(parseInt($scope.sta[i].exportS));
+                                        dataCa.push(parseInt($scope.sta[i].pricevIrgen));
+                                        dataCa.push(parseInt($scope.sta[i].priceeXtra));
                                         break;
                                     case "granada":
                                         dataG.push("granada");
-                                        dataG.push(parseInt($scope.sta[i].importS));
-                                        dataG.push(parseInt($scope.sta[i].exportS));
+                                        dataG.push(parseInt($scope.sta[i].pricevIrgen));
+                                        dataG.push(parseInt($scope.sta[i].priceeXtra));
                                         break;
                                     case "cordoba":
                                         dataCo.push("cordoba");
-                                        dataCo.push(parseInt($scope.sta[i].importS));
-                                        dataCo.push(parseInt($scope.sta[i].exportS));
+                                        dataCo.push(parseInt($scope.sta[i].pricevIrgen));
+                                        dataCo.push(parseInt($scope.sta[i].priceeXtra));
                                         break;
                                     case "almeria":
                                         dataA.push("almeria");
-                                        dataA.push(parseInt($scope.sta[i].importS));
-                                        dataA.push(parseInt($scope.sta[i].exportS));
+                                        dataA.push(parseInt($scope.sta[i].pricevIrgen));
+                                        dataA.push(parseInt($scope.sta[i].priceeXtra));
                                         break;
                                     case "jaen":
                                         dataJ.push("jaen");
-                                        dataJ.push(parseInt($scope.sta[i].importS));
-                                        dataJ.push(parseInt($scope.sta[i].exportS));
+                                        dataJ.push(parseInt($scope.sta[i].pricevIrgen));
+                                        dataJ.push(parseInt($scope.sta[i].priceeXtra));
                                         break;
                                     case "huelva":
                                         dataH.push("huelva");
-                                        dataH.push(parseInt($scope.sta[i].importS));
-                                        dataH.push(parseInt($scope.sta[i].exportS));
+                                        dataH.push(parseInt($scope.sta[i].pricevIrgen));
+                                        dataH.push(parseInt($scope.sta[i].priceeXtra));
                                         break;
                                 }
                             }
