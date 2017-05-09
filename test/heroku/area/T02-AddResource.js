@@ -5,8 +5,8 @@ describe('Add data', function () {
 		element.all(by.repeater('dataUnit in data')).then(function (initialResults){
 				browser.driver.sleep(2000);
 	
-				element(by.model('newData.province')).sendKeys('Sevilla');
-				element(by.model('newData.year')).sendKeys('2015');
+				element(by.model('newData.province')).sendKeys('prueba');
+				element(by.model('newData.year')).sendKeys('2013');
 				element(by.model('newData.area')).sendKeys('50');
 				element(by.model('newData.production')).sendKeys('20');
 				
