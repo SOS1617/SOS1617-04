@@ -18,8 +18,8 @@ angular.module("ManagerApp", ["angularUtils.directives.dirPagination", "ngRoute"
             templateUrl: "/price/listPrice.html",
             controller: "ListCtrlPrice"
         })
-        .when("/price/:province/:year", {
-            templateUrl: "/export/editPrice.html",
+        .when("/price-stats/:province/:year", {
+            templateUrl: "/price/editPrice.html",
             controller: "EditCtrlPrice"
         })
         .when("/area", {

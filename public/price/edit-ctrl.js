@@ -4,29 +4,24 @@ angular.module("ManagerApp")
         console.log("EditCtrl");
         refresh();
 
-
         function refresh() {
             $http
                 .get("/api/v2/price-stats/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey)
                 .then(function(response) {
                     $scope.data = JSON.stringify(response.data, null, 2);
-                    $scope.updateStat = response.data[0];
+                    $scope.updateStat = (response.data[0])? response.data[0] : response.data;
                 });
         }
 
-
         $scope.updateS = function() {
             var stat = new Object();
-            stat.province = $scope.updateStat.province;
-            stat.year = $scope.updateStat.year;
-            stat.oil = $scope.updateStat.oil;
-            stat.importS = $scope.updateStat.importS;
-            stat.exportS = $scope.updateStat.exportS;
+            stat.priceaceite = $scope.updateStat.priceaceite;
+            stat.pricevirgen = $scope.updateStat.pricevirgen;
+            stat.priceextra = $scope.updateStat.priceextra;
 
             console.log(stat);
             $http
-
-                .put("api/v2/price-stats/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey, stat)
+                .put("api/v2/price-stats/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey, $scope.updateStat)
                 .then(function(response) {
                     $scope.errorMessage = bootbox.alert("Correct Update");
                 }, function(response) {
@@ -38,10 +33,8 @@ angular.module("ManagerApp")
                         $scope.errorMessage = bootbox.alert("Stat not exists");
                     }
                 });
-            $location.path("/export");
+            $location.path("/price");
 
         };
-
-
 
     }]);
