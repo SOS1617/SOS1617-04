@@ -15,13 +15,15 @@ angular.module("ManagerApp")
 
         $scope.updateS = function() {
             var stat = new Object();
+            stat.province = $routeParams.province;
+            stat.year = $routeParams.year;
             stat.priceaceite = $scope.updateStat.priceaceite;
             stat.pricevirgen = $scope.updateStat.pricevirgen;
             stat.priceextra = $scope.updateStat.priceextra;
 
             console.log(stat);
             $http
-                .put("api/v2/price-stats/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey, $scope.updateStat)
+                .put("api/v2/price-stats/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey, stat)
                 .then(function(response) {
                     $scope.errorMessage = bootbox.alert("Correct Update");
                 }, function(response) {

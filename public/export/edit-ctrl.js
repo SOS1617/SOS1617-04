@@ -4,7 +4,6 @@ angular.module("ManagerApp")
         console.log("EditCtrl");
         refresh();
 
-
         function refresh() {
             $http
                 .get("/api/v2/export-and-import/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey)
