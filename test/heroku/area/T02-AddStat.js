@@ -1,7 +1,7 @@
 describe('Add data', function () {
 	it('should add a new data', function (){
 		browser.get('https://https://sos1617-04.herokuapp.com/#!/area/');
-
+		element(by.model('api')).sendKeys('12345');
 		element.all(by.repeater('dataUnit in data')).then(function (initialResults){
 				browser.driver.sleep(2000);
 	
