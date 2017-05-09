@@ -1,5 +1,5 @@
 angular.module("ManagerApp")
-.controller("EditCtrlArea", ["$scope", "$http","$routeParams", function($scope, $http,$routeParams) {
+.controller("EditCtrlArea", ["$scope", "$http","$routeParams", "$location", function($scope, $http,$routeParams,$location) {
     $scope.apikey="?apikey=12345"
     console.log("EditCtrl");
     refresh();
@@ -25,7 +25,7 @@ angular.module("ManagerApp")
 
         
         $http
-            .put("api/v2/area-and-production/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey, $scope.updateStat)
+            .put("api/v2/area-and-production/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey, stat)
             .then(function(response) {
                 $scope.errorMessage = bootbox.alert("Correct Update");
                 
