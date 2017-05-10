@@ -1,11 +1,11 @@
-describe('Data is loaded', function () {
-	it('should show a bunch of data', function (){
-		//browser.get('https://localhost:8080');
-		browser.get('https://sos1617-04.herokuapp.com/#!/area');
-		browser.driver.sleep(2000);
-		element(by.model('api')).sendKeys('12345');
-		var data = element.all(by.repeater('dataUnit in data'));
+describe('Data is loaded', function() {
+			it('should show a bunch of data', function() {
+				browser.get('https://sos1617-04.herokuapp.com/#!/area');
+				element(by.model('api')).sendKeys('12345');
+				element(by.buttonText('Send')).click().then(function() {
+					var results = element.all(by.repeater('stat in stats'));
+					expect(results.count()).toBeGreaterThan(1);
+				});
 
-		expect(data.count()).toBeGreaterThan(5);
-	});
-});
+				});
+			});
