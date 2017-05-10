@@ -3,7 +3,7 @@ angular.module("ManagerApp")
         console.log("ListCtrl");
         $scope.stats = [];
         $scope.currentPage = 1;
-        $scope.pageSize = 5;
+        $scope.pageSize = 50;
         var aux=1;
 
 
