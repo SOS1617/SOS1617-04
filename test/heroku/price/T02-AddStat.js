@@ -4,12 +4,12 @@ describe('Add data', function() {
 		element(by.model('api')).sendKeys('12345');
 
 		element(by.buttonText('Send')).click().then(function() {
-			element.all(by.repeater('stat in stats'))
+			element.all(by.repeater('newData in stats'))
 				.then(function(initialResults) {
 					browser.driver.sleep(2000);
 
 					element(by.model('newData.province')).sendKeys('sevilla');
-					element(by.model('newData.year')).sendKeys('2007');
+					element(by.model('newData.year')).sendKeys('2014');
 					element(by.model('newData.priceaceite')).sendKeys('10');
 					element(by.model('newData.priceextra')).sendKeys('8');
 					element(by.model('newData.pricevirgen')).sendKeys('7');
