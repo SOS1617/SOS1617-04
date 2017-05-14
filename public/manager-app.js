@@ -62,18 +62,21 @@ angular.module("ManagerApp", ["angularUtils.directives.dirPagination", "ngRoute"
             templateUrl: "/price/geochart.html",
             controller: "GeochartsCtrlPrice"
         })
-        .when("/googlePrice", {
-            templateUrl: "/price/googlechart.html",
-            controller: "GoogleChartsCtrlPrice"
+        .when("/canvajsPrice", {
+            templateUrl: "/price/canvajschart.html",
+            controller: "canvajsChartsCtrlPrice"
         })
-        /*
-        .when("/tauExport", {
-            templateUrl: "/price/tauchart.html",
-            controller: "TauchartsCtrlPrice"
-        })*/
         .when("/analytics", {
             templateUrl: "/analytics.html",
             
+        })
+         .when("/highPrice1", {
+            templateUrl: "/price/highcharts.1.html",
+            controller: "HighchartsCtrlPrice1"
+        })
+         .when("/highPrice2", {
+            templateUrl: "/price/highcharts.2.html",
+            controller: "HighchartsCtrlPrice2"
         })
 
 });
