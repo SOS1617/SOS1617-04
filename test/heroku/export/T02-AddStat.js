@@ -1,6 +1,6 @@
 describe('Add data', function() {
 			it('should add a new stat', function() {
-				browser.get('http://localhost:8080/#!/export');
+				browser.get('https://sos1617-04.herokuapp.com/#!/export');
 
 				element(by.model('api')).sendKeys('12345');
 
@@ -24,7 +24,7 @@ describe('Add data', function() {
 								browser.driver.sleep(2000);
 								browser.actions().sendKeys(protractor.Key.ENTER).perform();
 							});
-							browser.get('http://localhost:8080/#!/export');
+							browser.get('https://sos1617-04.herokuapp.com/#!/export');
 
 							element(by.model('api')).sendKeys('12345');
 
