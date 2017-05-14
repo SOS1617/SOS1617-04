@@ -19,6 +19,9 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
         });
     }
     
+    /**
+     * Filtrar para mostrar solo los datos de sPrice que estén entre los años from y to, ambos incluidos
+     */
     function searchFrom(sPrice, from, to) {
         var from = parseInt(from);
         var to = parseInt(to);
@@ -38,15 +41,14 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
     app.get(BASE_API_PATH + "/price-stats/loadInitialData", function(request, response) 
     {
         //
-        var res = request.query.apikey;
+        var res = request.query.apikey; // Apikey
+        
         var resul = key(res, function(d) 
         {
             if (d > 0) 
             {
-                //
-                console.log("INFO: Creando datos");
+                // Nuevos datos a añadir
                 var datos = [
-                       
                 // 2013
                 {
                     "province": "sevilla",
@@ -203,10 +205,13 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
                 //
                 response.redirect(200, BASE_API_PATH + "/");
             } else {
+                // No apikey
                 if(!request.query.apikey){
                     console.log("Err401: Login error.");
                     response.sendStatus(401);
-                } else {
+                } 
+                // Apikey incorrecta
+                else {
                     console.log("Err403: Login error.");
                     response.sendStatus(403);
                 }
@@ -220,28 +225,29 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
     // *******************************     *******************************
     app.get(BASE_API_PATH + "/price-stats", function(request, response) 
     {
-        // 
-        var url = request.query;
-        var province = url.province;
-        var year = url.year;
+        var url = request.query; // todas las variables de url
+        var province = url.province; // Provincia para mostrar solo los resultados de ella si está definido en la url
+        var year = url.year; // Igual que provincia, pero con año
         
         // Paginacion por defecto
-        var ose=0;
-        var limite=100;
+        var ose=0; // Inicio
+        var limite=100; // Fin
         
-        //
-        var res = request.query.apikey;
-        var from = url.from;
-        var to = url.to;
+        var res = request.query.apikey; // apikey introducida en la url
+        
+        // Búsqueda por año
+        var from = url.from; // Desde, inclusive from
+        var to = url.to; // Hasta, inclusive to
         
         var resul = key(res, function(d) {
             if (d > 0) {
+                // limit y offset definidos por el usuario
                 if(url.limit!=undefined){
                     limite = parseInt(url.limit);
                     ose = parseInt(url.offset);
                 }
-                console.log("INFO: limit = "+limite);
-                console.log("INFO: New GET request to /price-stats");
+                
+                // from=XXXX&to=XXXX no definidos, se muestran todos los años
                 if (from != undefined && to != undefined) {
                     dbLuis.find({}).skip(ose).limit(limite).toArray(function(err, price) {
                         if (err) {
@@ -250,46 +256,67 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
                         }
                         else {
                             var filted = price.filter((stat) => {
-                            if ((province == undefined || stat.province == province) && (year == undefined || stat.year == year) && (year == undefined || stat.year == year)) {
-                                return stat;
-                            }
+                                // Búsqueda &provincia=XXXX&year=XXXX
+                                if ((province == undefined || stat.province == province) && (year == undefined || stat.year == year) && (year == undefined || stat.year == year)) {
+                                    return stat;
+                                }
                             });
-                            if (filted.length > 0) {
+                            
+                            // 
+                            if (filted.length > 0) { // Ha habido resultados
+                                // Filtrar para quedarnos solos con los que estén entre los años from y to ambos incluidos.
                                 var filted = searchFrom(price,from,to);
+                                // Enviar datos
                                 response.send(filted);
-                            } else {
+                            } 
+                            // No hay datos que mostrar: Error 404
+                            else {
                                 console.log("WARNING: There are not any stat with this properties.");
                                 response.sendStatus(404); // not found
                             }
                         }
                     });
-                } else {
+                } 
+                // from=XXXX&to=XXXX definidos, se muestra solo ese intervalo
+                else {
+                    // Desde ose hasta ose+limite
                     dbLuis.find({}).skip(ose).limit(limite).toArray(function(err, price) {
                         if (err) {
                             console.error('WARNING: Error getting data from DB');
                             response.sendStatus(500); // internal server error
                         }
                         else {
+                            // Filtrar resultados para busqueda por provincia o año
                             var filted = price.filter((stat) => {
+                                // Búsqueda &provincia=XXXX&year=XXXX
                                 if ((province == undefined || stat.province == province) && (year == undefined || stat.year == year)) {
                                     return stat;
                                 }
                             });
+                            
+                            // Enviar los resultados
                             if (filted.length > 0) {
-                               console.log("INFO: Sending stat: " + JSON.stringify(filted, 2, null));
+                               //console.log("INFO: Sending stat: " + JSON.stringify(filted, 2, null));
                                response.send(filted);
-                            } else {
+                            } 
+                            // No hay datos que mostrar: Error 404
+                            else {
                                 console.log("WARNING: There are not any stat with this properties.");
                                 response.sendStatus(404); // not found
                             }
                         }
                     });
                 }
+            
+            // Errores de login
             } else {
+                // No se ha introducido apikey
                 if(!request.query.apikey){
                     console.log("Err401: Login error.");
                     response.sendStatus(401);
-                } else {
+                } 
+                // Se ha introducido apikey, pero es erronea
+                else {
                     console.log("Err403: Login error.");
                     response.sendStatus(403);
                 }
@@ -630,5 +657,3 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
     });
     
 }
-
-//console.log('a');
