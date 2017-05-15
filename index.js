@@ -19,7 +19,7 @@ var moduleExport = require("./api/v2/exportModule.js");
 var modulePrice = require("./api/v2/priceModule.js");
 var moduleArea = require("./api/v2/areaModule.js");
 
-
+var cors= require("cors");
 
 
 var dbAlberto;
@@ -28,7 +28,7 @@ var dbAdrian;
 
 var dbUser;
 
-
+app.use(cors());
 app.use("/", express.static(path.join(__dirname, "public")));
 
 app.use(bodyParser.json()); //use default json enconding/decoding

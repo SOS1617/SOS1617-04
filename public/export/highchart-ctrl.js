@@ -53,11 +53,11 @@ angular.module("ManagerApp")
                                 case "almeria":
                                     dataA.push(parseInt($scope.sta[i].oil));
                                     break;
+                                case "jaen":
+                                    dataJ.push(parseInt($scope.sta[i].oil));
+                                    break;
                                 case "huelva":
                                     dataH.push(parseInt($scope.sta[i].oil));
-                                    break;
-                                case "sevilla":
-                                    dataS.push(parseInt($scope.sta[i].oil));
                                     break;
                             }
                         }

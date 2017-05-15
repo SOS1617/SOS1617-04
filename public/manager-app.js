@@ -78,5 +78,10 @@ angular.module("ManagerApp", ["angularUtils.directives.dirPagination", "ngRoute"
             templateUrl: "/price/highcharts.2.html",
             controller: "HighchartsCtrlPrice2"
         })
+         .when("/highProxyExport", {
+            templateUrl: "/export/highProxyExport.html",
+            controller: "HighProxyExportCtrl"
+        })
+        
 
 });
