@@ -2,8 +2,8 @@ var express = require("express");
 var bodyParser = require("body-parser");;
 var helmet = require("helmet");
 var path = require('path');
-
-
+//ini cors
+var cors = require('cors');
 var app = express();
 var folder = path.join(__dirname, '/public');
 
@@ -31,9 +31,12 @@ var dbUser;
 
 app.use("/", express.static(path.join(__dirname, "public")));
 
-
 app.use(bodyParser.json()); //use default json enconding/decoding
 app.use(helmet()); //improve security
+
+//use cors
+app.use(cors());
+
 
 app.use("/",express.static(path.join(__dirname, 'public')));
 
