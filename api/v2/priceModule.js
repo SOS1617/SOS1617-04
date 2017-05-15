@@ -2,6 +2,34 @@ var exports = module.exports = {};
 
 exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
     
+        app.get("/proxyLuis", (req, res) => {
+      var http = require('http');
+    
+      var options = {
+       host: "sos1617-02.herokuapp.com",
+       path: "/api/v1/rpc-stats?apikey=GVAODcH3"
+      };
+    
+      var request = http.request(options, (response) => {
+       var input = '';
+    
+       response.on('data', function(chunk) {
+        input += chunk;
+       });
+    
+       response.on('end', function() {
+        res.send(input);
+       });
+      });
+    
+      request.on('error', function(e) {
+       res.sendStatus(503);
+      });
+    
+      request.end();
+     });
+ 
+ 
     // *******************************     *******************************
     // 
     // *******************************     *******************************
