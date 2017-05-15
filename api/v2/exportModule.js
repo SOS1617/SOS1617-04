@@ -2,6 +2,33 @@ var exports = module.exports = {};
 
 exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
 
+ app.get("/proxyAlberto", (req, res) => {
+  var http = require('http');
+
+  var options = {
+   host: "sos1617-05.herokuapp.com",
+   path: "/api/v1/economic-situation-stats?apikey=cinco"
+  };
+
+  var request = http.request(options, (response) => {
+   var input = '';
+
+   response.on('data', function(chunk) {
+    input += chunk;
+   });
+
+   response.on('end', function() {
+    res.send(input);
+   });
+  });
+
+  request.on('error', function(e) {
+   res.sendStatus(503);
+  });
+
+  request.end();
+ });
+
  // Authentication apikey=12345
 
  var key = function(request, callback) {
@@ -20,20 +47,21 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
   });
 
  }
- function searchFrom(sExport,from,to){
-   var from = parseInt(from);
-   var to = parseInt(to);
-   var res=[];
-   sExport.forEach((filt)=>{
-    if(filt.year>=from && filt.year<=to){
-     res.push(filt);
-    }
-   });
 
-    return res;
+ function searchFrom(sExport, from, to) {
+  var from = parseInt(from);
+  var to = parseInt(to);
+  var res = [];
+  sExport.forEach((filt) => {
+   if (filt.year >= from && filt.year <= to) {
+    res.push(filt);
+   }
+  });
 
-  
-  
+  return res;
+
+
+
  }
 
 
@@ -67,7 +95,7 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
       }
       else {
        if (sExport.length > 0) {
-        var filted=searchFrom(sExport,from,to);
+        var filted = searchFrom(sExport, from, to);
         response.send(filted);
        }
        else {
@@ -152,8 +180,7 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
        "oil": "97",
        "importS": "66",
        "exportS": "55"
-      },
-      {
+      }, {
        "province": "granada",
        "year": "2013",
        "oil": "385",
@@ -231,8 +258,7 @@ exports.register = function(app, dbAlberto, dbUser, BASE_API_PATH) {
        "oil": "85",
        "importS": "66",
        "exportS": "55"
-      }
-      ];
+      }];
 
       dbAlberto.insert(initialStats);
       console.log("Date insert in db");
