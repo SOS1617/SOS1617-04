@@ -35,28 +35,28 @@ angular.module("ManagerApp")
                             cat.push($scope.sta[i].year);
                             switch ($scope.sta[i].province) {
                                 case "sevilla":
-                                    dataS.push(parseInt($scope.sta[i].pricevirgen));
+                                    dataS.push(parseFloat($scope.sta[i].pricevirgen));
                                     break;
                                 case "malaga":
-                                    dataM.push(parseInt($scope.sta[i].pricevirgen));
+                                    dataM.push(parseFloat($scope.sta[i].pricevirgen));
                                     break;
                                 case "cadiz":
-                                    dataCa.push(parseInt($scope.sta[i].pricevirgen));
+                                    dataCa.push(parseFloat($scope.sta[i].pricevirgen));
                                     break;
                                 case "granada":
-                                    dataG.push(parseInt($scope.sta[i].pricevirgen));
+                                    dataG.push(parseFloat($scope.sta[i].pricevirgen));
                                     break;
                                 case "cordoba":
-                                    dataCo.push(parseInt($scope.sta[i].pricevirgen));
+                                    dataCo.push(parseFloat($scope.sta[i].pricevirgen));
                                     break;
                                 case "almeria":
-                                    dataA.push(parseInt($scope.sta[i].pricevirgen));
+                                    dataA.push(parseFloat($scope.sta[i].pricevirgen));
                                     break;
                                 case "huelva":
-                                    dataH.push(parseInt($scope.sta[i].pricevirgen));
+                                    dataH.push(parseFloat($scope.sta[i].pricevirgen));
                                     break;
                                 case "sevilla":
-                                    dataS.push(parseInt($scope.sta[i].pricevirgen));
+                                    dataS.push(parseFloat($scope.sta[i].pricevirgen));
                                     break;
                             }
                         }

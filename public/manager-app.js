@@ -86,6 +86,9 @@ angular.module("ManagerApp", ["angularUtils.directives.dirPagination", "ngRoute"
             templateUrl: "/export/corsExport.html",
             controller: "CorsExportCtrl"
         })
-        
+        .when("/highProxyArea", {
+            templateUrl: "/area/highProxyArea.html",
+            controller: "HighProxyAreaCtrl"
+        })
 
 });

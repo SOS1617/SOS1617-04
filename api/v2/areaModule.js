@@ -2,6 +2,35 @@ var exports = module.exports = {};
 
 exports.register = function(app, dbAdrian,dbUser, BASE_API_PATH) {
 
+app.get("/proxyAdrian", (req, res) => {
+  var http = require('http');
+
+  var options = {
+   host: "sos1617-03.herokuapp.com",
+   path: "/api/v2/results/?apikey=apisupersecreta"
+  };
+
+  var request = http.request(options, (response) => {
+   var input = '';
+
+   response.on('data', function(chunk) {
+    input += chunk;
+   });
+
+   response.on('end', function() {
+    res.send(input);
+   });
+  });
+
+  request.on('error', function(e) {
+   res.sendStatus(503);
+  });
+
+  request.end();
+ });
+
+
+
 // Authentication apikey=12345
 
  var key = function(request, callback) {

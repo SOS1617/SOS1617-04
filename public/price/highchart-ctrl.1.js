@@ -1,6 +1,5 @@
 angular.module("ManagerApp")
     .controller("HighchartsCtrlPrice1", ["$scope", "$http", "$location", function($scope, $http, $location) {
-        $scope.apikey = "secret";
         $scope.data = {};
         var dataCache = {};
         $scope.country = [];
@@ -13,7 +12,75 @@ angular.module("ManagerApp")
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
 
-        $http.get("https://sos1617-06.herokuapp.com/api/v1/gdp" + "?" + "apikey=" + $scope.apikey).then(function(response) {
+        $scope.apikey = "?apikey=12345"
+        var categoriesH = [];
+        var dataS = [];
+        var dataM = [];
+        var dataCa = [];
+        var dataG = [];
+        var dataCo = [];
+        var dataA = [];
+        var dataJ = [];
+        var dataH = [];
+
+        $scope.sta = [];
+
+        function sortResults(prop, asc) {
+                $scope.sta = $scope.sta.sort(function(a, b) {
+                    if (asc) {
+                        return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
+                    }
+                    else {
+                        return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
+                    }
+                });
+            }
+
+        $http
+            .get("api/v2/price-stats" + $scope.apikey + "&year=2014")
+            .then(function(response) {
+                        $scope.sta = response.data;
+                        sortResults('year', true);
+                        var cat = [];
+                        for (var i in $scope.sta) {
+                            cat.push($scope.sta[i].year);
+                            switch ($scope.sta[i].province) {
+                                case "sevilla":
+                                    dataS.push(parseFloat($scope.sta[i].pricevirgen));
+                                    break;
+                                case "malaga":
+                                    dataM.push(parseFloat($scope.sta[i].pricevirgen));
+                                    break;
+                                case "cadiz":
+                                    dataCa.push(parseFloat($scope.sta[i].pricevirgen));
+                                    break;
+                                case "granada":
+                                    dataG.push(parseFloat($scope.sta[i].pricevirgen));
+                                    break;
+                                case "cordoba":
+                                    dataCo.push(parseFloat($scope.sta[i].pricevirgen));
+                                    break;
+                                case "almeria":
+                                    dataA.push(parseFloat($scope.sta[i].pricevirgen));
+                                    break;
+                                case "huelva":
+                                    dataH.push(parseFloat($scope.sta[i].pricevirgen));
+                                    break;
+                                case "sevilla":
+                                    dataS.push(parseFloat($scope.sta[i].pricevirgen));
+                                    break;
+                            }
+                        }
+                        cat.sort();
+                        categoriesH = cat.filter(function(elem, index, self) {
+                            return index == self.indexOf(elem);
+                        });
+            }, function(response) {
+                $scope.sta = [];
+            });
+
+
+        $http.get("https://sos1617-06.herokuapp.com/api/v1/gdp" + "?" + "apikey=secret").then(function(response) {
 
             dataCache = response.data;
             $scope.data = dataCache;
@@ -24,11 +91,13 @@ angular.module("ManagerApp")
                 $scope.gdp.push(Number($scope.data[i].gdp));
                 $scope.gdp_growth.push(Number($scope.data[i].gdp_growth));
                 $scope.gdp_deflator.push(Number($scope.data[i].gdp_deflator));
-
-                console.log($scope.data[i].country);
             }
-
-
+            
+            //Datos api y precio del aceite de oliva en sevilla en 2014
+            var cats = $scope.country; // categorias
+            cats.push("Sevilla 2014 precio aceite");
+            dataS.unshift(null, null, null, null, null);
+            
             Highcharts.chart('container', {
                 title: {
                     text: 'Highcharts'
@@ -37,7 +106,7 @@ angular.module("ManagerApp")
                     type: 'column'
                 },
                 xAxis: {
-                    categories: $scope.country
+                    categories: cats
                 },
                 legend: {
                     layout: 'vertical',
@@ -70,6 +139,9 @@ angular.module("ManagerApp")
                 }, {
                     name: 'Gdp_Deflator',
                     data: $scope.gdp_deflator
+                }, {
+                    name: 'Precio aceite sevilla 2014',
+                    data: dataS
                 }]
             });
         });
