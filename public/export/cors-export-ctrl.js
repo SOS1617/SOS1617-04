@@ -1,10 +1,7 @@
 angular.module("ManagerApp")
-    .controller("HighProxyExportCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
+    .controller("CorsExportCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
 
-        console.log("ProxyCtrl");
-
-
-
+        console.log("CorsExportCtrl");
 
         $scope.change = function() {
             var dataS = [];
@@ -15,48 +12,19 @@ angular.module("ManagerApp")
             var dataA = [];
             var dataJ = [];
             var dataH = [];
-            var gdpS = [];
-            var gdpM = [];
-            var gdpCa = [];
-            var gdpG = [];
-            var gdpCo = [];
-            var gdpA = [];
-            var gdpJ = [];
-            var gdpH = [];
-
+            var dataSP = [];
+            var popuS = [];
 
 
             $http
-                .get("proxyAlberto")
+                .get("https://sos1617-03.herokuapp.com/api/v1/investmentseducation/?apikey=apisupersecreta")
                 .then(function(response) {
                     $scope.sta = response.data;
                     for (var i in $scope.sta) {
                         if ($scope.sta[i].year === $scope.year) {
-                            switch ($scope.sta[i].province) {
-                                case "Sevilla":
-                                    gdpS.push(parseInt($scope.sta[i].gdp));
-                                    break;
-                                case "Malaga":
-                                    gdpM.push(parseInt($scope.sta[i].gdp));
-                                    break;
-                                case "Cadiz":
-                                    gdpCa.push(parseInt($scope.sta[i].gdp));
-                                    break;
-                                case "Granada":
-                                    gdpG.push(parseInt($scope.sta[i].gdp));
-                                    break;
-                                case "Cordoba":
-                                    gdpCo.push(parseInt($scope.sta[i].gdp));
-                                    break;
-                                case "Almeria":
-                                    gdpA.push(parseInt($scope.sta[i].gdp));
-                                    break;
-                                case "Jaen":
-                                    gdpJ.push(parseInt($scope.sta[i].gdp));
-                                    break;
-                                case "Huelva":
-                                    gdpH.push(parseInt($scope.sta[i].gdp));
-                                    break;
+                            if ($scope.sta[i].country==="spain") {
+                                    popuS.push(parseInt($scope.sta[i].population));
+                                    
                             }
                         }
                     }
@@ -103,7 +71,8 @@ angular.module("ManagerApp")
                                     text: 'Stacked bar chart'
                                 },
                                 xAxis: {
-                                    categories: ["Sevilla", "Malaga", "Cadiz", "Granada", "Cordoba", "Almeria", "Jaen", "Huelva"]
+                                    categories: ["Sevilla", "Malaga", "Cadiz", "Granada", "Cordoba", "Almeria", "Jaen", "Huelva",
+                                        "Spain" ]
                                 },
                                 yAxis: {
                                     min: 0,
@@ -121,10 +90,10 @@ angular.module("ManagerApp")
                                 },
                                 series: [{
                                     name: 'oil',
-                                    data: [dataS, dataM, dataCa, dataG, dataCo, dataA, dataJ, dataH]
+                                    data: [dataS, dataM, dataCa, dataG, dataCo, dataA, dataJ, dataH,dataSP]
                                 }, {
-                                    name: 'gdp',
-                                    data: [gdpS, gdpM, gdpCa, gdpG, gdpCo, gdpA, gdpJ, gdpH]
+                                    name: 'population',
+                                    data: [dataSP, dataSP, dataSP, dataSP, dataSP, dataSP, dataSP,dataSP, popuS]
                                 }]
                             });
 
@@ -138,8 +107,6 @@ angular.module("ManagerApp")
 
                 });
 
-            console.log(dataS);
-            console.log(gdpS);
 
 
 

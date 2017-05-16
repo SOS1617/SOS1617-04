@@ -5,14 +5,7 @@ angular.module("ManagerApp")
         console.log("TauchartsCtrl");
 
         $scope.change = function() {
-            var dataS = [];
-            var dataM = [];
-            var dataCa = [];
-            var dataG = [];
-            var dataCo = [];
-            var dataA = [];
-            var dataJ = [];
-            var dataH = [];
+    
             $http
                 .get("api/v2/export-and-import" + $scope.apikey)
                 .then(function(response) {
