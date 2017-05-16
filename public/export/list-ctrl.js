@@ -11,7 +11,7 @@ angular.module("ManagerApp")
         $scope.setApikey = function(api) {
             $scope.apikey = "?apikey=" + api;
             aux = 0;
-            getResultsPage(1);
+            refresh();
         }
 
         $scope.searchFrom = function(from, to) {
@@ -25,11 +25,14 @@ angular.module("ManagerApp")
                     $scope.stats = [];
                 });
         }
-        $scope.pageChanged = function(newPage) {
-            getResultsPage(newPage);
-        };
-
-        function getResultsPage(newPage) {
+        $scope.numPage = function() {
+            $scope.stats.size/$scope.pageSize;
+        }
+        $scope.nextPage=function(){
+            
+            
+        }
+        function refresh() {
             $http
                 .get("api/v2/export-and-import" + $scope.apikey)
                 .then(function(response) {
@@ -51,45 +54,28 @@ angular.module("ManagerApp")
         }
 
         $scope.addStat = function() {
-                $http
-                    .post("api/v2/export-and-import" + $scope.apikey, $scope.newStat)
-                    .then(function(response) {
-                        $scope.errorMessage = bootbox.alert("Add stat");
-                    }, function(response) {
-                        $scope.stats = [];
-                        if (response.status == 422) {
-                            $scope.errorMessage = bootbox.alert("Fields cannot be empty ");
-                        }
-                        if (response.status == 409) {
-                            $scope.errorMessage = bootbox.alert("Stat already exists");
-                        }
-                        getResultsPage(1);
-                    })
-            }
-            /*   
-            $scope.updateStat = function(province, year) {
-                   $http
-                       .put("api/v2/export-and-import/" + province + "/" + year + $scope.apikey, $scope.newStat)
-                       .then(function(response) {
-                           $scope.errorMessage = bootbox.alert("Correct Update");
-                       }, function(response) {
-                           $scope.stats = [];
-                           if (response.status == 422) {
-                               $scope.errorMessage = bootbox.alert("Stat empty");
-                           }
-                           if (response.status == 404) {
-                               $scope.errorMessage = bootbox.alert("Stat not exists");
-                           }
-                           getResultsPage(1);
-                       })
-               }*/
+            $http
+                .post("api/v2/export-and-import" + $scope.apikey, $scope.newStat)
+                .then(function(response) {
+                    $scope.errorMessage = bootbox.alert("Add stat");
+                }, function(response) {
+                    $scope.stats = [];
+                    if (response.status == 422) {
+                        $scope.errorMessage = bootbox.alert("Fields cannot be empty ");
+                    }
+                    if (response.status == 409) {
+                        $scope.errorMessage = bootbox.alert("Stat already exists");
+                    }
+                    refresh();
+                })
+        }
 
         $scope.loadInitial = function() {
             $http
                 .get("api/v2/export-and-import/loadInitialData" + $scope.apikey)
                 .then(function(response) {
                     $scope.errorMessage = bootbox.alert("Load Stats");
-                    getResultsPage(1);
+                    refresh();
                 })
         }
         $scope.deleteStat = function(province, year) {
@@ -97,7 +83,7 @@ angular.module("ManagerApp")
                 .delete("api/v2/export-and-import/" + province + "/" + year + $scope.apikey, $scope.newStat)
                 .then(function(response) {
                     $scope.errorMessage = bootbox.alert("Stat delete");
-                    getResultsPage(1);
+                    refresh();
 
                 }, function(response) {
                     $scope.stats = [];
@@ -111,7 +97,7 @@ angular.module("ManagerApp")
                 .delete("api/v2/export-and-import" + $scope.apikey)
                 .then(function(response) {
                     $scope.errorMessage = bootbox.alert("Delete all stats");
-                    getResultsPage(1);
+                    refresh();
 
                 }, function(response) {
                     $scope.stats = [];
@@ -121,16 +107,3 @@ angular.module("ManagerApp")
                 })
         }
     }]);
-
-
-angular.module("ManagerApp")
-    .filter('offset', function() {
-        return function(input, start) {
-            if (!input || !input.length) {
-                return;
-            }
-            start = +start; //parse to int
-            return input.slice(start);
-        };
-
-    });
