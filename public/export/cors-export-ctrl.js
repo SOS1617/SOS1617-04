@@ -65,7 +65,7 @@ angular.module("ManagerApp")
                             }
                             Highcharts.chart('container', {
                                 chart: {
-                                    type: 'bar'
+                                    type: 'column'
                                 },
                                 title: {
                                     text: 'Stacked bar chart'
@@ -77,7 +77,7 @@ angular.module("ManagerApp")
                                 yAxis: {
                                     min: 0,
                                     title: {
-                                        text: 'Total fruit consumption'
+                                        text: 'Population and oil in Spain'
                                     }
                                 },
                                 legend: {

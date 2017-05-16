@@ -108,7 +108,7 @@ angular.module("ManagerApp")
                                 yAxis: {
                                     min: 0,
                                     title: {
-                                        text: 'Total fruit consumption'
+                                        text: 'Gdp and oil in andalucia'
                                     }
                                 },
                                 legend: {
