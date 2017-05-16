@@ -48,27 +48,6 @@ angular.module("ManagerApp")
                                 case "sevilla":
                                     dataS.push(parseFloat($scope.sta[i].pricevirgen));
                                     break;
-                                case "malaga":
-                                    dataM.push(parseFloat($scope.sta[i].pricevirgen));
-                                    break;
-                                case "cadiz":
-                                    dataCa.push(parseFloat($scope.sta[i].pricevirgen));
-                                    break;
-                                case "granada":
-                                    dataG.push(parseFloat($scope.sta[i].pricevirgen));
-                                    break;
-                                case "cordoba":
-                                    dataCo.push(parseFloat($scope.sta[i].pricevirgen));
-                                    break;
-                                case "almeria":
-                                    dataA.push(parseFloat($scope.sta[i].pricevirgen));
-                                    break;
-                                case "huelva":
-                                    dataH.push(parseFloat($scope.sta[i].pricevirgen));
-                                    break;
-                                case "sevilla":
-                                    dataS.push(parseFloat($scope.sta[i].pricevirgen));
-                                    break;
                             }
                         }
                         cat.sort();
@@ -96,8 +75,8 @@ angular.module("ManagerApp")
             //Datos api y precio del aceite de oliva en sevilla en 2014
             var cats = $scope.country; // categorias
             cats.push("Sevilla 2014 precio aceite");
-            dataS.unshift(null, null, null, null, null);
-            
+            dataS.unshift(null, null, null, null);
+            console.log(dataS);
             Highcharts.chart('container', {
                 title: {
                     text: 'Highcharts'
@@ -124,22 +103,10 @@ angular.module("ManagerApp")
                             capitalizeFirstLetter(this.x) + ': ' + this.y;
                     }
                 },
-                series: [{
-                    name: 'Country',
-                    data: $scope.country
-                }, {
-                    name: 'Year',
-                    data: $scope.year
-                }, {
+                series: [ {
                     name: 'Gdp',
                     data: $scope.gdp
-                }, {
-                    name: 'Gdp_Growth',
-                    data: $scope.gdp_growth
-                }, {
-                    name: 'Gdp_Deflator',
-                    data: $scope.gdp_deflator
-                }, {
+                },{
                     name: 'Precio aceite sevilla 2014',
                     data: dataS
                 }]

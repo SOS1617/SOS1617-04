@@ -7,7 +7,7 @@ exports.register = function(app, dbLuis,dbUser, BASE_API_PATH) {
     
       var options = {
        host: "sos1617-02.herokuapp.com",
-       path: "/api/v1/rpc-stats?apikey=GVAODcH3"
+       path: "/api/v1/rpc-stats?apikey=GVAODcH3&country=Venezuela&year=2016"
       };
     
       var request = http.request(options, (response) => {

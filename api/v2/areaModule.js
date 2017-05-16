@@ -264,7 +264,18 @@ app.get("/proxyAdrian", (req, res) => {
                     "year": "2015",
                     "productionS": "772",
                     "areaS": "84"
-                },
+                },{
+                    "province": "jaen",
+                    "year": "2016",
+                    "productionS": "375",
+                    "areaS": "802",
+
+                }, {
+                    "province": "cordoba",
+                    "year": "2016",
+                    "productionS": "772",
+                    "areaS": "84"
+                }
                 ];
 
                 dbAdrian.insert(initialStats);
