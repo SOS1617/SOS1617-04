@@ -31,7 +31,7 @@ angular.module("ManagerApp")
                     // **** Dibujar gráfica
                     var chart = new CanvasJS.Chart("chartContainer", {
                         title: {
-                            text: "Comparativa precio aceite virgen extra sevilla 2014 con prefijo movil 34000000000"
+                            text: "Comparativa precio aceite virgen extra sevilla 2014 con prefijo movil "+tlf
                         },
                         data: [{
                             // Change type to "doughnut", "line", "splineArea", etc.
