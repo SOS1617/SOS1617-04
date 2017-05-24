@@ -93,5 +93,9 @@ angular.module("ManagerApp", ["angularUtils.directives.dirPagination", "ngRoute"
         .when("/corsArea", {
             templateUrl: "/area/corsArea.html",
             controller: "CorsAreaCtrl"
-        })
+        })/*
+        .when("/api1", {
+            templateUrl: "/price/api1.html",
+            controller: "api1"
+        })*/
 });
