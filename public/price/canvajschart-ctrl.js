@@ -2,8 +2,6 @@ angular.module("ManagerApp")
     .controller("canvajsChartsCtrlPrice", ["$scope", "$http", "$location", function($scope, $http, $location) {
         $scope.apikey = "?apikey=12345"
         console.log("GeochartsCtrl");
-
-
         $scope.change = function() {
             var dataS0;
             var dataM0;
