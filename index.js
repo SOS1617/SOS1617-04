@@ -5,27 +5,20 @@ var path = require('path');
 var app = express();
 var folder = path.join(__dirname, '/public');
 
-
 var MongoClient = require('mongodb').MongoClient;
 var mURL = "mongodb://test:test@ds137370.mlab.com:37370/sandbox";
 
-
 var port = (process.env.PORT || 10000);
-var BASE_API_PATH = "/api/v2";
+var BASE_API_PATH = "/api/v3";
 
-var moduleExport = require("./api/v2/exportModule.js");
-var modulePrice = require("./api/v2/priceModule.js");
-var moduleArea = require("./api/v2/areaModule.js");
+var moduleExport = require("./api/v3/exportModule.js");
+var modulePrice = require("./api/v3/priceModule.js");
+var moduleArea = require("./api/v3/areaModule.js");
 
 var cors= require("cors");
-
-
 var dbAlberto;
 var dbLuis;
 var dbAdrian;
-
-var dbUser;
-
 app.use(cors());
 app.use("/", express.static(path.join(__dirname, "public")));
 
@@ -34,8 +27,7 @@ app.use(helmet()); //improve security
 
 app.use("/",express.static(path.join(__dirname, 'public')));
 
-
-app.use("/api/v2/tests", express.static(path.join(__dirname , "public/test.html")));
+app.use("/api/v3/tests", express.static(path.join(__dirname , "public/test.html")));
 
 MongoClient.connect(mURL, {
     native_parser: true
@@ -49,14 +41,11 @@ MongoClient.connect(mURL, {
     dbLuis = database.collection("prices");
     dbAdrian = database.collection("area");
 
-    dbUser = database.collection("user");
-
-    moduleExport.register(app, dbAlberto, dbUser, BASE_API_PATH);
-    modulePrice.register(app, dbLuis, dbUser, BASE_API_PATH);
-    moduleArea.register(app, dbAdrian,dbUser, BASE_API_PATH);
+    moduleExport.register(app, dbAlberto, BASE_API_PATH);
+    modulePrice.register(app, dbLuis, BASE_API_PATH);
+    moduleArea.register(app, dbAdrian, BASE_API_PATH);
 
     app.listen(port, () => {
         console.log("Magic is happening on port " + port);
     });
 });
-

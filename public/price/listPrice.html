@@ -58,14 +58,23 @@
                     <td>{{stat.priceextra}}</td>
                     <td>{{stat.pricevirgen}}</td>
                     <td><button class="button btn btn-danger" ng-click="deleteStat(stat.province,stat.year)">Delete</button></td>
-                </tr>
-            </div>
+                     </tr>
+                </div>
 
-        </tbody>
-    </table>
-    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
-    <button class="button btn btn-danger btn-lg" ng-click="deleteAll()">Delete All</button>
-    <div ng-if="errorMessage">
+            </tbody>
+        </table>
+        <div>
+            <button class="button btn btn-primary" ng-click="pageLess()">Previous</button> {{currentPage}}/{{numPages}}
+
+            <button class="button btn btn-primary" ng-click="pageMore()">Next</button>
+
+        </div>
+        <div>
+            <button class="button btn btn-danger btn-lg" ng-click="deleteAll()">Delete All</button>
+        </div>
+
     </div>
 
-</div>
+</main>
+
+</html>
