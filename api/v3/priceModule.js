@@ -1,6 +1,6 @@
 var exports = module.exports = {};
 
-exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
+exports.register = function(app, dbLuis, BASE_API_PATH) {
 
     /** 
      * Proxy
@@ -38,27 +38,10 @@ exports.register = function(app, dbLuis, dbUser, BASE_API_PATH) {
 
     /**
      * Comprobar la apikey
+     * ANULADO
     */
     var key = function(request, callback) {
-        //
-        var d; // Resultado
-        
-        // apikey existe en la db de apikeys? 
-        dbUser.find({
-            apikey: request
-        }).toArray(function(err, sPrice) {
-            // Si hay respuesta, existe la apikey y podemos continuar
-            if (sPrice.length > 0) {
-                d = 1;
-            } 
-            // Si no hay respuesta de la db significa que la apikey no coincide con ninguna de las que tenemos permitidas
-            else {
-                d = 0;
-            }
-            
-            // CallBack(res)
-            callback(d);
-        });
+        callback(1);
     }
 
     /**
