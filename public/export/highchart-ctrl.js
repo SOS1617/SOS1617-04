@@ -1,6 +1,5 @@
 angular.module("ManagerApp")
     .controller("HighExportCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
-            $scope.apikey = "?apikey=12345"
             console.log("HighExportCtrl");
             var categoriesH = [];
             var dataS = [];
@@ -27,7 +26,7 @@ angular.module("ManagerApp")
 
 
                 $http
-                    .get("api/v2/export-and-import" + $scope.apikey)
+                    .get("api/v3/export-and-import")
                     .then(function(response) {
                         $scope.sta = response.data;
                         sortResults('year', true);

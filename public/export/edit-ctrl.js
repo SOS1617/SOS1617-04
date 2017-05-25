@@ -1,12 +1,11 @@
 angular.module("ManagerApp")
     .controller("EditCtrlExport", ["$scope", "$http", "$routeParams", "$location", function($scope, $http, $routeParams, $location) {
-        $scope.apikey = "?apikey=12345"
         console.log("EditCtrl");
         refresh();
 
         function refresh() {
             $http
-                .get("/api/v2/export-and-import/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey)
+                .get("/api/v3/export-and-import/" + $routeParams.province + "/" + $routeParams.year)
                 .then(function(response) {
                     $scope.data = JSON.stringify(response.data, null, 2);
                     $scope.updateStat = response.data[0];
@@ -25,7 +24,7 @@ angular.module("ManagerApp")
             console.log(stat);
             $http
 
-                .put("api/v2/export-and-import/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey, stat)
+                .put("api/v3/export-and-import/" + $routeParams.province + "/" + $routeParams.year, stat)
                 .then(function(response) {
                     $scope.errorMessage = bootbox.alert("Correct Update");
                 }, function(response) {

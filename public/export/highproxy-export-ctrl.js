@@ -62,7 +62,7 @@ angular.module("ManagerApp")
                     }
 
                     $http
-                        .get("api/v2/export-and-import?apikey=12345")
+                        .get("api/v3/export-and-import")
                         .then(function(response) {
                             $scope.stat = response.data;
                             for (var i in $scope.stat) {
@@ -127,21 +127,8 @@ angular.module("ManagerApp")
                                     data: [gdpS, gdpM, gdpCa, gdpG, gdpCo, gdpA, gdpJ, gdpH]
                                 }]
                             });
-
-
-
-
-
                         });
-
-
-
                 });
-
-            console.log(dataS);
-            console.log(gdpS);
-
-
 
         }
 

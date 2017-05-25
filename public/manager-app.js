@@ -1,4 +1,4 @@
-angular.module("ManagerApp", ["angularUtils.directives.dirPagination", "ngRoute"]).config(function($routeProvider, $locationProvider) {
+angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locationProvider) {
 
     $routeProvider
         .when("/", {

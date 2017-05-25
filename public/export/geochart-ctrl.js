@@ -1,7 +1,6 @@
 angular.module("ManagerApp")
     .controller("GeoExportCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
 
-        $scope.apikey = "?apikey=12345"
         console.log("GeochartsCtrl");
 
 
@@ -15,7 +14,7 @@ angular.module("ManagerApp")
             var dataJ = [];
             var dataH = [];
             $http
-                .get("api/v2/export-and-import" + $scope.apikey)
+                .get("api/v3/export-and-import")
                 .then(function(response) {
                         $scope.sta = response.data;
                         for (var i in $scope.sta) {
