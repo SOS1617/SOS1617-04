@@ -15,7 +15,7 @@ angular.module("ManagerApp")
         $scope.sta = [];
 
         $http
-            .get("api/v2/price-stats" + $scope.apikey + "&year=2014&province=sevilla")
+            .get("api/v3/price-stats" + $scope.apikey + "&year=2014&province=sevilla")
             .then(function(response) {
                 $scope.sta = response.data;
                 for (var i in $scope.sta) {

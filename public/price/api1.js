@@ -7,7 +7,7 @@ angular.module("ManagerApp")
         // Dato api propia
         var datoApiPropia;
         $http
-            .get("api/v2/price-stats?apikey=12345&&year=2014&province=sevilla")
+            .get("api/v3/price-stats?apikey=12345&&year=2014&province=sevilla")
             .then(function(response) {
                     $scope.sta = response.data;
                     console.log(response.data);

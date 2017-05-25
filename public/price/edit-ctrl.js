@@ -6,7 +6,7 @@ angular.module("ManagerApp")
 
         function refresh() {
             $http
-                .get("/api/v2/price-stats/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey)
+                .get("/api/v3/price-stats/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey)
                 .then(function(response) {
                     $scope.data = JSON.stringify(response.data, null, 2);
                     $scope.updateStat = (response.data[0])? response.data[0] : response.data;
@@ -23,7 +23,7 @@ angular.module("ManagerApp")
 
             console.log(stat);
             $http
-                .put("api/v2/price-stats/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey, stat)
+                .put("api/v3/price-stats/" + $routeParams.province + "/" + $routeParams.year + $scope.apikey, stat)
                 .then(function(response) {
                     $scope.errorMessage = bootbox.alert("Correct Update");
                 }, function(response) {

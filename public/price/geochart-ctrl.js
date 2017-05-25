@@ -15,7 +15,7 @@ angular.module("ManagerApp")
             var dataJ = [];
             var dataH = [];
             $http
-                .get("api/v2/price-stats" + $scope.apikey + "&year="+$scope.year)
+                .get("api/v3/price-stats" + $scope.apikey + "&year="+$scope.year)
                 .then(function(response) {
                         $scope.sta = response.data;
                         for (var i in $scope.sta) {

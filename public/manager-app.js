@@ -1,34 +1,28 @@
 angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locationProvider) {
 
     $routeProvider
+        /**
+         *
+         */
         .when("/", {
             templateUrl: "main.html"
 
         })
+        .when("/analytics", {
+            templateUrl: "/analytics.html",
+            
+        })
+        
+        /**
+         *
+         */
         .when("/export", {
             templateUrl: "export/listExport.html",
             controller: "ListCtrlExport",
-
         })
         .when("/export/:province/:year", {
             templateUrl: "/export/editExport.html",
             controller: "EditCtrlExport"
-        })
-        .when("/price", {
-            templateUrl: "/price/listPrice.html",
-            controller: "ListCtrlPrice"
-        })
-        .when("/price-stats/:province/:year", {
-            templateUrl: "/price/editPrice.html",
-            controller: "EditCtrlPrice"
-        })
-        .when("/area", {
-            templateUrl: "/area/listArea.html",
-            controller: "ListCtrlArea"
-        })
-        .when("/area/:province/:year", {
-            templateUrl: "/area/editArea.html",
-            controller: "EditCtrlArea"
         })
          .when("/highExport", {
             templateUrl: "/export/highcharts.html",
@@ -42,6 +36,26 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locat
             templateUrl: "/export/tauchart.html",
             controller: "TauchartsCtrl"
         })
+         .when("/highProxyExport", {
+            templateUrl: "/export/highProxyExport.html",
+            controller: "HighProxyExportCtrl"
+        })
+         .when("/corsExport", {
+            templateUrl: "/export/corsExport.html",
+            controller: "CorsExportCtrl"
+        })
+        
+        /**
+         *
+         */
+        .when("/area", {
+            templateUrl: "/area/listArea.html",
+            controller: "ListCtrlArea"
+        })
+        .when("/area/:province/:year", {
+            templateUrl: "/area/editArea.html",
+            controller: "EditCtrlArea"
+        })
         .when("/highArea", {
             templateUrl: "/area/highcharts.html",
             controller: "HighAreaCtrl"
@@ -54,6 +68,44 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locat
             templateUrl: "/area/plotly.html",
             controller: "PlotlyCtrl"
         })
+        .when("/highProxyArea", {
+            templateUrl: "/area/highProxyArea.html",
+            controller: "HighProxyAreaCtrl"
+        })
+        .when("/corsArea", {
+            templateUrl: "/area/corsArea.html",
+            controller: "CorsAreaCtrl"
+        })
+        
+        /**
+         * 
+         */
+        // https://market.mashape.com/divad12/numbers-1
+        .when("/apiLuis1", {
+            templateUrl: "/price/api1.html",
+            controller: "api1"
+        })
+        // https://market.mashape.com/neutrinoapi/phone-validate
+        .when("/apiLuis2", {
+            templateUrl: "/price/api2.html",
+            controller: "api2"
+        })
+         .when("/highPrice1", {
+            templateUrl: "/price/highcharts.1.html",
+            controller: "HighchartsCtrlPrice1"
+        })
+         .when("/highPrice2", {
+            templateUrl: "/price/highcharts.2.html",
+            controller: "HighchartsCtrlPrice2"
+        })
+        .when("/price", {
+            templateUrl: "/price/listPrice.html",
+            controller: "ListCtrlPrice"
+        })
+        .when("/price-stats/:province/:year", {
+            templateUrl: "/price/editPrice.html",
+            controller: "EditCtrlPrice"
+        })
          .when("/highPrice", {
             templateUrl: "/price/highcharts.html",
             controller: "HighchartsCtrlPrice"
@@ -65,43 +117,5 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locat
         .when("/canvajsPrice", {
             templateUrl: "/price/canvajschart.html",
             controller: "canvajsChartsCtrlPrice"
-        })
-        .when("/analytics", {
-            templateUrl: "/analytics.html",
-            
-        })
-         .when("/highPrice1", {
-            templateUrl: "/price/highcharts.1.html",
-            controller: "HighchartsCtrlPrice1"
-        })
-         .when("/highPrice2", {
-            templateUrl: "/price/highcharts.2.html",
-            controller: "HighchartsCtrlPrice2"
-        })
-         .when("/highProxyExport", {
-            templateUrl: "/export/highProxyExport.html",
-            controller: "HighProxyExportCtrl"
-        })
-         .when("/corsExport", {
-            templateUrl: "/export/corsExport.html",
-            controller: "CorsExportCtrl"
-        })
-        .when("/highProxyArea", {
-            templateUrl: "/area/highProxyArea.html",
-            controller: "HighProxyAreaCtrl"
-        })
-        .when("/corsArea", {
-            templateUrl: "/area/corsArea.html",
-            controller: "CorsAreaCtrl"
-        })
-        // https://market.mashape.com/divad12/numbers-1
-        .when("/apiLuis1", {
-            templateUrl: "/price/api1.html",
-            controller: "api1"
-        })
-        // https://market.mashape.com/neutrinoapi/phone-validate
-        .when("/apiLuis2", {
-            templateUrl: "/price/api2.html",
-            controller: "api2"
         })
 });

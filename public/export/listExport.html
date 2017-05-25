@@ -63,7 +63,7 @@
                     <td></td>
                 </tr>
                 <div>
-                    <tr ng-repeat="stat in stats">
+                    <tr ng-repeat="stat in stats" current-page="currentPage">
                         <td><a href="#!/export/{{stat.province}}/{{stat.year}}">{{stat.province}}</a></td>
                         <td>{{stat.year}}</td>
                         <td>{{stat.oil}}</td>

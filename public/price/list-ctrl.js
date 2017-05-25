@@ -1,20 +1,48 @@
+/**
+ * Controlador de List Price
+ */
 angular.module("ManagerApp")
     .controller("ListCtrlPrice", ["$scope", "$http", function($scope, $http) {
-        console.log("ListCtrlPrice");
-
+        //
         $scope.stats = [];
         $scope.currentPage = 1;
         $scope.pageSize = 5;
+        
+        /**
+         * Búsqueda por intervalo de año
+         */
         $scope.searchFrom = function(from, to) {
-            console.log("api/v3/price-stats" + "?from=" + from + "&to=" + to);
             $http
-                .get("/api/v3/price-stats" + "&from=" + from + "&to=" + to)
+                .get("/api/v3/price-stats" + "?from=" + from + "&to=" + to)
                 .then(function(response) {
                     $scope.stats = response.data;
                 }, function(response) {
                     $scope.stats = [];
                 });
         }
+        
+        /**
+         * Formulario de búsqueda por provincia y año
+         */
+        $scope.search = function(province, year) {
+            // Podemos usar provincia, año o ambos
+            var province = (province)? "?province=" + province : "";
+            var year = (year)? "year=" + year : "";
+            var year = (province == "")? "?"+year: "&"+year ;
+            
+            //
+            $http
+                .get("/api/v3/price-stats" + province + year)
+                .then(function(response) {
+                    $scope.stats = response.data;
+                }, function(response) {
+                    $scope.stats = [];
+                });
+        }
+        
+        /**
+         * Cargar página alante
+         */
         $scope.pageMore = function() {
             $scope.currentPage++;
             $http
@@ -26,6 +54,10 @@ angular.module("ManagerApp")
                     $scope.stats = [];
                 });
         }
+        
+        /**
+         * Cargar página atrás
+         */
         $scope.pageLess = function() {
             $scope.currentPage--;
             $http
@@ -38,7 +70,10 @@ angular.module("ManagerApp")
                     $scope.stats = [];
                 });
         }
-
+        
+        /**
+         * 
+         */
         function initial() {
             $http
                 .get("api/v3/price-stats" + "?limit=" + ($scope.pageSize) + "&offset=" + (($scope.currentPage - 1) * $scope.pageSize))
@@ -50,6 +85,9 @@ angular.module("ManagerApp")
                 });
         }
 
+        /**
+         * 
+         */
         function refresh() {
             $http
                 .get("api/v3/price-stats" + "?limit=1000")
@@ -60,6 +98,10 @@ angular.module("ManagerApp")
                     $scope.data = [];
                 });
         }
+        
+        /**
+         * Añadir nueva estadística
+         */
         $scope.addStat = function() {
             $http
                 .post("api/v3/price-stats", $scope.newStat)
@@ -77,6 +119,10 @@ angular.module("ManagerApp")
                     }
                 })
         }
+        
+        /**
+         * Cargar datos iniciales
+         */
         $scope.loadInitial = function() {
             $http
                 .get("api/v3/price-stats/loadInitialData")
@@ -86,6 +132,10 @@ angular.module("ManagerApp")
                     initial();
                 })
         }
+        
+        /**
+         * Eliminar una estadística
+         */
         $scope.deleteStat = function(province, year) {
             $http
                 .delete("api/v3/price-stats/" + province + "/" + year, $scope.newStat)
@@ -101,6 +151,10 @@ angular.module("ManagerApp")
                     }
                 })
         }
+        
+        /**
+         * Eliminar todo
+         */
         $scope.deleteAll = function() {
             $http
                 .delete("api/v3/price-stats")
@@ -116,6 +170,10 @@ angular.module("ManagerApp")
                     }
                 })
         }
+        
+        /**
+         * Carga inicial
+         */
         refresh();
         initial();
     }]);

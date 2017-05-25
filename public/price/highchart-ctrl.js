@@ -26,7 +26,7 @@ angular.module("ManagerApp")
             }
 
         $http
-            .get("api/v2/price-stats" + $scope.apikey)
+            .get("api/v3/price-stats" + $scope.apikey)
             .then(function(response) {
                         $scope.sta = response.data;
                         sortResults('year', true);
