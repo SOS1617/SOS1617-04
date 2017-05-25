@@ -94,8 +94,14 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locat
             templateUrl: "/area/corsArea.html",
             controller: "CorsAreaCtrl"
         })
-        .when("/api1", {
+        // https://market.mashape.com/divad12/numbers-1
+        .when("/apiLuis1", {
             templateUrl: "/price/api1.html",
             controller: "api1"
+        })
+        // https://market.mashape.com/neutrinoapi/phone-validate
+        .when("/apiLuis2", {
+            templateUrl: "/price/api2.html",
+            controller: "api2"
         })
 });
