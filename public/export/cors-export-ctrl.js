@@ -17,7 +17,7 @@ angular.module("ManagerApp")
 
 
             $http
-                .get("https://sos1617-03.herokuapp.com/api/v1/investmentseducation/?apikey=apisupersecreta")
+                .get("https://sos1617-03.herokuapp.com/api/v3/investmentseducation/")
                 .then(function(response) {
                     $scope.sta = response.data;
                     for (var i in $scope.sta) {
@@ -30,7 +30,7 @@ angular.module("ManagerApp")
                     }
 
                     $http
-                        .get("api/v2/export-and-import?apikey=12345")
+                        .get("api/v3/export-and-import")
                         .then(function(response) {
                             $scope.stat = response.data;
                             for (var i in $scope.stat) {

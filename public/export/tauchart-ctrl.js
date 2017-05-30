@@ -1,13 +1,11 @@
 angular.module("ManagerApp")
     .controller("TauchartsCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
-
-        $scope.apikey = "?apikey=12345"
         console.log("TauchartsCtrl");
 
         $scope.change = function() {
     
             $http
-                .get("api/v2/export-and-import" + $scope.apikey)
+                .get("api/v3/export-and-import")
                 .then(function(response) {
                         $scope.sta = response.data;
                          var chart = new tauCharts.Chart({

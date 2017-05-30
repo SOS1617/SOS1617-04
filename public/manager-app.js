@@ -1,22 +1,35 @@
 angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locationProvider) {
 
     $routeProvider
-        /**
-         *
-         */
+    /**
+     *
+     */
         .when("/", {
             templateUrl: "main.html"
 
         })
         .when("/analytics", {
             templateUrl: "/analytics.html",
-            
+
+        })
+        .when("/governance", {
+            templateUrl: "/governance.html",
+
+        })
+        .when("/integrations", {
+            templateUrl: "/integrations.html",
+                        controller: "IntegrationsCtrl"
+
+
         })
         
-        /**
-         *
-         */
-        .when("/export", {
+        
+        
+
+    /**
+     *
+     */
+    .when("/export", {
             templateUrl: "export/listExport.html",
             controller: "ListCtrlExport",
         })
@@ -24,11 +37,11 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locat
             templateUrl: "/export/editExport.html",
             controller: "EditCtrlExport"
         })
-         .when("/highExport", {
+        .when("/highExport", {
             templateUrl: "/export/highcharts.html",
             controller: "HighExportCtrl"
         })
-         .when("/geoExport", {
+        .when("/geoExport", {
             templateUrl: "/export/geochart.html",
             controller: "GeoExportCtrl"
         })
@@ -36,19 +49,29 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locat
             templateUrl: "/export/tauchart.html",
             controller: "TauchartsCtrl"
         })
-         .when("/highProxyExport", {
+        .when("/highProxyExport", {
             templateUrl: "/export/highProxyExport.html",
             controller: "HighProxyExportCtrl"
         })
-         .when("/corsExport", {
+        .when("/corsExport", {
             templateUrl: "/export/corsExport.html",
             controller: "CorsExportCtrl"
         })
-        
-        /**
-         *
-         */
-        .when("/area", {
+        .when("/exportApi1", {
+            templateUrl: "/export/exportApi1.html",
+            controller: "ExportApi1Ctrl"
+        })
+        .when("/exportApi2", {
+            templateUrl: "/export/exportApi2.html",
+            controller: "ExportApi2Ctrl"
+        })
+
+
+
+    /**
+     *
+     */
+    .when("/area", {
             templateUrl: "/area/listArea.html",
             controller: "ListCtrlArea"
         })
@@ -60,7 +83,7 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locat
             templateUrl: "/area/highcharts.html",
             controller: "HighAreaCtrl"
         })
-         .when("/geoArea", {
+        .when("/geoArea", {
             templateUrl: "/area/geochart.html",
             controller: "GeoAreaCtrl"
         })
@@ -76,12 +99,12 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locat
             templateUrl: "/area/corsArea.html",
             controller: "CorsAreaCtrl"
         })
-        
-        /**
-         * 
-         */
-        // https://market.mashape.com/divad12/numbers-1
-        .when("/apiLuis1", {
+
+    /**
+     * 
+     */
+    // https://market.mashape.com/divad12/numbers-1
+    .when("/apiLuis1", {
             templateUrl: "/price/api1.html",
             controller: "api1"
         })
@@ -90,11 +113,11 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locat
             templateUrl: "/price/api2.html",
             controller: "api2"
         })
-         .when("/highPrice1", {
+        .when("/highPrice1", {
             templateUrl: "/price/highcharts.1.html",
             controller: "HighchartsCtrlPrice1"
         })
-         .when("/highPrice2", {
+        .when("/highPrice2", {
             templateUrl: "/price/highcharts.2.html",
             controller: "HighchartsCtrlPrice2"
         })
@@ -106,11 +129,11 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locat
             templateUrl: "/price/editPrice.html",
             controller: "EditCtrlPrice"
         })
-         .when("/highPrice", {
+        .when("/highPrice", {
             templateUrl: "/price/highcharts.html",
             controller: "HighchartsCtrlPrice"
         })
-         .when("/geoPrice", {
+        .when("/geoPrice", {
             templateUrl: "/price/geochart.html",
             controller: "GeochartsCtrlPrice"
         })

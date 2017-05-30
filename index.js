@@ -3,7 +3,6 @@ var bodyParser = require("body-parser");;
 var helmet = require("helmet");
 var path = require('path');
 var app = express();
-var folder = path.join(__dirname, '/public');
 
 var MongoClient = require('mongodb').MongoClient;
 var mURL = "mongodb://test:test@ds137370.mlab.com:37370/sandbox";
