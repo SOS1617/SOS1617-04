@@ -112,7 +112,7 @@ angular.module("ManagerApp")
                                                     areaS.push(parseInt($scope.stats[i].areaS));
                                                     break;
                                                 case "malaga":
-                                                    areM.push(parseInt($scope.stats[i].areaS));
+                                                    areaM.push(parseInt($scope.stats[i].areaS));
                                                     break;
                                                 case "cadiz":
                                                     areaCa.push(parseInt($scope.stats[i].areaS));
