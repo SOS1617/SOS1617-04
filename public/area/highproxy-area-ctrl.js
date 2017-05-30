@@ -2,10 +2,6 @@ angular.module("ManagerApp")
     .controller("HighProxyAreaCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
 
         console.log("ProxyCtrl");
-
-
-
-
         $scope.change = function() {
             var dataS = [];
             var dataM = [];
@@ -62,7 +58,7 @@ angular.module("ManagerApp")
                     }
 
                     $http
-                        .get("api/v2/area-and-production?apikey=12345")
+                        .get("api/v3/area-and-production")
                         .then(function(response) {
                             $scope.stat = response.data;
                             for (var i in $scope.stat) {

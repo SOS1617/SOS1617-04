@@ -1,24 +1,14 @@
 <html>
-    <head>
 
-    </head>
+<head>
+
+</head>
 <main>
     <div ng-controller="ListCtrlArea">
-        <h2>List area and production Stats </h2>
-
+        <h2>List Area and production Stats </h2>
 
         <button class="button btn btn-primary" ng-click="loadInitial()">Load Initial Data</button>
-        <h4>Apikey = 12345</h4>
-        Insert ApiKey<input class="form-control" ng-model="api" />
-        <button class="button btn btn-primary" ng-click="setApikey(api)">Send</button>
-        <!--h4>Search</h4>
-        <Province:<input class="form-control" type="text" name="search" ng-model="test1" placeholder="Province.."> 
-        Year: <input class="form-control" type="text" name="search" ng-model="test2" placeholder="Year.."> 
-        Import:
-        <input class="form-control" type="text" name="search" ng-model="test4" placeholder="Import.."> 
-        Export: <input class="form-control" type="text" name="search" ng-model="test5" placeholder="Export..">-->
-        
-        
+
         <div class="row">
             <div class="col-md-6">
                 <h4>Province:</h4><input class="form-control" type="text" name="search" ng-model="test1" placeholder="Province.."></div>
@@ -26,15 +16,15 @@
             <div class="col-md-6">
                 <h4>Year:</h4><input class="form-control" type="text" name="search" ng-model="test2" placeholder="Year.."></div>
 
+            
+            <div class="col-md-6">
+                <h4>Area:</h4><input class="form-control" type="text" name="search" ng-model="test4" placeholder="Area.."> </div>
 
             <div class="col-md-6">
-                <h4>Area:</h4><input class="form-control" type="text" name="search" ng-model="test3" placeholder="Area.."> </div>
-
-            <div class="col-md-6">
-                <h4>Production:</h4><input class="form-control" type="text" name="search" ng-model="test4" placeholder="Production.."></div>
+                <h4>Production:</h4><input class="form-control" type="text" name="search" ng-model="test5" placeholder="Production.."></div>
 
         </div>
-        
+
         <br/>
 
         <div class="row">
@@ -57,7 +47,6 @@
                     <th>Area Stats</th>
                     <th>Production Stats</th>
                     <th>ACTIONS</th>
-                    <th>DELETE</th>
                 </tr>
             </thead>
             <tbody>
@@ -66,12 +55,12 @@
                     <td><input class="form-control" ng-model="newStat.year" /></td>
                     <td><input class="form-control" ng-model="newStat.areaS" /></td>
                     <td><input class="form-control" ng-model="newStat.productionS" /></td>
-                    <td><button class="button btn btn-primary" ng-click="addStat()">Add</button></td>
+                    <td><button id "ad" class="button btn btn-primary" ng-click="addStat()">Add</button></td>
                     <td></td>
                 </tr>
                 <div>
-                    <tr dir-paginate="stat in stats |itemsPerPage: pageSize|filter:test1 |filter:test2 |filter:test3 |filter:test4 " current-page="currentPage">
-                        <td><a href="#!/area/{{stat.province}}/{{stat.year}}">{{stat.province}}</a></td>
+                    <tr ng-repeat="stat in stats" current-page="currentPage">
+                        <td><a href="#!/export/{{stat.province}}/{{stat.year}}">{{stat.province}}</a></td>
                         <td>{{stat.year}}</td>
                         <td>{{stat.areaS}}</td>
                         <td>{{stat.productionS}}</td>
@@ -82,9 +71,14 @@
 
             </tbody>
         </table>
-        <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
-        <button class="button btn btn-danger btn-lg" ng-click="deleteAll()">Delete All</button>
-        <div ng-if="errorMessage">
+        <div>
+            <button class="button btn btn-primary" ng-click="pageLess()">Previous</button> {{currentPage}}/{{numPages}}
+
+            <button class="button btn btn-primary" ng-click="pageMore()">Next</button>
+
+        </div>
+        <div>
+            <button class="button btn btn-danger btn-lg" ng-click="deleteAll()">Delete All</button>
         </div>
 
     </div>

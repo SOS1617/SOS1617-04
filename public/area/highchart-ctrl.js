@@ -1,6 +1,5 @@
 angular.module("ManagerApp")
     .controller("HighAreaCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
-        $scope.apikey = "?apikey=12345"
         console.log("HighAreaCtrl");
         var categoriesH = [];
         var dataS = [];
@@ -27,7 +26,7 @@ angular.module("ManagerApp")
 
 
         $http
-            .get("api/v2/area-and-production" + $scope.apikey)
+            .get("api/v3/area-and-production")
             .then(function(response) {
                 $scope.sta = response.data;
                 var cat = [];

@@ -1,7 +1,5 @@
 angular.module("ManagerApp")
     .controller("GeoAreaCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
-
-        $scope.apikey = "?apikey=12345"
         console.log("GeochartsCtrl");
 
 
@@ -15,7 +13,7 @@ angular.module("ManagerApp")
             var dataJ = [];
             var dataH = [];
             $http
-                .get("api/v2/area-and-production" + $scope.apikey)
+                .get("api/v3/area-and-production" )
                 .then(function(response) {
                         $scope.sta = response.data;
                         for (var i in $scope.sta) {
