@@ -107,7 +107,7 @@ angular.module("ManagerApp")
                                     $scope.stats = response.data;
                                     for (var i in $scope.stats) {
                                         if ($scope.stats[i].year === $scope.year) {
-                                            switch ($scope.stat[i].province) {
+                                            switch ($scope.stats[i].province) {
                                                 case "sevilla":
                                                     areaS.push(parseInt($scope.stats[i].areaS));
                                                     break;
