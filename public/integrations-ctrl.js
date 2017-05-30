@@ -4,31 +4,69 @@ angular.module("ManagerApp")
         console.log("IntegrationsCtrl");
 
         $scope.change = function() {
-            var dataS = [];
-            var dataM = [];
-            var dataCa = [];
-            var dataG = [];
-            var dataCo = [];
-            var dataA = [];
-            var dataJ = [];
-            var dataH = [];
-            var dataSP = [];
-            var popuS = [];
+            var priceS = [];
+            var priceM = [];
+            var priceCa = [];
+            var priceG = [];
+            var priceCo = [];
+            var priceA = [];
+            var priceJ = [];
+            var priceH = [];
 
+            var oilS = [];
+            var oilM = [];
+            var oilCa = [];
+            var oilG = [];
+            var oilCo = [];
+            var oilA = [];
+            var oilJ = [];
+            var oilH = [];
+
+            var areaS = [];
+            var areaM = [];
+            var areaCa = [];
+            var areaG = [];
+            var areaCo = [];
+            var areaA = [];
+            var areaJ = [];
+            var areaH = [];
 
             $http
-                .get("https://sos1617-03.herokuapp.com/api/v3/investmentseducation/")
+                .get("api/v3/price-stats")
                 .then(function(response) {
                     $scope.sta = response.data;
+
                     for (var i in $scope.sta) {
                         if ($scope.sta[i].year === $scope.year) {
-                            if ($scope.sta[i].country==="spain") {
-                                    popuS.push(parseInt($scope.sta[i].population));
-                                    
+
+                            switch ($scope.sta[i].province) {
+                                case "sevilla":
+                                    priceS.push(parseInt($scope.sta[i].priceaceite));
+                                    break;
+                                case "malaga":
+                                    priceM.push(parseInt($scope.sta[i].priceaceite));
+                                    break;
+                                case "cadiz":
+                                    priceCa.push(parseInt($scope.sta[i].priceaceite));
+                                    break;
+                                case "granada":
+                                    priceG.push(parseInt($scope.sta[i].priceaceite));
+                                    break;
+                                case "cordoba":
+                                    priceCo.push(parseInt($scope.sta[i].priceaceite));
+                                    break;
+                                case "almeria":
+                                    priceA.push(parseInt($scope.sta[i].priceaceite));
+                                    break;
+                                case "jaen":
+                                    priceJ.push(parseInt($scope.sta[i].priceaceite));
+                                    break;
+                                case "huelva":
+                                    priceH.push(parseInt($scope.sta[i].priceaceite));
+                                    break;
                             }
                         }
                     }
-
                     $http
                         .get("api/v3/export-and-import")
                         .then(function(response) {
@@ -37,76 +75,113 @@ angular.module("ManagerApp")
                                 if ($scope.stat[i].year === $scope.year) {
                                     switch ($scope.stat[i].province) {
                                         case "sevilla":
-                                            dataS.push(parseInt($scope.stat[i].oil));
+                                            oilS.push(parseInt($scope.stat[i].oil));
                                             break;
                                         case "malaga":
-                                            dataM.push(parseInt($scope.stat[i].oil));
+                                            oilM.push(parseInt($scope.stat[i].oil));
                                             break;
                                         case "cadiz":
-                                            dataCa.push(parseInt($scope.stat[i].oil));
+                                            oilCa.push(parseInt($scope.stat[i].oil));
                                             break;
                                         case "granada":
-                                            dataG.push(parseInt($scope.stat[i].oil));
+                                            oilG.push(parseInt($scope.stat[i].oil));
                                             break;
                                         case "cordoba":
-                                            dataCo.push(parseInt($scope.stat[i].oil));
+                                            oilCo.push(parseInt($scope.stat[i].oil));
                                             break;
                                         case "almeria":
-                                            dataA.push(parseInt($scope.stat[i].oil));
+                                            oilA.push(parseInt($scope.stat[i].oil));
                                             break;
                                         case "jaen":
-                                            dataJ.push(parseInt($scope.stat[i].oil));
+                                            oilJ.push(parseInt($scope.stat[i].oil));
                                             break;
                                         case "huelva":
-                                            dataH.push(parseInt($scope.stat[i].oil));
+                                            oilH.push(parseInt($scope.stat[i].oil));
                                             break;
                                     }
                                 }
                             }
-                            Highcharts.chart('container', {
-                                chart: {
-                                    type: 'column'
-                                },
-                                title: {
-                                    text: 'Stacked bar chart'
-                                },
-                                xAxis: {
-                                    categories: ["Sevilla", "Malaga", "Cadiz", "Granada", "Cordoba", "Almeria", "Jaen", "Huelva",
-                                        "Spain" ]
-                                },
-                                yAxis: {
-                                    min: 0,
-                                    title: {
-                                        text: 'Population and oil in Spain'
+                            $http
+                                .get("api/v3/area-and-production")
+                                .then(function(response) {
+                                    $scope.stats = response.data;
+                                    for (var i in $scope.stats) {
+                                        if ($scope.stats[i].year === $scope.year) {
+                                            switch ($scope.stat[i].province) {
+                                                case "sevilla":
+                                                    areaS.push(parseInt($scope.stats[i].areaS));
+                                                    break;
+                                                case "malaga":
+                                                    areM.push(parseInt($scope.stats[i].areaS));
+                                                    break;
+                                                case "cadiz":
+                                                    areaCa.push(parseInt($scope.stats[i].areaS));
+                                                    break;
+                                                case "granada":
+                                                    areaG.push(parseInt($scope.stats[i].areaS));
+                                                    break;
+                                                case "cordoba":
+                                                    areaCo.push(parseInt($scope.stats[i].areaS));
+                                                    break;
+                                                case "almeria":
+                                                    areaA.push(parseInt($scope.stats[i].areaS));
+                                                    break;
+                                                case "jaen":
+                                                    areaJ.push(parseInt($scope.stats[i].areaS));
+                                                    break;
+                                                case "huelva":
+                                                    areaH.push(parseInt($scope.stats[i].areaS));
+                                                    break;
+                                            }
+                                        }
                                     }
-                                },
-                                legend: {
-                                    reversed: true
-                                },
-                                plotOptions: {
-                                    series: {
-                                        stacking: 'normal'
-                                    }
-                                },
-                                series: [{
-                                    name: 'oil',
-                                    data: [dataS, dataM, dataCa, dataG, dataCo, dataA, dataJ, dataH,dataSP]
-                                }, {
-                                    name: 'population',
-                                    data: [dataSP, dataSP, dataSP, dataSP, dataSP, dataSP, dataSP,dataSP, popuS]
-                                }]
-                            });
+                                    Highcharts.chart('container', {
+                                        chart: {
+                                            type: 'column'
+                                        },
+                                        title: {
+                                            text: 'Stacked bar chart'
+                                        },
+                                        xAxis: {
+                                            categories: ["Sevilla", "Malaga", "Cadiz", "Granada", "Cordoba", "Almeria", "Jaen", "Huelva"]
+                                        },
+                                        yAxis: {
+                                            min: 0,
+                                            title: {
+                                                text: 'Population and oil in Spain'
+                                            }
+                                        },
+                                        legend: {
+                                            reversed: true
+                                        },
+                                        plotOptions: {
+                                            series: {
+                                                stacking: 'normal'
+                                            }
+                                        },
+                                        series: [{
+                                            name: 'price aceite',
+                                            data: [priceS, priceM, priceCa, priceG, priceCo, priceA, priceJ, priceH]
+                                        }, {
+                                            name: 'oil',
+                                            data: [oilS, oilM, oilCa, oilG, oilCo, oilA, oilJ, oilH]
+                                        }, {
+                                            name: 'area',
+                                            data: [areaS, areaM, areaCa, areaG, areaCo, areaA, areaJ, areaH]
+                                        }]
+                                    });
 
 
+
+
+
+                                });
 
 
 
                         });
 
-
-
                 });
-
 
 
 
