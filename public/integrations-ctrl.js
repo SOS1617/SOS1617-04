@@ -41,28 +41,28 @@ angular.module("ManagerApp")
 
                             switch ($scope.sta[i].province) {
                                 case "sevilla":
-                                    priceS.push(parseInt($scope.sta[i].priceaceite));
+                                    priceS.push(parseFloat($scope.sta[i].priceaceite));
                                     break;
                                 case "malaga":
-                                    priceM.push(parseInt($scope.sta[i].priceaceite));
+                                    priceM.push(parseFloat($scope.sta[i].priceaceite));
                                     break;
                                 case "cadiz":
-                                    priceCa.push(parseInt($scope.sta[i].priceaceite));
+                                    priceCa.push(parseFloat($scope.sta[i].priceaceite));
                                     break;
                                 case "granada":
-                                    priceG.push(parseInt($scope.sta[i].priceaceite));
+                                    priceG.push(parseFloat($scope.sta[i].priceaceite));
                                     break;
                                 case "cordoba":
-                                    priceCo.push(parseInt($scope.sta[i].priceaceite));
+                                    priceCo.push(parseFloat($scope.sta[i].priceaceite));
                                     break;
                                 case "almeria":
-                                    priceA.push(parseInt($scope.sta[i].priceaceite));
+                                    priceA.push(parseFloat($scope.sta[i].priceaceite));
                                     break;
                                 case "jaen":
-                                    priceJ.push(parseInt($scope.sta[i].priceaceite));
+                                    priceJ.push(parseFloat($scope.sta[i].priceaceite));
                                     break;
                                 case "huelva":
-                                    priceH.push(parseInt($scope.sta[i].priceaceite));
+                                    priceH.push(parseFloat($scope.sta[i].priceaceite));
                                     break;
                             }
                         }
@@ -75,28 +75,28 @@ angular.module("ManagerApp")
                                 if ($scope.stat[i].year === $scope.year) {
                                     switch ($scope.stat[i].province) {
                                         case "sevilla":
-                                            oilS.push(parseInt($scope.stat[i].oil));
+                                            oilS.push(parseFloat($scope.stat[i].oil));
                                             break;
                                         case "malaga":
-                                            oilM.push(parseInt($scope.stat[i].oil));
+                                            oilM.push(parseFloat($scope.stat[i].oil));
                                             break;
                                         case "cadiz":
-                                            oilCa.push(parseInt($scope.stat[i].oil));
+                                            oilCa.push(parseFloat($scope.stat[i].oil));
                                             break;
                                         case "granada":
-                                            oilG.push(parseInt($scope.stat[i].oil));
+                                            oilG.push(parseFloat($scope.stat[i].oil));
                                             break;
                                         case "cordoba":
-                                            oilCo.push(parseInt($scope.stat[i].oil));
+                                            oilCo.push(parseFloat($scope.stat[i].oil));
                                             break;
                                         case "almeria":
-                                            oilA.push(parseInt($scope.stat[i].oil));
+                                            oilA.push(parseFloat($scope.stat[i].oil));
                                             break;
                                         case "jaen":
-                                            oilJ.push(parseInt($scope.stat[i].oil));
+                                            oilJ.push(parseFloat($scope.stat[i].oil));
                                             break;
                                         case "huelva":
-                                            oilH.push(parseInt($scope.stat[i].oil));
+                                            oilH.push(parseFloat($scope.stat[i].oil));
                                             break;
                                     }
                                 }
@@ -109,28 +109,28 @@ angular.module("ManagerApp")
                                         if ($scope.stats[i].year === $scope.year) {
                                             switch ($scope.stats[i].province) {
                                                 case "sevilla":
-                                                    areaS.push(parseInt($scope.stats[i].areaS));
+                                                    areaS.push(parseFloat($scope.stats[i].areaS));
                                                     break;
                                                 case "malaga":
-                                                    areaM.push(parseInt($scope.stats[i].areaS));
+                                                    areaM.push(parseFloat($scope.stats[i].areaS));
                                                     break;
                                                 case "cadiz":
-                                                    areaCa.push(parseInt($scope.stats[i].areaS));
+                                                    areaCa.push(parseFloat($scope.stats[i].areaS));
                                                     break;
                                                 case "granada":
-                                                    areaG.push(parseInt($scope.stats[i].areaS));
+                                                    areaG.push(parseFloat($scope.stats[i].areaS));
                                                     break;
                                                 case "cordoba":
-                                                    areaCo.push(parseInt($scope.stats[i].areaS));
+                                                    areaCo.push(parseFloat($scope.stats[i].areaS));
                                                     break;
                                                 case "almeria":
-                                                    areaA.push(parseInt($scope.stats[i].areaS));
+                                                    areaA.push(parseFloat($scope.stats[i].areaS));
                                                     break;
                                                 case "jaen":
-                                                    areaJ.push(parseInt($scope.stats[i].areaS));
+                                                    areaJ.push(parseFloat($scope.stats[i].areaS));
                                                     break;
                                                 case "huelva":
-                                                    areaH.push(parseInt($scope.stats[i].areaS));
+                                                    areaH.push(parseFloat($scope.stats[i].areaS));
                                                     break;
                                             }
                                         }
