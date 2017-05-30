@@ -1,7 +1,7 @@
 angular.module("ManagerApp")
-    .controller("CorsExportCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
+    .controller("IntegrationsCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
 
-        console.log("CorsExportCtrl");
+        console.log("IntegrationsCtrl");
 
         $scope.change = function() {
             var dataS = [];

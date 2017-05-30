@@ -12,6 +12,19 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locat
             templateUrl: "/analytics.html",
 
         })
+        .when("/governance", {
+            templateUrl: "/governance.html",
+
+        })
+        .when("/integrations", {
+            templateUrl: "/integrations.html",
+                        controller: "IntegrationsCtrl"
+
+
+        })
+        
+        
+        
 
     /**
      *
