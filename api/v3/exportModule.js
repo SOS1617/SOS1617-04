@@ -168,51 +168,58 @@ exports.register = function(app, dbAlberto, BASE_API_PATH) {
      "province": "sevilla",
      "year": "2015",
      "oil": "32",
-     "importS": "66",
-     "exportS": "55"
+     "importS": "82",
+     "exportS": "58"
     }, {
      "province": "malaga",
      "year": "2015",
      "oil": "47",
-     "importS": "66",
-     "exportS": "55"
+     "importS": "43",
+     "exportS": "41"
     }, {
      "province": "cadiz",
      "year": "2015",
      "oil": "64",
-     "importS": "68",
-     "exportS": "75"
+     "importS": "31",
+     "exportS": "48"
     }, {
      "province": "granada",
      "year": "2015",
-     "oil": "75",
-     "importS": "66",
-     "exportS": "55"
+     "oil": "71",
+     "importS": "62",
+     "exportS": "65"
     }, {
      "province": "cordoba",
      "year": "2015",
-     "oil": "81",
-     "importS": "66",
-     "exportS": "55"
+     "oil": "63",
+     "importS": "82",
+     "exportS": "48"
     }, {
      "province": "almeria",
      "year": "2015",
-     "oil": "77",
-     "importS": "66",
-     "exportS": "55"
+     "oil": "67",
+     "importS": "86",
+     "exportS": "65"
     }, {
      "province": "jaen",
      "year": "2015",
      "oil": "25",
-     "importS": "66",
-     "exportS": "55"
+     "importS": "36",
+     "exportS": "95"
     }, {
      "province": "huelva",
      "year": "2015",
-     "oil": "85",
-     "importS": "66",
-     "exportS": "55"
-    }];
+     "oil": "94",
+     "importS": "46",
+     "exportS": "85"
+    }, {
+     "province": "sevilla",
+     "year": "2007",
+     "oil": "94",
+     "importS": "46",
+     "exportS": "85"
+    }
+    ];
 
     dbAlberto.insert(initialStats);
     console.log("Date insert in db");

@@ -18,13 +18,18 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locat
         })
         .when("/integrations", {
             templateUrl: "/integrations.html",
-                        controller: "IntegrationsCtrl"
+            controller: "IntegrationsCtrl"
 
 
         })
-        
-        
-        
+        .when("/about", {
+            templateUrl: "/about.html",
+
+
+        })
+
+
+
 
     /**
      *
@@ -107,11 +112,11 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locat
             templateUrl: "/area/chartist-ext.html",
             controller: "ChartistExtCtrl"
         })
-    /**
-     * 
-     */
-    // https://market.mashape.com/divad12/numbers-1
-    .when("/apiLuis1", {
+        /**
+         * 
+         */
+        // https://market.mashape.com/divad12/numbers-1
+        .when("/apiLuis1", {
             templateUrl: "/price/api1.html",
             controller: "api1"
         })
