@@ -58,7 +58,7 @@ exports.register = function(app, dbAdrian, BASE_API_PATH) {
         var areaS = url.areaS;
         var off = 0;
         var limite = 100;
-        var res = request.query.apikey;
+       
         if (url.limit != undefined) {
             limite = parseInt(url.limit);
             off = parseInt(url.offset);
