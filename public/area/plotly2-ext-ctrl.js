@@ -1,24 +1,16 @@
 angular.module("ManagerApp")
-    .controller("PlotlyExtCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
+    .controller("Plotly2ExtCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
 
-        $scope.change = function() {
+            console.log("Plotly2ExtCtrl");
+            var dataM= [];
             var dataS = [];
-            var dataM = [];
-            var extA = [];
-            
 
+            //api externa
             $http
-                .get("https://irythia-hs.p.mashape.com/card?name=Ysera&mashape-key=g75tu3kuAGmsh11AhtOqywfqTTMKp1CSz0PjsnDYAlVt6hgY41")
+                .get("https://cosmin-us-phone-number-lookup.p.mashape.com/get.php?phone=3055050000&mashape-key=g75tu3kuAGmsh11AhtOqywfqTTMKp1CSz0PjsnDYAlVt6hgY41")
                 .then(function(response) {
-                    $scope.sta = response.data.health;
-                   
-                       
-                            
-                                
-
-                            
-                        
-                    
+                    $scope.sta = response.data.phone_number.npa;
+                    console.log($scope.sta);
 
                     $http
                         .get("api/v3/area-and-production")
@@ -32,13 +24,11 @@ angular.module("ManagerApp")
                                             break;
                                         case "malaga":
                                             dataM.push(parseInt($scope.stat[i].areaS));
-                                            break;
-                                       
+                                            break;    
                                     }
                                 }
                             }
-                            
-
+                            //grafica
                             var trace1 = {
                             x: ['sevilla', 'malaga'],
                             y: [dataS[0],dataM[0]],
@@ -47,7 +37,7 @@ angular.module("ManagerApp")
                         };
 
                         var trace2 = {
-                            x: ['Ysera health'],
+                            x: ['Phone npa'],
                             y: [ parseInt($scope.sta)],
                             mode: 'lines',
                             type: 'scatter'
@@ -55,22 +45,12 @@ angular.module("ManagerApp")
                        
                         var data = [trace1, trace2];
 
-                        Plotly.newPlot('myDivExt', data);
+                        Plotly.newPlot('myDivExt2', data);
                     
 
 
+    });
 
-                        });
+});
 
-
-
-                });
-
-            console.log(dataS);
-            console.log(extA);
-
-
-
-        }
-
-    }]);
+}]);
