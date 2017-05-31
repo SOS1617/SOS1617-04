@@ -28,7 +28,7 @@ angular.module("ManagerApp")
 
         $scope.searchFrom = function(from, to) {
             $http
-                .get("/api/v3/export-and-import" + "&from=" + from + "&to=" + to)
+                .get("/api/v3/export-and-import" + "?from=" + from + "&to=" + to)
                 .then(function(response) {
                     $scope.stats = response.data;
                 }, function(response) {
