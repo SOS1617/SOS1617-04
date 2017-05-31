@@ -1,33 +1,24 @@
 angular.module("ManagerApp")
     .controller("PlotlyExtCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
 
-        console.log("PlotlyExtCtrl");
-
         $scope.change = function() {
             var dataS = [];
             var dataM = [];
-            var dataCa = [];
-            var dataG = [];
-            var dataCo = [];
-            var dataA = [];
-            var dataJ = [];
-            var dataH = [];
-            var dataSV = [];
-            var electionS = [];
-
+            var extA = [];
+            
 
             $http
-                .get("https://sportsop-soccer-sports-open-data-v1.p.mashape.com/v1/leagues/bundesliga/seasons/15-16/topscorers")
+                .get("https://irythia-hs.p.mashape.com/card?name=Ysera&mashape-key=g75tu3kuAGmsh11AhtOqywfqTTMKp1CSz0PjsnDYAlVt6hgY41")
                 .then(function(response) {
-                    $scope.sta = response.data;
-                    for (var i in $scope.sta) {
+                    $scope.sta = response.data.health;
+                   
+                       
+                            
+                                
 
-
-                        electionS.push(parseInt($scope.sta[i].number));
-
-
-
-                    }
+                            
+                        
+                    
 
                     $http
                         .get("api/v3/area-and-production")
@@ -42,40 +33,30 @@ angular.module("ManagerApp")
                                         case "malaga":
                                             dataM.push(parseInt($scope.stat[i].areaS));
                                             break;
-                                        case "cadiz":
-                                            dataCa.push(parseInt($scope.stat[i].areaS));
-                                            break;
-                                        case "granada":
-                                            dataG.push(parseInt($scope.stat[i].areaS));
-                                            break;
-                                        case "cordoba":
-                                            dataCo.push(parseInt($scope.stat[i].areaS));
-                                            break;
-                                        case "almeria":
-                                            dataA.push(parseInt($scope.stat[i].areaS));
-                                            break;
-                                        case "jaen":
-                                            dataJ.push(parseInt($scope.stat[i].areaS));
-                                            break;
-                                        case "huelva":
-                                            dataH.push(parseInt($scope.stat[i].areaS));
-                                            break;
+                                       
                                     }
                                 }
                             }
-                            var data = [{
-                                values: [dataS[0], electionS[0]],
-                                labels: ['Sevilla', 'Soccer'],
-                                type: 'pie'
-                            }];
+                            
 
-                            var layout = {
-                                height: 400,
-                                width: 500
-                            };
+                            var trace1 = {
+                            x: ['sevilla', 'malaga'],
+                            y: [dataS[0],dataM[0]],
+                            mode: 'markers',
+                            type: 'scatter'
+                        };
 
-                            Plotly.newPlot('myExtDiv', data, layout);
+                        var trace2 = {
+                            x: ['Ysera health'],
+                            y: [ parseInt($scope.sta)],
+                            mode: 'lines',
+                            type: 'scatter'
+                        };
+                       
+                        var data = [trace1, trace2];
 
+                        Plotly.newPlot('myDivExt', data);
+                    
 
 
 
@@ -85,6 +66,8 @@ angular.module("ManagerApp")
 
                 });
 
+            console.log(dataS);
+            console.log(extA);
 
 
 
