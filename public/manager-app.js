@@ -99,7 +99,14 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider, $locat
             templateUrl: "/area/corsArea.html",
             controller: "CorsAreaCtrl"
         })
-
+        .when("/plotlyExtArea", {
+            templateUrl: "/area/plotly-ext.html",
+            controller: "PlotlyExtCtrl"
+        })
+        .when("/chartistExtArea", {
+            templateUrl: "/area/chartist-ext.html",
+            controller: "ChartistExtCtrl"
+        })
     /**
      * 
      */

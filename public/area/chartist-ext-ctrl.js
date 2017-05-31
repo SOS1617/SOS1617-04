@@ -1,63 +1,43 @@
 angular.module("ManagerApp")
     .controller("ChartistExtCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
 
-        console.log("ChartistExtCtrl");
-        $scope.change = function() {
-            var dataS = [];
-            var dataM = [];
-            var ExtA = [];
-            //var ExtB = [];
-
-
-
-            //api externa
-            $http
-                .get("https://irythia-hs.p.mashape.com/cards")
-                .then(function(response) {
+        // Dato api propia
+        var datoArea;
+        $http
+            .get("api/v3/area-and-production&year=2013&province=sevilla")
+            .then(function(response) {
                     $scope.sta = response.data;
+                    console.log(response.data);
                     for (var i in $scope.sta) {
-                        ExtA.push(parseInt($scope.sta[i].cost));
-                        ExtA.push(parseInt($scope.sta[i].health));
+                        datoArea = parseInt($scope.sta[i].areaS);
                     }
-                    $http
-                        .get("api/v3/area-and-production")
-                        .then(function(response) {
-                            $scope.stat = response.data;
-                            for (var i in $scope.stat) {
-                                if ($scope.stat[i].year === $scope.year) {
-                                    switch ($scope.stat[i].province) {
-                                        case "sevilla":
-                                            dataS.push(parseInt($scope.stat[i].areaS));
-                                            break;
-                                        case "malaga":
-                                            dataM.push(parseInt($scope.stat[i].areaS));
-                                            break;
+                },
+                function(response) {
+                    $scope.sta = [];
+                });
+        console.log(datoArea)
 
-                                    }
-                                }
-                            }
-                            //grafica
-                            new Chartist.Line('.ct-chart', {
-                                labels: ['Sevilla', 'Malaga'],
-                                series: [
-                                    [dataS[0], dataM[0]],
-                                    [ExtA[0], ExtA[1]]
-                                ]
-                            }, {
-                                fullWidth: true,
-                                chartPadding: {
-                                    right: 40
-                                }
-                            });
+        $http
+            .get("https://sportsop-soccer-sports-open-data-v1.p.mashape.com/v1/leagues/bundesliga/seasons/15-16/topscorers")
+            .then(function(response) {
+                    new Chartist.Line('.ct-chart', {
+                        labels: ['Sevilla', 'Soccer'],
+                        series: [
+                            [parseInt(datoArea)],
+                            [parseInt(response.data.number)]
+                            
+                        ]
+                    }, {
+                        fullWidth: true,
+                        chartPadding: {
+                            right: 40
+                        }
+                    });
 
-                        });
-
-
+                },
+                function(response) {
+                    $scope.sta = [];
                 });
 
-            console.log(dataS);
-            console.log(ExtA);
-
-        }
 
     }]);
