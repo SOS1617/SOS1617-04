@@ -47,6 +47,7 @@ exports.register = function(app, dbAlberto, BASE_API_PATH) {
   var url = request.query;
   var province = url.province;
   var year = url.year;
+  var oil = url.oil;
   var importS = url.importS;
   var exportS = url.exportS;
   var off = 0;
@@ -86,7 +87,7 @@ exports.register = function(app, dbAlberto, BASE_API_PATH) {
     }
     else {
      var filted = sExport.filter((stat) => {
-      if ((province == undefined || stat.province == province) && (year == undefined || stat.year == year) && (year == undefined || stat.year == year) && (importS == undefined || stat.importS == importS) && (exportS == undefined || stat.exportS == exportS)) {
+      if ((province == undefined || stat.province == province) && (year == undefined || stat.year == year) && (oil == undefined || stat.oil == oil) && (importS == undefined || stat.importS == importS) && (exportS == undefined || stat.exportS == exportS)) {
        return stat;
       }
      });
@@ -418,34 +419,34 @@ exports.register = function(app, dbAlberto, BASE_API_PATH) {
  app.delete(BASE_API_PATH + "/export-and-import/:province/:year", function(request, response) {
   var province = request.params.province;
   var year = request.params.year;
-    if (!province || !year) {
-     console.log("WARNING: New DELETE request to /export-and-import-stats/:name without name, sending 400...");
-     response.sendStatus(400); // bad request
+  if (!province || !year) {
+   console.log("WARNING: New DELETE request to /export-and-import-stats/:name without name, sending 400...");
+   response.sendStatus(400); // bad request
+  }
+  else {
+   console.log("INFO: New DELETE request to /export-and-import-stats/" + province + " and " + year);
+   dbAlberto.remove({
+    province: province,
+    year: year
+   }, {}, function(err, doc) {
+    if (err) {
+     console.error('WARNING: Error removing data from DB');
+     response.sendStatus(500); // internal server error
     }
     else {
-     console.log("INFO: New DELETE request to /export-and-import-stats/" + province + " and " + year);
-     dbAlberto.remove({
-      province: province,
-      year: year
-     }, {}, function(err, doc) {
-      if (err) {
-       console.error('WARNING: Error removing data from DB');
-       response.sendStatus(500); // internal server error
-      }
-      else {
-       var n = doc.result.n;
-       if (n !== 0) {
-        console.log("INFO: The stat with name " + province + " and year " + year + " has been succesfully deleted, sending 204...");
-        response.sendStatus(204); // no content
-       }
-       else {
-        console.log("WARNING: There are no contacts to delete");
-        response.sendStatus(404); // not found
-       }
-      }
-     });
+     var n = doc.result.n;
+     if (n !== 0) {
+      console.log("INFO: The stat with name " + province + " and year " + year + " has been succesfully deleted, sending 204...");
+      response.sendStatus(204); // no content
+     }
+     else {
+      console.log("WARNING: There are no contacts to delete");
+      response.sendStatus(404); // not found
+     }
     }
-  
+   });
+  }
+
  });
 
 }
