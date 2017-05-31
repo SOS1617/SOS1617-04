@@ -23,9 +23,6 @@ angular.module("ManagerApp")
             }
         }
 
-
-
-
         $scope.searchFrom = function(from, to) {
             $http
                 .get("/api/v3/export-and-import" + "?from=" + from + "&to=" + to)
