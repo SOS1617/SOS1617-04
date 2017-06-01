@@ -50,43 +50,69 @@ exports.register = function(app, dbAdrian, BASE_API_PATH) {
 
     }
     // GET a collection and Search
-    app.get(BASE_API_PATH + "/area-and-production", function(request, response) {
-        var url = request.query;
-        var province = url.province;
-        var year = url.year;
-        var productionS = url.productionS;
-        var areaS = url.areaS;
-        var off = 0;
-        var limite = 100;
-       
-        if (url.limit != undefined) {
-            limite = parseInt(url.limit);
-            off = parseInt(url.offset);
-        }
-        dbAdrian.find({}).skip(off).limit(limite).toArray(function(err, sExport) {
-            if (err) {
-                console.error('WARNING: Error getting data from DB');
-                response.sendStatus(500); // internal server error
-            }
-            else {
-                var filted = sExport.filter((stat) => {
-                    if ((province == undefined || stat.province == province) && (year == undefined || stat.year == year) && (productionS == undefined || stat.importS == productionS) && (areaS == undefined || stat.exportS == areaS)) {
-                        return stat;
-                    }
-                });
-                if (filted.length > 0) {
-                    console.log("INFO: Sending stat: " + JSON.stringify(filted, 2, null));
-                    response.send(filted);
-                }
-                else {
-                    console.log("WARNING: There are not any contact with this properties");
-                    response.sendStatus(404); // not found
-                }
-            }
+ app.get(BASE_API_PATH + "/area-and-production", function(request, response) {
+  var url = request.query;
+  var province = url.province;
+  var year = url.year;
+ 
+  var areaS = url.areaS;
+  var productionS = url.productionS;
+  var off = 0;
+  var limite = 100;
+  var from = url.from;
+  var to = url.to;
+  if (url.limit != undefined) {
+   limite = parseInt(url.limit);
+   off = parseInt(url.offset);
+  }
+  if (from != undefined && to != undefined) {
+   dbAdrian.find({}).toArray(function(err, sArea) {
+    if (err) {
+     console.error('WARNING: Error getting data from DB');
+     response.sendStatus(500); // internal server error
+    }
+    else {
+     if (sArea.length > 0) {
+      var filted = searchFrom(sArea, from, to);
+      response.send(filted);
+     }
+     else {
+      console.log("WARNING: There are not any stat with this properties");
+      response.sendStatus(404); // not found
+
+     }
+    }
+   });
 
 
-        });
-    });
+  }
+  else {
+   dbAdrian.find({}).skip(off).limit(limite).toArray(function(err, sArea) {
+    if (err) {
+     console.error('WARNING: Error getting data from DB');
+     response.sendStatus(500); // internal server error
+    }
+    else {
+     var filted = sArea.filter((stat) => {
+      if ((province == undefined || stat.province == province) && (year == undefined || stat.year == year)  && (areaS == undefined || stat.areaS == areaS) && (productionS == undefined || stat.productionS == productionS)) {
+       return stat;
+      }
+     });
+     if (filted.length > 0) {
+      console.log("INFO: Sending stat: " + JSON.stringify(filted, 2, null));
+      response.send(filted);
+     }
+     else {
+      console.log("WARNING: There are not any stat with this properties");
+      response.sendStatus(404); // not found
+
+     }
+    }
+   });
+  }
+
+
+ });
 
     app.get(BASE_API_PATH + "/area-and-production/loadInitialData", function(request, response) {
 

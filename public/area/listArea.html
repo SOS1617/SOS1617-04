@@ -5,25 +5,31 @@
 </head>
 <main>
     <div ng-controller="ListCtrlArea">
-        <h2>List Area and production Stats </h2>
+        <h2>List Area and Production Stats </h2>
 
         <button class="button btn btn-primary" ng-click="loadInitial()">Load Initial Data</button>
+        <h3>Search: </h3>
 
         <div class="row">
-            <div class="col-md-6">
-                <h4>Province:</h4><input class="form-control" type="text" name="search" ng-model="test1" placeholder="Province.."></div>
+            <div class="col-md-4">
+                <h4>Province:</h4><input class="form-control" type="text" ng-model="province"></div>
 
-            <div class="col-md-6">
-                <h4>Year:</h4><input class="form-control" type="text" name="search" ng-model="test2" placeholder="Year.."></div>
+            <div class="col-md-4">
+                <h4>Year:</h4><input class="form-control" type="text" name="search" ng-model="year"></div>
 
-            
-            <div class="col-md-6">
-                <h4>Area:</h4><input class="form-control" type="text" name="search" ng-model="test4" placeholder="Area.."> </div>
+            <div class="col-md-4">
+                <h4>Area:</h4><input class="form-control" type="text" name="search" ng-model="areaS"> </div>
 
-            <div class="col-md-6">
-                <h4>Production:</h4><input class="form-control" type="text" name="search" ng-model="test5" placeholder="Production.."></div>
+            <div class="col-md-4">
+                <h4>Production:</h4><input class="form-control" type="text" name="search" ng-model="productionS"></div>
 
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <button class="button btn btn-primary" ng-click="search()">GET</button>
+            </div>
+        </div>
+
 
         <br/>
 
@@ -59,8 +65,8 @@
                     <td></td>
                 </tr>
                 <div>
-                    <tr ng-repeat="stat in stats" current-page="currentPage">
-                        <td><a href="#!/export/{{stat.province}}/{{stat.year}}">{{stat.province}}</a></td>
+                    <tr ng-repeat="stat in stats">
+                        <td><a href="#!/area/{{stat.province}}/{{stat.year}}">{{stat.province}}</a></td>
                         <td>{{stat.year}}</td>
                         <td>{{stat.areaS}}</td>
                         <td>{{stat.productionS}}</td>
@@ -72,9 +78,9 @@
             </tbody>
         </table>
         <div>
-            <button class="button btn btn-primary" ng-click="pageLess()">Previous</button> {{currentPage}}/{{numPages}}
+            <button id="pre" class="button btn btn-primary" ng-click="pageLess()">Previous</button> {{currentPage}}/{{numPages}}
 
-            <button class="button btn btn-primary" ng-click="pageMore()">Next</button>
+            <button id="nex" class="button btn btn-primary" ng-click="pageMore()">Next</button>
 
         </div>
         <div>
